@@ -6,10 +6,12 @@ let windowFactor = {
 }
 
 let grid;
+let aisle;
 
 function setup() {
     createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
-    grid = new Grid(5, 5);
+    grid = new Grid(200, 200);
+    aisle = new Aisle(createVector(0, 0), createVector(80, 80));
 }
 
 function windowResized() {
@@ -19,7 +21,7 @@ function windowResized() {
 function draw() {
     background(255);
     grid.draw();
-    
+    aisle.draw();
 }
 
 function keyPressed() {
