@@ -9,7 +9,7 @@ let grid;
 
 function setup() {
     createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
-    grid = new Grid(2000, 2000);
+    grid = new Grid(5, 5);
 }
 
 function windowResized() {
@@ -37,4 +37,8 @@ function mousePressed() {
   ellipse(mouseX, mouseY, 5, 5);
   // prevent default
   return false;
+}
+
+function mouseClicked() {
+    console.log(grid.getClickedSquare());
 }
