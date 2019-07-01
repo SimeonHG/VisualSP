@@ -7,18 +7,41 @@ let grid;
 
 function setup() {
     createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
-    grid = new Grid(5, 5);
+    grid = new Grid(200, 200);
 }
 
 function windowResized() {
     resizeCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
 }
 
+let startPos, currentPos, endPos;
+
+function drawSelection(start, end) {
+    push();
+    fill(255, 0, 0, 80);
+    noStroke();
+    rect(startPos.x, startPos.y, currentPos.x - startPos.x + Square.width, currentPos.y - startPos.y + Square.width);
+    pop();
+}
+
 function draw() {
     background(255);
     grid.draw();
+    if (startPos && currentPos) {
+        drawSelection(startPos, currentPos);
+    }
 }
 
-function mouseClicked() {
-    console.log(grid.getClickedSquare());
+function mousePressed() {
+    startPos = grid.getClickedSquare();
+}
+
+function mouseDragged() {
+    currentPos = grid.getClickedSquare();
+}
+
+function mouseReleased() {
+    console.log(startPos, currentPos);
+    startPos = undefined;
+    currentPos = undefined;
 }
