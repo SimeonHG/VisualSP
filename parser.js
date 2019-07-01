@@ -1,21 +1,31 @@
 class BasicParser {
-    constructor(filename) {
-        this.filename = filename
+    constructor(filepath) {
+        this.filepath = filepath;
     }
-    export(obj);
-    import();
+    export(obj) {}
+    import() {}
 }
 
 class JSONParser extends BasicParser {
-    constructor(filename) {
-        super(filename);
+    constructor(filepath) {
+        super(filepath);
     }
 
     export(obj) {
-        output = {aisles: [], shelfs: []}
+        output = {aisles: [], shelfs: []};
+        
         for (let i = 0; i < obj.length; i++) {
-            const element = array[i];
-            output
+            let key = obj.constructor.name.toLowerCase();
+            output[key].push({x: obj.x, y: obj.y});
         }
+
+        let fp = fopen(this.filepath, 3);
+        
+        if (fp == -1) {
+            throw "IOException, cannot open file";
+        }
+
+        fwrite(fp, JSON.stringify(output));
+        fclose(fp);
     }
 }
