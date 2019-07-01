@@ -16,16 +16,16 @@ class JSONParser extends BasicParser {
         
         for (let i = 0; i < obj.length; i++) {
             let key = obj.constructor.name.toLowerCase();
+            {}
             output[key].push({x: obj.x, y: obj.y});
         }
 
-        let fp = fopen(this.filepath, 3);
-        
-        if (fp == -1) {
-            throw "IOException, cannot open file";
-        }
+        return output;
+    }
 
-        fwrite(fp, JSON.stringify(output));
-        fclose(fp);
+    import() {
+        let fp = fopen(this.filepath);
+
+        fread()
     }
 }
