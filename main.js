@@ -32,3 +32,9 @@ function keyReleased() {
 	console.log(EventListener.getKeys());
 }
 
+function mousePressed() {
+  console.log("click");
+  ellipse(mouseX, mouseY, 5, 5);
+  // prevent default
+  return false;
+}
