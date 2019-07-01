@@ -3,8 +3,11 @@ let windowFactor = {
     height: 0.94
 }
 
+let grid;
+
 function setup() {
     createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
+    grid = new Grid(2000, 2000);
 }
 
 function windowResized() {
@@ -13,4 +16,5 @@ function windowResized() {
 
 function draw() {
     background(255);
+    grid.draw();
 }
