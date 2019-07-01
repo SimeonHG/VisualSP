@@ -1,3 +1,5 @@
+
+
 let windowFactor = {
     width: 0.95,
     height: 0.94
@@ -17,4 +19,16 @@ function windowResized() {
 function draw() {
     background(255);
     grid.draw();
+    
 }
+
+function keyPressed() {
+
+	EventListener.addKey(keyCode);
+}
+
+function keyReleased() { 
+	EventListener.removeKey(keyCode);
+	console.log(EventListener.getKeys());
+}
+
