@@ -1,4 +1,10 @@
+const controls = {
+  view: {x: 0, y: 0, zoom: 1},
+  viewPos: { prevX: null,  prevY: null,  isDragging: false },
+}
 
+let canvas;
+let drawn = false;
 
 let windowFactor = {
     width: 0.95,
@@ -6,11 +12,6 @@ let windowFactor = {
 }
 
 let grid;
-let aisles = [];
-
-function setup() {
-    createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
-    grid = new Grid(200, 200);
 }
 
 function windowResized() {
@@ -21,16 +22,12 @@ let startPos, currentPos;
 
 function draw() {
     background(255);
+    camera.apply();
     grid.draw();
-    for (let aisle of aisles) {
-        aisle.draw();
-    }
-    Selection.draw();
-
-    if (aisles[0] && aisles[1]) {
-        console.log(aisles[0].collides(aisles[1]));
-    }
 }
+
+
+
 
 function mousePressed() {
     Selection.begin();
@@ -47,5 +44,26 @@ function mouseReleased() {
         aisle.remove();
     } else {
         aisles.push(aisle);
+    }
+}
+
+
+class Controls{
+    static zoom(controls){
+        function worldZoom(e){
+            const {x, y, deltaY} = e;
+            const direction = deltaY > 0 ? -1 : 1;
+            const factor = 0.05;
+            const zoom = 1*direction*factor;
+
+            const wx = (x-controls.view.x)/(width*x-controls.view.zoom);
+            const wy = (y-controls.view.y)/(height*y-controls.view.zoom);
+
+            controls.view.x -= wx*width*zoom;
+            controls.view.y -= wy*height*zoom;
+            controls.view.zoom += zoom;
+        }
+        return{worldZoom}
+
     }
 }
