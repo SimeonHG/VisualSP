@@ -1,10 +1,10 @@
 
-class JSONParser extends BasicParser {
-    export(object) {
-        output = { aisles: [] };
+class JSONParser {
+    export(objects) {
+        let output = { aisles: [] };
         
-        for (const iterator of object) {
-            output.aisles.push(object.json());
+        for (const aisle of objects) {
+            output.aisles.push(aisle.json());
         }
         return output;
     }
