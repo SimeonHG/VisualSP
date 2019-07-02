@@ -1,4 +1,10 @@
+const controls = {
+  view: {x: 0, y: 0, zoom: 1},
+  viewPos: { prevX: null,  prevY: null,  isDragging: false },
+}
 
+let canvas;
+let drawn = false;
 
 let windowFactor = {
     width: 0.95,
@@ -9,7 +15,9 @@ let grid;
 let aisle;
 
 function setup() {
-    createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
+    canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
+    canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
+
     grid = new Grid(200, 200);
     aisle = new Aisle(createVector(0, 0), createVector(80, 80));
 }
@@ -29,11 +37,19 @@ function drawSelection(start, end) {
 }
 
 function draw() {
-    background(255);
+
+    translate(controls.view.x, controls.view.y);
+    scale(controls.view.zoom);
+    clear();
     grid.draw();
+
+    drawn = true;
+    
+
     if (startPos && currentPos) {
         drawSelection(startPos, currentPos);
     }
+    
 }
 
 function mousePressed() {
@@ -49,3 +65,26 @@ function mouseReleased() {
     startPos = undefined;
     currentPos = undefined;
 }
+
+
+class Controls{
+    static zoom(controls){
+        function worldZoom(e){
+            const {x, y, deltaY} = e;
+            const direction = deltaY > 0 ? -1 : 1;
+            const factor = 0.05;
+            const zoom = 1*direction*factor;
+
+            const wx = (x-controls.view.x)/(width*x-controls.view.zoom);
+            const wy = (y-controls.view.y)/(height*y-controls.view.zoom);
+
+            controls.view.x -= wx*width*zoom;
+            controls.view.y -= wy*height*zoom;
+            controls.view.zoom += zoom;
+        }
+        return{worldZoom}
+
+    }
+}
+
+
