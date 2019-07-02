@@ -32,8 +32,8 @@ function draw() {
     background(255);
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
-    
-    
+
+
     camera.apply();
     grid.draw();
     for (let aisle of aisles) {
@@ -70,7 +70,7 @@ function mouseDragged() {
     }
     if(Settings.mode == "movement"){
        Controls.move(controls).mouseDragged();
-    } 
+    }
 
 }
 
@@ -79,6 +79,9 @@ function mouseReleased() {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
             aisle = new Aisle(aisleCoords.start, aisleCoords.end);
+            if (aisle.invalid()) {
+                aisle.destroy();
+            }
             aisles.push(aisle);
         }
     } else if (Settings.mode == "segments") { 
@@ -97,6 +100,3 @@ function mouseReleased() {
         Controls.move(controls).mouseReleased()
     }
 }
-
-
-
