@@ -68,9 +68,8 @@ function mouseReleased() {
         let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
         if (aisle.invalid()) {
             aisle.destroy();
-        } else {
-            aisles.push(aisle);
         }
+        aisles.push(aisle);
     }
 }
 

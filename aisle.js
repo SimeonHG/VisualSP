@@ -22,13 +22,16 @@ class Aisle {
 		push();
 		strokeWeight(3);
 		let {r, g, b, a} = this.color;
-		fill(r, g, b, a);
-		rect(this.start.x, this.start.y, this.width.x, this.width.y);
+		this.alpha -= 10;
+		fill(r, g, b, this.alpha);
 		if (this.toDestroy) {
-			if (millis() - this.lifetime > 400) {
+			noStroke();
+			if (this.alpha <= 0) {
+				console.log(aisles.indexOf(this));
 				aisles.splice(aisles.indexOf(this), 1);
 			}
 		}
+		rect(this.start.x, this.start.y, this.width.x, this.width.y);
 		for (let corner of this.corners) {
 			circle(corner.x, corner.y, 5);
 		}
@@ -63,8 +66,8 @@ class Aisle {
 
 	destroy() {
 		this.toDestroy = true;
-		this.lifetime = millis();
-		this.color = {r: 255, g: 0, b: 0, a: 180};
+		this.alpha = 180;
+		this.color = {r: 255, g: 0, b: 0};
 	}
 
     json() {
