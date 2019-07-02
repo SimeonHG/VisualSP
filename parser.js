@@ -12,12 +12,12 @@ class JSONParser extends BasicParser {
     }
 
     export(obj) {
-        output = {aisles: [], shelfs: []};
+        output = { 'aisles': [], 'shelfs': []};
         
         for (let i = 0; i < obj.length; i++) {
             let key = obj.constructor.name.toLowerCase();
-            {}
-            output[key].push({x: obj.x, y: obj.y});
+            
+            output[key].push(obj.json());
         }
 
         return output;
