@@ -1,10 +1,7 @@
 class Camera {
-    moveSpeed = 10;
-    zoom = 1;
-    position = [0, 0]
-
-    constructor(moveSpeed) {
-        this.moveSpeed = moveSpeed
+    constructor(moveSpeed = 10) {
+        this.moveSpeed = moveSpeed;
+        this.zoom = 1;
     }
 
     apply() {

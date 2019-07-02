@@ -32,16 +32,16 @@ function draw() {
     background(255);
     camera.apply();
     grid.draw();
+    for (let aisle of aisles) {
+        aisle.draw();
+    }
+    Selection.draw();
 }
 
 function keyPressed() {
 	EventListener.addKey(keyCode);
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
-    clear();
-    if (startPos && currentPos) {
-        drawSelection(startPos, currentPos);
-    }
 }
 
 function mousePressed() {
@@ -55,16 +55,16 @@ function mouseDragged() {
 function mouseReleased() {
     let aisleCoords = Selection.end();
     let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-    if (aisle.invalid()) {
-        aisle.remove();
-    } else {
+    // if (aisle.invalid()) {
+    //     aisle.remove();
+    // } else {
         aisles.push(aisle);
-    }
+    // }
 }
 
 
-class Controls{
-    static zoom(controls){
+class Controls {
+    static zoom(controls) {
         function worldZoom(e){
             const {x, y, deltaY} = e;
             const direction = deltaY > 0 ? -1 : 1;
