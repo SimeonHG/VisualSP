@@ -9,7 +9,6 @@ function exporter() {
     element.setAttribute('href', 
         'data:text/plain;charset=utf-8,' + encodeURIComponent(payload));
 
-
     element.style.display = 'none';
     document.body.appendChild(element);
 
