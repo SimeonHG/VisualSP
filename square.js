@@ -12,6 +12,10 @@ class Square {
     draw() {
         rect(this.pos.x, this.pos.y, Square.width, Square.width);
     }
+    
+    json() {
+        return { 'x': this.pos.x, 'y': this.pos.y };
+    }
 }
 
 Square.width = 20;
