@@ -1,7 +1,7 @@
-<<<<<<< HEAD
-class Aisle {
+class Aisle extends Entity {
 
 	constructor(start, end) {
+		super(start, end);
 		this.start = start;
 		this.end = end;
 
@@ -17,11 +17,7 @@ class Aisle {
 		];
 		this.toDestroy = false;
 		this.color = {r: 51, g: 51, b: 51, a:160};
-=======
-class Aisle extends Entity {
-	constructor(start, end) {
-		super(start, end);
->>>>>>> 54e5492c960a1afcb1d83256523539f7ce1d2989
+
 	}
 
 	draw() {
