@@ -1,8 +1,8 @@
 class Aisle extends Entity {
 	constructor(start, end) {
 		super(start, end);
+		this.segments = [];
 	}
-
 	draw() {
 		push();
 		strokeWeight(3);

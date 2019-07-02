@@ -38,6 +38,7 @@ function draw() {
     grid.draw();
     for (let aisle of aisles) {
         aisle.draw();
+        aisle.segments.forEach((s) => s.draw());
     }
     Selection.draw();
 }
@@ -53,17 +54,18 @@ function keyReleased() {
 }
 
 function mousePressed() {
-    if (mouseButton === LEFT && Settings.mode == "draw") {
+    if (mouseButton === LEFT && (Settings.mode == "aisles" || Settings.mode == "segments")) {
         Selection.begin();
         Selection.update();
     }
     if(mouseButton === LEFT && Settings.mode == "movement"){
         Controls.move(controls).mousePressed();
     }
+
 }
 
 function mouseDragged() {
-    if(Settings.mode == "draw"){
+    if(Settings.mode == "aisles" || Settings.mode == "segments"){
       Selection.update();
     }
     if(Settings.mode == "movement"){
@@ -73,11 +75,22 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
-    if(Settings.mode == "draw") {
+    if(Settings.mode == "aisles") {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
             aisle = new Aisle(aisleCoords.start, aisleCoords.end);
             aisles.push(aisle);
+        }
+    } else if (Settings.mode == "segments") { 
+        let segmentCoords = Selection.end();
+        if (segmentCoords) {
+            let segment = new Segment(segmentCoords.start, segmentCoords.end);
+            //TODO: Optimize this
+            aisles.forEach(aisle => {
+                if (segment.isInside(aisle)) {
+                    aisle.segments.push(segment);
+                }
+            });
         }
     }
     else if(Settings.mode == "movement") {
