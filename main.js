@@ -76,7 +76,7 @@ function mouseReleased() {
     if(Settings.mode == "draw") {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
-            let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
+            aisle = new Aisle(aisleCoords.start, aisleCoords.end);
             aisles.push(aisle);
         }
     }
