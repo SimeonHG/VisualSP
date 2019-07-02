@@ -2,23 +2,53 @@ class Entity {
     constructor(start, end) {
         this.start = start;
         this.end = end;
+        this.normalize();
+        this.width = abs(this.start.x - this.end.x);
+        this.height = abs(this.start.y - this.end.y);
+    }
+
+    normalize() {
+        let o1 = this.end;
+        let o2 = this.start;
+
+        let new_start = {
+            x: min(o1.x, o2.x),
+            y: min(o1.y, o2.y)
+        };
+        let new_end = {
+            x: max(o1.x, o2.x),
+            y: max(o1.y, o2.y)
+        };
+
+        this.start = new_start;
+        this.end = new_end;
     }
 
     isInside(other) {
-         return ((this.start.x >= other.start.x
+        return ((this.start.x >= other.start.x
                     && this.start.y >= other.start.y
                     && this.end.x <= other.end.x
                     && this.end.y <= other.end.y) ? true : false);
-        }
+    }
 
     collides(other) {
-        let wX = this.end.x - this.start.x;
-        let wY = this.end.y - this.start.y;
+        if (this.start.x < other.start.x + other.width &&
+            this.start.x + this.width > other.start.x &&
+            this.start.y < other.start.y + other.height &&
+            this.start.y + this.height > other.start.y) {
+            return true;
+        }
 
-        let owX = other.end.x - other.start.x;
-        let owY = other.end.y - other.start.y;
+        return false;
+    }
 
-        return (this.start.x + wX < other.start.x);
+    invalid(others) {
+        for (let other of others) {
+            if (this.collides(other) && this != other) {
+                return true;
+            }
+        }
+        return false;
     }
 
     json() {

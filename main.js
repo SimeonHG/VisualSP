@@ -76,24 +76,12 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
-    let aisleCoords = Selection.end();
-    if (aisleCoords) {
-        let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-        
-        if (aisle.invalid()) {
-            aisle.destroy();
-        }
-        aisles.push(aisle);
-    }
-
-}
-
-function mouseReleased() {
     if(Settings.mode == "aisles") {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
             aisle = new Aisle(aisleCoords.start, aisleCoords.end);
             if (aisle.invalid()) {
+                console.log("invalid aisle");
                 aisle.destroy();
             }
             aisles.push(aisle);
@@ -105,7 +93,13 @@ function mouseReleased() {
             //TODO: Optimize this
             aisles.forEach(aisle => {
                 if (segment.isInside(aisle)) {
+                    // console.log("isInside");
                     aisle.segments.push(segment);
+                    segment.attach(aisle);
+                    if (segment.invalid()) {
+                        console.log( "INVALID SEGMENT");
+                        aisle.segments.splice(aisle.segments.indexOf(segment), 1);
+                    }
                 }
             });
         }
