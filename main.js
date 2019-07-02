@@ -29,6 +29,9 @@ function windowResized() {
 let startPos, currentPos;
 
 function draw() {
+    translate(controls.view.x, controls.view.y);
+    scale(controls.view.zoom);
+    
     background(255);
     camera.apply();
     grid.draw();
