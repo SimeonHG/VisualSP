@@ -47,7 +47,7 @@ function keyPressed() {
     scale(controls.view.zoom);
 }
 
-function keyRelease() {
+function keyReleased() {
 	EventListener.removeKey(keyCode);
 }
 
