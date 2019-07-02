@@ -40,9 +40,9 @@ class Aisle {
 			let value = Reflect.get(this, prop);
 			
 			if (Reflect.has(value, 'json')) {
-				obj[e] = value.json();
+				obj.e = value.json();
 			} else {
-				obj[e] = value;
+				obj.e = value;
 			}
 		}
 
