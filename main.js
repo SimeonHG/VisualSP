@@ -52,8 +52,10 @@ function keyReleased() {
 }
 
 function mousePressed() {
-    Selection.begin();
-    Selection.update();
+    if (mouseButton === LEFT) {
+        Selection.begin();
+        Selection.update();
+    }
 }
 
 function mouseDragged() {
