@@ -1,23 +1,26 @@
 class Aisle extends Entity {
 
 	constructor(start, end) {
-		super(start, end);
-		this.segments = [];
+		this.start = start;
+		this.end = end;
 
-		this.width = {
-			x: this.end.x - this.start.x,
-			y: this.end.y - this.start.y
-		};
-		this.corners = [
-			createVector(this.start.x               ,   this.start.y),
-			createVector(this.start.x + this.width.x,   this.start.y),
-			createVector(this.start.x + this.width.x,   this.start.y + this.width.y),
-			createVector(this.start.x               ,   this.start.y + this.width.y)
-		];
-		this.toDestroy = false;
-		this.color = {r: 51, g: 51, b: 51, a:160};
+		this.normalize();
 
+		this.width = abs(this.start.x - this.end.x);
+		this.height = abs(this.start.y - this.end.y);
 	}
+
+	normalize() {
+		let o1 = this.end;
+		let o2 = this.start;
+
+		let new_start = { x: min(o1.x, o2.x), y: min(o1.y, o2.y)};
+		let new_end = { x: max(o1.x, o2.x), y: max(o1.y, o2.y)};
+
+		this.start = new_start;
+		this.end = new_end;
+	}
+
 	draw() {
 		push();
 		strokeWeight(3);
@@ -40,15 +43,14 @@ class Aisle extends Entity {
 	}
 
 	collides(other) {
-		let w = 0.5 * (this.width.x + other.width.x);
-		let h = 0.5 * (this.width.y + other.width.y);
-		let dx = (this.x + this.width.x) / 2 - (other.x + other.width.x) / 2;
-		let dy = (this.y + this.width.y) / 2 - (other.y + other.width.y) / 2;
-
-		if (abs(dx) <= w && abs(dy) <= h) {
+		if (this.start.x < other.start.x + other.width &&
+			this.start.x + this.width > other.start.x &&
+			this.start.y < other.start.y + other.height &&
+			this.start.y + this.height > other.start.y) {
 			return true;
-		}
-		return true;
+		 }
+
+		return false;
 	}
 
 	invalid() {

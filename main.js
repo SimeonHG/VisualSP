@@ -73,6 +73,18 @@ function mouseDragged() {
     if(Settings.mode == "movement"){
        Controls.move(controls).mouseDragged();
     }
+}
+
+function mouseReleased() {
+    let aisleCoords = Selection.end();
+    if (aisleCoords) {
+        let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
+        
+        if (aisle.invalid()) {
+            aisle.destroy();
+        }
+        aisles.push(aisle);
+    }
 
 }
 
