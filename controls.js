@@ -40,19 +40,14 @@ class Controls {
             const direction = deltaY > 0 ? -1 : 1;
             const factor = 0.05;
             const zoom = 1*direction*factor;
-            console.log("zoom = " + zoom);
-
+            
             const wx = (mouseX-controls.view.x)/(width*mouseX-controls.view.zoom);
-            //console.log("wx = " + wx);
             const wy = (mouseY-controls.view.y)/(height*mouseY-controls.view.zoom);
-            //console.log("wy = " + wy);
 
             controls.view.x -= (mouseX-controls.view.x)*width*zoom/1000;
             controls.view.y -= (mouseY-controls.view.y)*height*zoom/1000;
             controls.view.zoom += zoom;
-            console.log("controls.view.x = " + controls.view.x);
-            console.log("controls.view.y = " + controls.view.y);
-            console.log("controls.view.zoom = " + controls.view.zoom);
+            
         }
         return{worldZoom}
     }

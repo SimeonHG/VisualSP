@@ -12,6 +12,10 @@ class Selection {
         let start = Selection.start;
         let end = Selection.current;
 
+        if (!end) {
+            return null;
+        }
+
         let xW = end.x - start.x;
         let yW = end.y - start.y;
 
