@@ -29,10 +29,11 @@ function windowResized() {
 let startPos, currentPos;
 
 function draw() {
+    background(255);
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
     
-    background(255);
+    
     camera.apply();
     grid.draw();
     for (let aisle of aisles) {
@@ -52,39 +53,44 @@ function keyRelease() {
 }
 
 function mousePressed() {
-    Selection.begin();
+    if(mouseButton === RIGHT){
+        Selection.begin();
+    }
+    if(mouseButton === LEFT){
+        console.log("asdasd")
+        Controls.move(controls).mousePressed();
+        console.log("fafafaf")
+    }
+
 }
 
 function mouseDragged() {
-    Selection.update();
+    if(mouseButton === RIGHT){
+      Selection.update();
+    }
+    if(mouseButton === LEFT){
+       Controls.move(controls).mouseDragged();
+
+    } 
+
 }
 
 function mouseReleased() {
-    let aisleCoords = Selection.end();
-    let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-    // if (aisle.invalid()) {
-    //     aisle.remove();
-    // } else {
-        aisles.push(aisle);
+    if(mouseButton === RIGHT){
+        let aisleCoords = Selection.end();
+        let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
+        // if (aisle.invalid()) {
+        //     aisle.remove();
+        // } else {
+            aisles.push(aisle);
+        }
+        if(mouseButton === LEFT){
+            Controls.move(controls).mouseReleased()
+
+        }
+
     // }
 }
 
 
-class Controls {
-    static zoom(controls) {
-        function worldZoom(e){
-            const {x, y, deltaY} = e;
-            const direction = deltaY > 0 ? -1 : 1;
-            const factor = 0.05;
-            const zoom = 1*direction*factor;
 
-            const wx = (x-controls.view.x)/(width*x-controls.view.zoom);
-            const wy = (y-controls.view.y)/(height*y-controls.view.zoom);
-
-            controls.view.x -= wx*width*zoom;
-            controls.view.y -= wy*height*zoom;
-            controls.view.zoom += zoom;
-        }
-        return{worldZoom}
-    }
-}
