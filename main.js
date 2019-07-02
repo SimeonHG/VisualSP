@@ -46,6 +46,7 @@ function keyPressed() {
 
 function mousePressed() {
     Selection.begin();
+    Selection.update();
 }
 
 function mouseDragged() {
@@ -54,12 +55,14 @@ function mouseDragged() {
 
 function mouseReleased() {
     let aisleCoords = Selection.end();
-    let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
+    if (aisleCoords) {
+        let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
     // if (aisle.invalid()) {
     //     aisle.remove();
     // } else {
         aisles.push(aisle);
     // }
+    }
 }
 
 
