@@ -29,10 +29,11 @@ function windowResized() {
 let startPos, currentPos;
 
 function draw() {
+    background(255);
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
     
-    background(255);
+    
     camera.apply();
     grid.draw();
     for (let aisle of aisles) {
@@ -52,44 +53,37 @@ function keyReleased() {
 }
 
 function mousePressed() {
-    if (mouseButton === LEFT) {
+    if (mouseButton === LEFT && Settings.mode == "draw") {
         Selection.begin();
         Selection.update();
+    }
+    if(mouseButton === LEFT && Settings.mode == "movement"){
+        Controls.move(controls).mousePressed();
     }
 }
 
 function mouseDragged() {
-    Selection.update();
+    if(Settings.mode == "draw"){
+      Selection.update();
+    }
+    if(Settings.mode == "movement"){
+       Controls.move(controls).mouseDragged();
+    } 
+
 }
 
 function mouseReleased() {
-    let aisleCoords = Selection.end();
-    if (aisleCoords) {
-        let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-    // if (aisle.invalid()) {
-    //     aisle.remove();
-    // } else {
-        aisles.push(aisle);
-    // }
-    }
-}
-
-
-class Controls {
-    static zoom(controls) {
-        function worldZoom(e){
-            const {x, y, deltaY} = e;
-            const direction = deltaY > 0 ? -1 : 1;
-            const factor = 0.05;
-            const zoom = 1*direction*factor;
-
-            const wx = (x-controls.view.x)/(width*x-controls.view.zoom);
-            const wy = (y-controls.view.y)/(height*y-controls.view.zoom);
-
-            controls.view.x -= wx*width*zoom;
-            controls.view.y -= wy*height*zoom;
-            controls.view.zoom += zoom;
+    if(Settings.mode == "draw") {
+        let aisleCoords = Selection.end();
+        if (aisleCoords) {
+            aisle = new Aisle(aisleCoords.start, aisleCoords.end);
+            aisles.push(aisle);
         }
-        return{worldZoom}
+    }
+    else if(Settings.mode == "movement") {
+        Controls.move(controls).mouseReleased()
     }
 }
+
+
+
