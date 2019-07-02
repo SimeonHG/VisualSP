@@ -6,10 +6,12 @@ let windowFactor = {
 }
 
 let grid;
+let camera;
 
 function setup() {
     createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
-    grid = new Grid(5, 5);
+    grid = new Grid(500, 500);
+    camera = new Camera(10);
 }
 
 function windowResized() {
@@ -18,12 +20,11 @@ function windowResized() {
 
 function draw() {
     background(255);
+    camera.apply();
     grid.draw();
-    
 }
 
 function keyPressed() {
-
 	EventListener.addKey(keyCode);
 }
 
