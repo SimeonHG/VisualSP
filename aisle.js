@@ -1,7 +1,6 @@
-class Aisle {
+class Aisle extends Entity {
 	constructor(start, end) {
-		this.start = start;
-		this.end = end;
+		super(start, end);
 	}
 
 	draw() {
@@ -31,21 +30,4 @@ class Aisle {
 	destroy() {
 
 	}
-    
-    json() {
-		let obj = new Object();
-		let props = Reflect.ownKeys(this);
-		
-		for (const prop of props) {
-			let value = Reflect.get(this, prop);
-			
-			if (Reflect.has(value, 'json')) {
-				obj[prop] = value.json();
-			} else {
-				obj[prop] = value;
-			}
-		}
-
-		return obj;
-    }
 }
