@@ -11,10 +11,25 @@ class Aisle extends Entity {
 		pop();
 	}
 
+	collides(other) {
+		let w = 0.5 * (this.width.x + other.width.x);
+		let h = 0.5 * (this.width.y + other.width.y);
+		let dx = (this.x + this.width.x) / 2 - (other.x + other.width.x) / 2;
+		let dy = (this.y + this.width.y) / 2 - (other.y + other.width.y) / 2;
+
+		if (abs(dx) <= w && abs(dy) <= h) {
+			return true;
+		}
+
+		return false;
+	}
+
 	invalid() {
 		for (let aisle of aisles) {
-
+			if(this.collides(aisle))
+				return true;
 		}
+		return false;
 	}
 
 	destroy() {
