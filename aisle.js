@@ -48,7 +48,7 @@ class Aisle extends Entity {
 		if (abs(dx) <= w && abs(dy) <= h) {
 			return true;
 		}
-		return false;
+		return true;
 	}
 
 	invalid() {

@@ -38,7 +38,9 @@ function draw() {
     grid.draw();
     for (let aisle of aisles) {
         aisle.draw();
-        aisle.segments.forEach((s) => s.draw());
+        if (Settings.viewModes().includes("show-segments")) {
+            aisle.segments.forEach((s) => s.draw());
+        }
     }
     Selection.draw();
 }
