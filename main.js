@@ -47,6 +47,10 @@ function keyPressed() {
     scale(controls.view.zoom);
 }
 
+function keyRelease() {
+	EventListener.removeKey(keyCode);
+}
+
 function mousePressed() {
     Selection.begin();
 }
