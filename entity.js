@@ -4,16 +4,12 @@ class Entity {
         this.end = end;
     }
 
-<<<<<<< HEAD
     isInside(other) {
          return ((this.start.x >= other.start.x
                     && this.start.y >= other.start.y
                     && this.end.x <= other.end.x
                     && this.end.y <= other.end.y) ? true : false);
         }
-=======
-    // isInside(other)
->>>>>>> 0a362096d7a3c5d1b8688ca8f8e5425305f9e96b
 
     collides(other) {
         let wX = this.end.x - this.start.x;
