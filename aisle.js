@@ -11,16 +11,6 @@ class Aisle extends Entity {
 		pop();
 	}
 
-	collides(other) {
-		let wX = this.end.x - this.start.x;
-		let wY = this.end.y - this.start.y;
-
-		let owX = other.end.x - other.start.x;
-		let owY = other.end.y - other.start.y;
-
-		return (this.start.x + wX < other.start.x);
-	}
-
 	invalid() {
 		for (let aisle of aisles) {
 
