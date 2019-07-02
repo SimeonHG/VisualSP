@@ -1,4 +1,10 @@
+const controls = {
+  view: {x: 0, y: 0, zoom: 1},
+  viewPos: { prevX: null,  prevY: null,  isDragging: false },
+}
 
+let canvas;
+let drawn = false;
 
 let windowFactor = {
     width: 0.95,
@@ -12,6 +18,8 @@ let camera;
 function setup() {
     createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
+    canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
+
     camera = new Camera(10);
     aisle = new Aisle(createVector(0, 0), createVector(80, 80));
 }
@@ -38,9 +46,20 @@ function draw() {
 
 function keyPressed() {
 	EventListener.addKey(keyCode);
+
+
+    translate(controls.view.x, controls.view.y);
+    scale(controls.view.zoom);
+    clear();
+    grid.draw();
+
+    drawn = true;
+    
+
     if (startPos && currentPos) {
         drawSelection(startPos, currentPos);
     }
+    
 }
 
 function mousePressed() {
@@ -56,3 +75,26 @@ function mouseReleased() {
     startPos = undefined;
     currentPos = undefined;
 }
+
+
+class Controls{
+    static zoom(controls){
+        function worldZoom(e){
+            const {x, y, deltaY} = e;
+            const direction = deltaY > 0 ? -1 : 1;
+            const factor = 0.05;
+            const zoom = 1*direction*factor;
+
+            const wx = (x-controls.view.x)/(width*x-controls.view.zoom);
+            const wy = (y-controls.view.y)/(height*y-controls.view.zoom);
+
+            controls.view.x -= wx*width*zoom;
+            controls.view.y -= wy*height*zoom;
+            controls.view.zoom += zoom;
+        }
+        return{worldZoom}
+
+    }
+}
+
+
