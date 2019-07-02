@@ -4,6 +4,8 @@ class Entity {
         this.end = end;
     }
 
+    isInside(other)
+
     collides(other) {
         let wX = this.end.x - this.start.x;
         let wY = this.end.y - this.start.y;
