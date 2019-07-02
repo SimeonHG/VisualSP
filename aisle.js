@@ -1,13 +1,16 @@
 class Aisle extends Entity {
 
 	constructor(start, end) {
-		this.start = start;
-		this.end = end;
+		super(start, end);
 
 		this.normalize();
 
 		this.width = abs(this.start.x - this.end.x);
 		this.height = abs(this.start.y - this.end.y);
+
+		this.color = {r: 51, g: 51, b: 51, a: 120};
+
+		this.segments = [];
 	}
 
 	normalize() {
@@ -36,9 +39,9 @@ class Aisle extends Entity {
 			}
 		}
 		rect(this.start.x, this.start.y, this.end.x - this.start.x, this.end.y - this.start.y);
-		for (let corner of this.corners) {
-			circle(corner.x, corner.y, 5);
-		}
+		// for (let corner of this.corners) {
+		// 	circle(corner.x, corner.y, 5);
+		// }
 		pop();
 	}
 
