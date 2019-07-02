@@ -12,11 +12,16 @@ class Selection {
         let start = Selection.start;
         let end = Selection.current;
 
-        end.x += end.x - start.x > 0 ? Square.width : 0;
-        end.y += end.y - start.y > 0 ? Square.width : 0;
+        let xW = end.x - start.x;
+        let yW = end.y - start.y;
+
+        end.x += xW >= 0 ? Square.width : 0;
+        end.y += yW >= 0 ? Square.width : 0;
+
 
         Selection.start = undefined;
         Selection.current = undefined;
+
         return {
             start: start,
             end: end
@@ -33,8 +38,8 @@ class Selection {
 
         let wX = end.x - st.x;
         let wY = end.y - st.y;
-        wX += wX > 0 ? Square.width : 0;
-        wY += wY > 0 ? Square.width : 0;
+        wX += wX >= 0 ? Square.width : 0;
+        wY += wY >= 0 ? Square.width : 0;
 
         rect(st.x, st.y, wX, wY);
     }
