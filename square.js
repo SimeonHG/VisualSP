@@ -14,7 +14,7 @@ class Square {
     }
     
     json() {
-        return { 'x': this.pos.x, 'y': this.pos.y };
+        return { x: this.pos.x, y: this.pos.y };
     }
 }
 
