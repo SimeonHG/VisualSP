@@ -52,7 +52,7 @@ function keyReleased() {
 }
 
 function mousePressed() {
-    if (mouseButton === LEFT) {
+    if (mouseButton === LEFT && Settings.mode == "draw") {
         Selection.begin();
         Selection.update();
     }
