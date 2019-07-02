@@ -31,7 +31,7 @@ let startPos, currentPos;
 function draw() {
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
-    
+
     background(255);
     camera.apply();
     grid.draw();
@@ -66,11 +66,11 @@ function mouseReleased() {
     let aisleCoords = Selection.end();
     if (aisleCoords) {
         let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-    // if (aisle.invalid()) {
-    //     aisle.remove();
-    // } else {
-        aisles.push(aisle);
-    // }
+        if (aisle.invalid()) {
+            aisle.destroy();
+        } else {
+            aisles.push(aisle);
+        }
     }
 }
 
