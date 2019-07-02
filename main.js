@@ -5,18 +5,17 @@ const controls = {
 
 let canvas;
 let drawn = false;
+let grid;
+let aisle;
+let camera;
 
 let windowFactor = {
     width: 0.95,
     height: 0.94
 }
 
-let grid;
-let aisle;
-let camera;
-
 function setup() {
-    createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
+    canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
 
@@ -46,20 +45,12 @@ function draw() {
 
 function keyPressed() {
 	EventListener.addKey(keyCode);
-
-
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
     clear();
-    grid.draw();
-
-    drawn = true;
-    
-
     if (startPos && currentPos) {
         drawSelection(startPos, currentPos);
     }
-    
 }
 
 function mousePressed() {
@@ -93,7 +84,6 @@ class Controls{
             controls.view.zoom += zoom;
         }
         return{worldZoom}
-
     }
 }
 
