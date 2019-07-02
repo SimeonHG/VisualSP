@@ -6,16 +6,28 @@ let windowFactor = {
 }
 
 let grid;
+let aisle;
 let camera;
 
 function setup() {
     createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     camera = new Camera(10);
+    aisle = new Aisle(createVector(0, 0), createVector(80, 80));
 }
 
 function windowResized() {
     resizeCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
+}
+
+let startPos, currentPos, endPos;
+
+function drawSelection(start, end) {
+    push();
+    fill(255, 0, 0, 80);
+    noStroke();
+    rect(startPos.x, startPos.y, currentPos.x - startPos.x + Square.width, currentPos.y - startPos.y + Square.width);
+    pop();
 }
 
 function draw() {
@@ -26,20 +38,21 @@ function draw() {
 
 function keyPressed() {
 	EventListener.addKey(keyCode);
-}
-
-function keyReleased() { 
-	EventListener.removeKey(keyCode);
-	console.log(EventListener.getKeys());
+    if (startPos && currentPos) {
+        drawSelection(startPos, currentPos);
+    }
 }
 
 function mousePressed() {
-  console.log("click");
-  ellipse(mouseX, mouseY, 5, 5);
-  // prevent default
-  return false;
+    startPos = grid.getClickedSquare();
 }
 
-function mouseClicked() {
-    console.log(grid.getClickedSquare());
+function mouseDragged() {
+    currentPos = grid.getClickedSquare();
+}
+
+function mouseReleased() {
+    console.log(startPos, currentPos);
+    startPos = undefined;
+    currentPos = undefined;
 }
