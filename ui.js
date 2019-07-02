@@ -3,6 +3,8 @@ function exporter() {
     let parser = new JSONParser();
     let payload = JSON.stringify(parser.export(aisles));
     
+    console.log(payload);
+    
     element.setAttribute('download', "store_pick.json");
     element.setAttribute('href', 
         'data:text/plain;charset=utf-8,' + encodeURIComponent(payload));

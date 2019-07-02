@@ -5,8 +5,8 @@ class Square {
     }
 
     isClicked() {
-        return mouseX / controls.view.zoom >= this.pos.x && mouseX / controls.view.zoom <= this.pos.x + Square.width &&
-               mouseY / controls.view.zoom >= this.pos.y && mouseY / controls.view.zoom <= this.pos.y + Square.width
+        return (mouseX - controls.view.x) / controls.view.zoom  >= this.pos.x && (mouseX - controls.view.x) / controls.view.zoom <= this.pos.x + Square.width &&
+               (mouseY - controls.view.y) / controls.view.zoom  >= this.pos.y && (mouseY - controls.view.y) / controls.view.zoom  <= this.pos.y + Square.width
     }
 
     draw() {

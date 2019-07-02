@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class Aisle {
 
 	constructor(start, end) {
@@ -16,6 +17,11 @@ class Aisle {
 		];
 		this.toDestroy = false;
 		this.color = {r: 51, g: 51, b: 51, a:160};
+=======
+class Aisle extends Entity {
+	constructor(start, end) {
+		super(start, end);
+>>>>>>> 54e5492c960a1afcb1d83256523539f7ce1d2989
 	}
 
 	draw() {
@@ -36,23 +42,6 @@ class Aisle {
 			circle(corner.x, corner.y, 5);
 		}
 		pop();
-	}
-
-	collides(other) {
-		for (let corner of other.corners) {
-			if ( (this.start.x + this.width.x < corner.x) &&
-			 	(this.start.y + this.width.y < corner.y) ) {
-				  return true;
-			  }
-		}
-
-		for (let corner of this.corners) {
-			if ( (other.start.x + other.width.x < corner.x) &&
-				(other.start.y + other.width.y < corner.y) ) {
-				  return true;
-			  }
-		}
-		return false;
 	}
 
 	invalid() {
