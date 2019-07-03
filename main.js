@@ -15,11 +15,17 @@ let windowFactor = {
     height: 0.94
 }
 
+let input;
+
 function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
 }
+function typeLabel(){
+    new Label(0, 0, "asddsa").draw();
+}
+
 
 function windowResized() {
     resizeCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
