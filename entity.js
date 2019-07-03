@@ -1,16 +1,11 @@
 class Entity {
     constructor(start, end) {
-        this.start = start;
-        this.end = end;
-        this.normalize();
+        this.normalize(start, end);
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
     }
 
-    normalize() {
-        let o1 = this.end;
-        let o2 = this.start;
-
+    normalize(o1, o2) {
         let new_start = {
             x: min(o1.x, o2.x),
             y: min(o1.y, o2.y)
