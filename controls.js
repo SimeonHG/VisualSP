@@ -27,11 +27,27 @@ class Controls {
           controls.viewPos.prevX = null;
           controls.viewPos.prevY = null;
         }
+
+        function keyboardMovement() {
+          if (EventListener.getKeys().includes("W")) {
+            controls.view.y += 10;
+          }
+          if (EventListener.getKeys().includes("A")) {
+            controls.view.x += 10;
+          }
+          if (EventListener.getKeys().includes("S")) {
+            controls.view.y -= 10;
+          }
+          if (EventListener.getKeys().includes("D")) {
+            controls.view.x -= 10;
+          }
+        }
      
         return {
           mousePressed, 
           mouseDragged, 
-          mouseReleased
+          mouseReleased,
+          keyboardMovement
         }
       }
     static zoom(controls) {
@@ -49,6 +65,6 @@ class Controls {
             controls.view.zoom += zoom;
             
         }
-        return{worldZoom}
+        return {worldZoom}
     }
 }

@@ -7,7 +7,6 @@ let canvas;
 let drawn = false;
 let grid;
 let aisles = [];
-let camera;
 
 let windowFactor = {
     width: 0.95,
@@ -18,8 +17,6 @@ function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
-
-    camera = new Camera(10);
 }
 
 function windowResized() {
@@ -30,11 +27,9 @@ let startPos, currentPos;
 
 function draw() {
     background(255);
+    Controls.move(controls).keyboardMovement();
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
-
-
-    camera.apply();
     grid.draw();
     for (let aisle of aisles) {
         aisle.draw();
