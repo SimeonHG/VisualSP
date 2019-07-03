@@ -3,8 +3,8 @@ class Entity {
         this.start = start;
         this.end = end;
         this.normalize();
-        this.width = abs(this.start.x - this.end.x);
-        this.height = abs(this.start.y - this.end.y);
+        this._width = abs(this.start.x - this.end.x);
+        this._height = abs(this.start.y - this.end.y);
     }
 
     normalize() {
@@ -32,10 +32,10 @@ class Entity {
     }
 
     collides(other) {
-        if (this.start.x < other.start.x + other.width &&
-            this.start.x + this.width > other.start.x &&
-            this.start.y < other.start.y + other.height &&
-            this.start.y + this.height > other.start.y) {
+        if (this.start.x < other.start.x + other._width &&
+            this.start.x + this._width > other.start.x &&
+            this.start.y < other.start.y + other._height &&
+            this.start.y + this._height > other.start.y) {
             return true;
         }
 
@@ -61,19 +61,22 @@ class Entity {
     }
 
     json() {
-        let obj = new Object();
-        let props = Reflect.ownKeys(this);
+		let obj = new Object();
+		let props = Reflect.ownKeys(this);
 
-        for (const prop of props) {
-            let value = Reflect.get(this, prop);
+		for (const prop of props) {
+			if (prop.charAt(0) == '_')
+				continue;
 
-            if (Reflect.has(value, 'json')) {
-                obj.e = value.json();
-            } else {
-                obj.e = value;
-            }
-        }
+			let value = Reflect.get(this, prop);
 
-        return obj;
+			if (value instanceof Object && Reflect.has(value, 'json')) {
+				obj[prop] = value.json();
+			} else {
+				obj[prop] = value;
+			}
+		}
+
+		return obj;
     }
 }
