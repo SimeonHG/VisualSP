@@ -34,6 +34,7 @@ function windowResized() {
 let startPos, currentPos;
 
 function draw() {
+    // console.log(mouseY);
     background(255);
     Controls.move(controls).keyboardMovement();
     translate(controls.view.x, controls.view.y);
@@ -102,35 +103,38 @@ function mouseReleased() {
     } else if(Settings.mode == "movement") {
         Controls.move(controls).mouseReleased()
     } else if(Settings.mode == "select") {
-        for(let aisle of aisles) {
-            aisle.deselect();
-        }
-        selectedItems = [];
-        let aisleCoords = Selection.end();
-        if (aisleCoords) {
-            let selection = new Aisle(aisleCoords.start, aisleCoords.end);
-            let colls = selection.collisions();
-            let coll = colls[0];
-
-            if (!coll) {
-                return;
+        if (mouseY > 0) {
+            for (let aisle of aisles) {
+                aisle.deselect();
             }
+            selectedItems = [];
+            let aisleCoords = Selection.end();
+            if (aisleCoords) {
+                let selection = new Aisle(aisleCoords.start, aisleCoords.end);
+                let colls = selection.collisions();
+                let coll = colls[0];
 
-            if (selection.isInside(coll)) {
-                let segment = new Segment(aisleCoords.start, aisleCoords.end);
-                segment.attach(coll);
-                if (segment.collisions().length > 0) {
-                    for(let seg of segment.collisions()) {
-                        seg.select();
-                    }
-                    segment.remove();
+                if (!coll) {
                     return;
                 }
-                segment.remove();
-            }
-            for(let col of selection.collisions()) {
-                col.select();
+
+                if (selection.isInside(coll)) {
+                    let segment = new Segment(aisleCoords.start, aisleCoords.end);
+                    segment.attach(coll);
+                    if (segment.collisions().length > 0) {
+                        for (let seg of segment.collisions()) {
+                            seg.select();
+                        }
+                        segment.remove();
+                        return;
+                    }
+                    segment.remove();
+                }
+                for (let col of selection.collisions()) {
+                    col.select();
+                }
             }
         }
+        
     }
 }

@@ -1,4 +1,5 @@
 let parser = new JSONParser();
+let inputBox, inputBoxButton, itemToLabel;
 
 function exporter() {
     let element = document.createElement('a');
@@ -19,20 +20,32 @@ function exporter() {
 }
 
 function beginCreateLabel() {
-    if (selectedItems.length > 2) {
-        alert("Please, only select one entity in order to label it!");
-    } else {
+    if (selectedItems.length == 1) {
+        if (inputBox) {
+            inputBox.remove();
+        }
+        if (inputBoxButton) {
+            inputBoxButton.remove();
+        }
         console.log(selectedItems);
-        let itemToLabel = selectedItems[0];
-        let input = createInput();
+        itemToLabel = selectedItems[0];
+        inputBox = createInput();
+        inputBox.position(itemToLabel.centerCoords()[0], itemToLabel.centerCoords()[1]);
+        inputBoxButton = createButton('Apply');
+        inputBoxButton.position(inputBox.x + inputBox.width, itemToLabel.centerCoords()[1]);
+        inputBoxButton.mousePressed(createLabel);
 
-        input.position(itemToLabel.centerCoords()[0], itemToLabel.centerCoords()[1]);
-        itemToLabel.setLabel;
-    }
+        Settings.setMode("movement");
+    } else {
+        alert("Please select exactly one entity!");
+    } 
 }
 
 function createLabel() {
-
+    itemToLabel.setLabel(inputBox.value());
+    // console.log(inputBox.value());
+    inputBox.remove();
+    inputBoxButton.remove();
 }
 
 document.getElementById('importer').onchange = function(event) {
