@@ -4,9 +4,24 @@ class Entity {
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
         this._selected = false;
-        this.label = new Label(((this.end.x - this.start.x) / 2) + this.start.x,
-            ((this.end.y - this.start.y) / 2) + this.start.y, Entity.calcLabelSizeFactor(this._width, this._height, "aaaaaaaaaaaaaaaaaaa"), Entity.mustRotate(this._width, this._height), "aaaaaaaaaaaaaaaaaaa" );
+        this.label = new Label(this.centerCoords()[0], this.centerCoords()[1], Entity.calcLabelSizeFactor(this._width, this._height, ''),
+            Entity.mustRotate(this.width, this.height),
+            '');
+    }
 
+    centerCoords() {
+        const coords = [];
+        coords[0] = ((this.end.x - this.start.x) / 2) + this.start.x;
+        coords[1] = ((this.end.y - this.start.y) / 2) + this.start.y;
+        return coords;
+    }
+
+    setLabel(text) {
+        this.label = new Label(((this.end.x - this.start.x) / 2) + this.start.x,
+            ((this.end.y - this.start.y) / 2) + this.start.y,
+            Entity.calcLabelSizeFactor(this.width, this.height, text),
+            Entity.mustRotate(this.width, this.height),
+            text);
     }
 
     static calcLabelSizeFactor(width, height, text) {

@@ -18,6 +18,23 @@ function exporter() {
     document.body.removeChild(element);
 }
 
+function beginCreateLabel() {
+    if (selectedItems.length > 2) {
+        alert("Please, only select one entity in order to label it!");
+    } else {
+        console.log(selectedItems);
+        let itemToLabel = selectedItems[0];
+        let input = createInput();
+
+        input.position(itemToLabel.centerCoords()[0], itemToLabel.centerCoords()[1]);
+        itemToLabel.setLabel;
+    }
+}
+
+function createLabel() {
+
+}
+
 document.getElementById('importer').onchange = function(event) {
     console.log(event);
     
