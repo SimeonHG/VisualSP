@@ -33,6 +33,11 @@ class Entity {
         this.end = new_end;
     }
 
+    isClicked() {
+        return (mouseX - controls.view.x) / controls.view.zoom  >= this.pos.x && (mouseX - controls.view.x) / controls.view.zoom <= this.pos.x + Square.width &&
+               (mouseY - controls.view.y) / controls.view.zoom  >= this.pos.y && (mouseY - controls.view.y) / controls.view.zoom <= this.pos.y + Square.width
+    }
+
     isInside(other) {
         return ((this.start.x >= other.start.x
                     && this.start.y >= other.start.y

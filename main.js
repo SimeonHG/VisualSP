@@ -45,6 +45,7 @@ function draw() {
     Selection.draw();
 }
 
+
 function keyPressed() {
 	EventListener.addKey(keyCode);
     translate(controls.view.x, controls.view.y);
@@ -55,12 +56,25 @@ function keyReleased() {
 	EventListener.removeKey(keyCode);
 }
 
+function clickedOnSelected() {
+    for (let selection of selectedItems) {
+        if (selection.isClicked()) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function mousePressed() {
     if (mouseButton === LEFT) {
-        if(Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
+        if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
             Selection.begin();
             Selection.update();
-        } else if(Settings.mode == "movement"){
+        } else if (Settings.mode == "movement"){
+            if (selectedItems.length > 0 && clickedOnSelected()) {
+                console.log("moving");
+            }
+
             Controls.move(controls).mousePressed();
         }
     }
