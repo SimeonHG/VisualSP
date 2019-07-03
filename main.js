@@ -56,18 +56,18 @@ function keyReleased() {
 }
 
 function mousePressed() {
-    if (mouseButton === LEFT && (Settings.mode == "aisles" || Settings.mode == "segments")) {
-        Selection.begin();
-        Selection.update();
+    if (mouseButton === LEFT) {
+        if(Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
+            Selection.begin();
+            Selection.update();
+        } else if(Settings.mode == "movement"){
+            Controls.move(controls).mousePressed();
+        }
     }
-    if(mouseButton === LEFT && Settings.mode == "movement"){
-        Controls.move(controls).mousePressed();
-    }
-
 }
 
 function mouseDragged() {
-    if(Settings.mode == "aisles" || Settings.mode == "segments"){
+    if(Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select"){
       Selection.update();
     }
     if(Settings.mode == "movement"){
@@ -80,7 +80,7 @@ function mouseReleased() {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
             aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-            if (aisle.invalid()) {
+            if (aisle.invalid().collided) {
                 console.log("invalid aisle");
                 aisle.destroy();
             }
@@ -103,8 +103,20 @@ function mouseReleased() {
                 }
             });
         }
-    }
-    else if(Settings.mode == "movement") {
+    } else if(Settings.mode == "movement") {
         Controls.move(controls).mouseReleased()
+    } else if(Settings.mode == "select") {
+        for(let aisle of aisles) {
+            aisle.deselect();
+        }
+        let aisleCoords = Selection.end();
+        if (aisleCoords) {
+            let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
+            for(let collidedAisle of aisle.invalid().collisionObjects) {
+
+                collidedAisle.selected();
+
+            }
+        }
     }
 }
