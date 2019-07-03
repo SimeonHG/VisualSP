@@ -99,9 +99,27 @@ function mouseReleased() {
         }
         let aisleCoords = Selection.end();
         if (aisleCoords) {
-            let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-            for(let col of aisle.collisions()) {
-                col.select();
+            let selection = new Aisle(aisleCoords.start, aisleCoords.end);
+            let colls = selection.collisions();
+            let coll = colls[0];
+            console.log(colls);
+            if(colls.length == 1 && selection.isInside(coll)){ //&& Settings.viewModes().includes("show-segments")) {
+                let segment = new Segment(aisleCoords.start, aisleCoords.end);
+                segment.attach(coll);
+                if(segment.collisions().length > 0) {
+                    for(let col of segment.collisions()) {
+                        col.select();
+                    }
+                } else {
+                    for(let col of selection.collisions()) {
+                        col.select();
+                    }    
+                }
+                segment.remove();
+            } else {
+                for(let col of selection.collisions()) {
+                    col.select();
+                }
             }
         }
     }
