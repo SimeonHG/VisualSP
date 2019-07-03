@@ -5,7 +5,7 @@ class Entity {
         this._height = abs(this.start.y - this.end.y);
         this._selected = false;
         this.label = new Label(((this.end.x - this.start.x) / 2) + this.start.x,
-            ((this.end.y - this.start.y) / 2) + this.start.y, Entity.calcLabelSizeFactor(this.width, this.height, "aaaaaaaaaaaaaaaaaaa"), Entity.mustRotate(this.width, this.height), "aaaaaaaaaaaaaaaaaaa" );
+            ((this.end.y - this.start.y) / 2) + this.start.y, Entity.calcLabelSizeFactor(this._width, this._height, "aaaaaaaaaaaaaaaaaaa"), Entity.mustRotate(this._width, this._height), "aaaaaaaaaaaaaaaaaaa" );
 
     }
 
