@@ -1,4 +1,5 @@
 let parser = new JSONParser();
+let inputBox, inputBoxButton, itemToLabel;
 
 function exporter() {
     let element = document.createElement('a');
@@ -16,6 +17,35 @@ function exporter() {
     element.click();
 
     document.body.removeChild(element);
+}
+
+function beginCreateLabel() {
+    if (selectedItems.length == 1) {
+        if (inputBox) {
+            inputBox.remove();
+        }
+        if (inputBoxButton) {
+            inputBoxButton.remove();
+        }
+        console.log(selectedItems);
+        itemToLabel = selectedItems[0];
+        inputBox = createInput();
+        inputBox.position(itemToLabel.centerCoords()[0], itemToLabel.centerCoords()[1]);
+        inputBoxButton = createButton('Apply');
+        inputBoxButton.position(inputBox.x + inputBox.width, itemToLabel.centerCoords()[1]);
+        inputBoxButton.mousePressed(createLabel);
+
+        Settings.setMode("movement");
+    } else {
+        alert("Please select exactly one entity!");
+    } 
+}
+
+function createLabel() {
+    itemToLabel.setLabel(inputBox.value());
+    // console.log(inputBox.value());
+    inputBox.remove();
+    inputBoxButton.remove();
 }
 
 document.getElementById('importer').onchange = function(event) {

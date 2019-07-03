@@ -8,6 +8,13 @@ class Entity {
         this.label = new Label(this, "aaaaaa");
     }
 
+    centerCoords() {
+        const coords = [];
+        coords[0] = ((this.end.x - this.start.x) / 2) + this.start.x;
+        coords[1] = ((this.end.y - this.start.y) / 2) + this.start.y;
+        return coords;
+    }
+
     move(direction) {
         this.start.x += direction.x;
         this.start.y += direction.y;
