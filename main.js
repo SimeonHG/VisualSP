@@ -21,20 +21,6 @@ function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
-<<<<<<< HEAD
-=======
-
-    camera = new Camera(10);
-
-    input = createInput();
-    input.position(20, 65);
-
-    button = createButton('submit');
-    button.position(input.x + input.width, 65);
-    button.mousePressed(typeLabel());
-    
-
->>>>>>> c3fc5b8ffa402ce45cfebb6610b57c79e1c2a391
 }
 function typeLabel(){
     new Label(0, 0, "asddsa").draw();
