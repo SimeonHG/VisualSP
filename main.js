@@ -105,24 +105,25 @@ function mouseReleased() {
             let selection = new Aisle(aisleCoords.start, aisleCoords.end);
             let colls = selection.collisions();
             let coll = colls[0];
-            console.log(selectedItems);
-            if(colls.length == 1 && selection.isInside(coll)) {
+
+            if (!coll) {
+                return;
+            }
+
+            if (selection.isInside(coll)) {
                 let segment = new Segment(aisleCoords.start, aisleCoords.end);
                 segment.attach(coll);
-                if(segment.collisions().length > 0) {
-                    for(let col of segment.collisions()) {
-                        col.select();
+                if (segment.collisions().length > 0) {
+                    for(let seg of segment.collisions()) {
+                        seg.select();
                     }
-                } else {
-                    for(let col of selection.collisions()) {
-                        col.select();
-                    }
+                    segment.remove();
+                    return;
                 }
                 segment.remove();
-            } else {
-                for(let col of selection.collisions()) {
-                    col.select();
-                }
+            }
+            for(let col of selection.collisions()) {
+                col.select();
             }
         }
     }
