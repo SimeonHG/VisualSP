@@ -86,6 +86,10 @@ class Entity {
 
 			let value = Reflect.get(this, prop);
 
+            if (value instanceof Array) {
+                value = value.map((e) => e instanceof Object ? e.json() : e);
+            }
+
 			if (value instanceof Object && Reflect.has(value, 'json')) {
 				obj[prop] = value.json();
 			} else {
