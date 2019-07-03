@@ -52,6 +52,7 @@ class Controls {
       }
     static zoom(controls) {
         function worldZoom(e){
+
             const {x, y, deltaY} = e;
             const direction = deltaY > 0 ? -1 : 1;
             const factor = 0.05;
@@ -60,13 +61,17 @@ class Controls {
             const wx = (mouseX-controls.view.x)/(width*mouseX-controls.view.zoom);
             const wy = (mouseY-controls.view.y)/(height*mouseY-controls.view.zoom);
 
+
             controls.view.x -= (mouseX-controls.view.x)*width*zoom/1000;
             controls.view.y -= (mouseY-controls.view.y)*height*zoom/1000;
+            controls.view.zoom += zoom;
             console.log(controls.view.zoom);
-            if (controls.view.zoom <= 1.6 && controls.view.zoom >= 0.3) {
-              controls.view.zoom += zoom;
-            }
             
+            if (controls.view.zoom >= 1.6) {
+              controls.view.zoom = 1.6;
+            } else if (controls.view.zoom <= 0.2) {
+              controls.view.zoom = 0.2;
+            }
             
         }
         return {worldZoom}
