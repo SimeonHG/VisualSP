@@ -1,11 +1,5 @@
 let parser = new JSONParser();
 
-// document.onload = () => {
-//     console.log('fds');
-
-//     document.getElementById('importer').onchange = onImport;
-// }
-
 function exporter() {
     let element = document.createElement('a');
     let payload = JSON.stringify(parser.export(aisles));
