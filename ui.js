@@ -1,6 +1,13 @@
+let parser = new JSONParser();
+
+// document.onload = () => {
+//     console.log('fds');
+
+//     document.getElementById('importer').onchange = onImport;
+// }
+
 function exporter() {
     let element = document.createElement('a');
-    let parser = new JSONParser();
     let payload = JSON.stringify(parser.export(aisles));
     
     console.log(payload);
@@ -15,4 +22,17 @@ function exporter() {
     element.click();
 
     document.body.removeChild(element);
+}
+
+document.getElementById('importer').onchange = function(event) {
+    console.log(event);
+    
+    let reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(event.target.files[0]);
+    
+    function onReaderLoad(event){
+        aisles = parser.import(event.target.result); 
+    }
+    
 }
