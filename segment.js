@@ -5,12 +5,12 @@ class Segment extends Entity {
     }
 
     attach(aisle) {
-        this.aisle = aisle
+        this._aisle = aisle
         aisle.segments.push(this);
     }
 
     remove() {
-        super.remove(this.aisle.segments);
+        super.remove(this._aisle.segments);
     }
 
     draw() {
@@ -27,6 +27,6 @@ class Segment extends Entity {
     }
 
     collisions() {
-        return super.collisions(this.aisle.segments);
+        return super.collisions(this._aisle.segments);
     }
 }
