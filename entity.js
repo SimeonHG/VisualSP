@@ -47,8 +47,6 @@ class Entity {
             if (this.collides(other) && this != other) {
                 result.collisionObjects.push(other);
                 result.collided = true;
-            } else {
-                result.collided = false;
             }
         }
         
