@@ -14,13 +14,28 @@ let windowFactor = {
     height: 0.94
 }
 
+let input;
+
 function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
 
     camera = new Camera(10);
+
+    input = createInput();
+    input.position(20, 65);
+
+    button = createButton('submit');
+    button.position(input.x + input.width, 65);
+    button.mousePressed(typeLabel());
+    
+
 }
+function typeLabel(){
+    new Label(0, 0, "asddsa").draw();
+}
+
 
 function windowResized() {
     resizeCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
@@ -62,6 +77,9 @@ function mousePressed() {
     }
     if(mouseButton === LEFT && Settings.mode == "movement"){
         Controls.move(controls).mousePressed();
+    }
+    if(mouseButton === LEFT && Settings.mode == "label"){
+        new Label().draw;
     }
 
 }

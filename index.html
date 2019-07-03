@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <title>Visual SP</title>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js"></script>
+        <script language="javascript" type="text/javascript" src="p5.dom.js"></script>
         <script src = "eventListener.js"></script>
         <script src = "main.js"></script>
         <script src="entity.js"></script>
@@ -17,6 +18,7 @@
         <script src = "settings.js"></script>
         <script src = "camera.js"></script>
         <script src = "controls.js"></script>
+        <script src = "label.js"></script>
         <link rel = "stylesheet" href = "style.css" type = "text/css" media = "screen"/>
     </head>
     <body>
@@ -24,6 +26,9 @@
         <button onclick="Settings.setMode('aisles')">Draw aisles</button>
         <button onclick="Settings.setMode('segments')">Draw segments</button>
         <button onclick="Settings.setMode('select')">Select</button>
+
+        <button onclick="Settings.setMode('label')">Select</button>
+
         <button onclick="exporter()">Export Map</button>
         <br>
         <form>

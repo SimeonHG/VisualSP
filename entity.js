@@ -5,6 +5,18 @@ class Entity {
         this.normalize();
         this.width = abs(this.start.x - this.end.x);
         this.height = abs(this.start.y - this.end.y);
+        this.label = new Label(((this.end.x - this.start.x) / 2) + this.start.x,
+            ((this.end.y - this.start.y) / 2) + this.start.y, Entity.calcLabelSizeFactor(this.width, this.height, "aaaaaaaaaaaaaaaaaaa"), Entity.mustRotate(this.width, this.height), "aaaaaaaaaaaaaaaaaaa" );
+    }
+
+    static calcLabelSizeFactor(width, height, text) {
+        let shortestDimension = min(width, height);
+        let longestDimension = max(width, height);
+        return min(longestDimension / text.length, shortestDimension);
+    }
+
+    static mustRotate(width, height){
+        return height > width;
     }
 
     normalize() {

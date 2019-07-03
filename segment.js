@@ -12,6 +12,7 @@ class Segment extends Entity {
         strokeWeight(3);
         fill(15, 70, 20, 160);
         rect(this.start.x, this.start.y, this.end.x - this.start.x, this.end.y - this.start.y);
+        this.label.draw();
         pop();
     }
 
