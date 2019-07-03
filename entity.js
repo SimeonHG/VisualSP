@@ -37,20 +37,16 @@ class Entity {
         return false;
     }
 
-    invalid(others) {
-        let result = {
-            collided : false, 
-            collisionObjects : []
-        }
+    collisions(others) {
+        let collisions = [];
 
         for (let other of others) {
             if (this.collides(other) && this != other) {
-                result.collisionObjects.push(other);
-                result.collided = true;
+                collisions.push(other);
             }
         }
-        
-        return result;
+
+        return collisions;
     }
 
     json() {

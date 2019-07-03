@@ -75,13 +75,12 @@ function mouseReleased() {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
             aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-            if (aisle.invalid().collided) {
-                console.log("invalid aisle");
+            if (aisle.collisions().length > 0) {
                 aisle.destroy();
             }
             aisles.push(aisle);
         }
-    } else if (Settings.mode == "segments") { 
+    } else if (Settings.mode == "segments") {
         let segmentCoords = Selection.end();
         if (segmentCoords) {
             let segment = new Segment(segmentCoords.start, segmentCoords.end);
@@ -107,10 +106,8 @@ function mouseReleased() {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
             let aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-            for(let collidedAisle of aisle.invalid().collisionObjects) {
-
-                collidedAisle.selected();
-
+            for(let col of aisle.collisions()) {
+                col.select();
             }
         }
     }

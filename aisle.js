@@ -3,52 +3,53 @@ class Aisle extends Entity {
 	constructor(start, end) {
 		super(start, end);
 
-		
-
-		this._color = {r: 51, g: 51, b: 51, a: 120};
-
+		this._alpha = 120;
+		this._selected = false;
+		this._markedDestroy = false;
 		this.segments = [];
 	}
-
-	
 
 	draw() {
 		push();
 		strokeWeight(3);
-		let {r, g, b, a} = this._color;
-		fill(r, g, b, a);
-		if (this.toDestroy) {
+
+		fill(51, 51, 51, 180);
+
+		if (this._selected) {
+			fill(100, 149, 237, 160);
+			stroke(0, 0, 255);
+		}
+
+		if (this._markedDestroy) {
+			fill(255, 0, 0, this._alpha);
 			noStroke();
-			this._color.a -= 10;
-			if (this._color.a <= 0) {
+			this._alpha -= 10;
+			if (this._alpha <= 0) {
 				this.remove()
 			}
 		}
 		rect(this.start.x, this.start.y, this.end.x - this.start.x, this.end.y - this.start.y);
-
 		pop();
 	}
 
 	destroy() {
-		this.toDestroy = true;
-		this._color = {r: 255, g: 0, b: 0, a: 180};
+		this._markedDestroy = true;
 	}
 
 	remove() {
 		aisles.splice(aisles.indexOf(this), 1);
 	}
 
-	invalid() {
-		return super.invalid(aisles);
+	collisions() {
+		return super.collisions(aisles);
 	}
 
-	selected() {
-		stroke();
-		this._color = {r: 100, g: 149, b: 237, a: 100};
+	select() {
+		this._selected = true;
 	}
 
 	deselect() {
-		this._color = {r: 51, g: 51, b: 51, a: 120};
+		this._selected = false;
 	}
 
     json() {
