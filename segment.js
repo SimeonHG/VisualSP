@@ -29,4 +29,6 @@ class Segment extends Entity {
     collisions() {
         return super.collisions(this._aisle.segments);
     }
+
+    //Add constraints to moving the label
 }

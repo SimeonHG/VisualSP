@@ -11,7 +11,7 @@ class Label {
 		return min(longestDimension / text.length, shortestDimension);
 	}
 
-	checkRotate(){
+	checkRotate() {
 		return this.entity._height > this.entity._width;
 	}
 
@@ -20,8 +20,9 @@ class Label {
         noStroke();
         textSize(1.75 * this.getFactor());
         textAlign(CENTER, CENTER);
-		let x = this.entity.start.x;
-		let y = this.entity.start.y;
+		let coords = this.entity.centerCoords();
+		let x = coords[0];
+		let y = coords[1];
 		if (this.checkRotate()) {
          	push();
          	translate(x, y);

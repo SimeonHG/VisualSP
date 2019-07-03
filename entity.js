@@ -5,7 +5,7 @@ class Entity {
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
         this._selected = false;
-        this.label = new Label(this, "aaaaaa");
+        this.label = new Label(this, '');
     }
 
     centerCoords() {
@@ -72,6 +72,10 @@ class Entity {
         }
 
         return collisions;
+    }
+
+    setLabel(text) {
+        this.label = new Label(this, text);
     }
 
     remove(list) {
