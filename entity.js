@@ -49,6 +49,10 @@ class Entity {
         return collisions;
     }
 
+    remove(list) {
+        list.splice(list.indexOf(this), 1);
+    }
+
     json() {
 		let obj = new Object();
 		let props = Reflect.ownKeys(this);

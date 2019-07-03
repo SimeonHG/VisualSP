@@ -12,7 +12,7 @@ class Selection {
         let start = Selection.start;
         let end = Selection.current;
 
-        if (!end) {
+        if (!end || !start) {
             return null;
         }
 

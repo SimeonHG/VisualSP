@@ -33,9 +33,6 @@ function draw() {
     grid.draw();
     for (let aisle of aisles) {
         aisle.draw();
-        if (Settings.viewModes().includes("show-segments")) {
-            aisle.segments.forEach((s) => s.draw());
-        }
     }
     Selection.draw();
 }
@@ -85,17 +82,14 @@ function mouseReleased() {
         if (segmentCoords) {
             let segment = new Segment(segmentCoords.start, segmentCoords.end);
             //TODO: Optimize this
-            aisles.forEach(aisle => {
+            for (let aisle of aisles) {
                 if (segment.isInside(aisle)) {
-                    // console.log("isInside");
-                    aisle.segments.push(segment);
                     segment.attach(aisle);
-                    if (segment.invalid()) {
-                        console.log( "INVALID SEGMENT");
-                        aisle.segments.splice(aisle.segments.indexOf(segment), 1);
+                    if (segment.collisions().length > 0) {
+                        segment.remove();
                     }
                 }
-            });
+            }
         }
     } else if(Settings.mode == "movement") {
         Controls.move(controls).mouseReleased()

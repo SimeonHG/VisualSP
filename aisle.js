@@ -30,6 +30,12 @@ class Aisle extends Entity {
 		}
 		rect(this.start.x, this.start.y, this.end.x - this.start.x, this.end.y - this.start.y);
 		pop();
+
+		if (Settings.viewModes().includes("show-segments")) {
+			for (let segment of this.segments) {
+				segment.draw();
+			}
+		}
 	}
 
 	destroy() {
@@ -37,7 +43,7 @@ class Aisle extends Entity {
 	}
 
 	remove() {
-		aisles.splice(aisles.indexOf(this), 1);
+		super.remove(aisles);
 	}
 
 	collisions() {
@@ -45,10 +51,16 @@ class Aisle extends Entity {
 	}
 
 	select() {
+		for (let seg of this.segments) {
+			seg.select();
+		}
 		this._selected = true;
 	}
 
 	deselect() {
+		for (let seg of this.segments) {
+			seg.deselect();
+		}
 		this._selected = false;
 	}
 
