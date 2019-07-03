@@ -1,25 +1,35 @@
-class Label{
-	constructor(x, y, factor,shouldRotate,  text) {
-        this.x = x;
-        this.y = y;
-        this.factor = factor;
-        this.shouldRotate = shouldRotate;
-        this.text = text;
-    }
+class Label {
 
-    draw() {	
+	constructor(entity, text) {
+        this.text = text;
+		this.entity = entity;
+	}
+
+	getFactor() {
+		let shortestDimension = min(this.entity._width, this.entity._height);
+		let longestDimension = max(this.entity._width, this.entity._height);
+		return min(longestDimension / text.length, shortestDimension);
+	}
+
+	checkRotate(){
+		return this.entity._height > this.entity._width;
+	}
+
+    draw() {
     	fill(0);
         noStroke();
-        textSize(1.75 * this.factor);
+        textSize(1.75 * this.getFactor());
         textAlign(CENTER, CENTER);
-         if(this.shouldRotate){
+		let x = this.entity.start.x;
+		let y = this.entity.start.y;
+		if (this.checkRotate()) {
          	push();
-         	translate(this.x, this.y);
+         	translate(x, y);
         	rotate(-PI/2);
         	text(this.text, 0, 0);
         	pop();
         } else {
-        	text(this.text, this.x, this.y);
+        	text(this.text, x, y);
         }
     }
 }

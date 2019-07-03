@@ -38,6 +38,13 @@ class Aisle extends Entity {
 		}
 	}
 
+	move(direction) {
+		super.move(direction);
+		for (let segment of this.segments) {
+			segment.move(direction);
+		}
+	}
+
 	destroy() {
 		this._markedDestroy = true;
 	}

@@ -1,22 +1,19 @@
 class Entity {
+
     constructor(start, end) {
         this.normalize(start, end);
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
         this._selected = false;
-        this.label = new Label(((this.end.x - this.start.x) / 2) + this.start.x,
-            ((this.end.y - this.start.y) / 2) + this.start.y, Entity.calcLabelSizeFactor(this._width, this._height, "aaaaaaaaaaaaaaaaaaa"), Entity.mustRotate(this._width, this._height), "aaaaaaaaaaaaaaaaaaa" );
-
+        this.label = new Label(this, "aaaaaa");
     }
 
-    static calcLabelSizeFactor(width, height, text) {
-        let shortestDimension = min(width, height);
-        let longestDimension = max(width, height);
-        return min(longestDimension / text.length, shortestDimension);
-    }
+    move(direction) {
+        this.start.x += direction.x;
+        this.start.y += direction.y;
 
-    static mustRotate(width, height){
-        return height > width;
+        this.end.x += direction.x;
+        this.end.y += direction.y;
     }
 
     normalize(o1, o2) {
@@ -34,8 +31,10 @@ class Entity {
     }
 
     isClicked() {
-        return (mouseX - controls.view.x) / controls.view.zoom  >= this.pos.x && (mouseX - controls.view.x) / controls.view.zoom <= this.pos.x + Square.width &&
-               (mouseY - controls.view.y) / controls.view.zoom  >= this.pos.y && (mouseY - controls.view.y) / controls.view.zoom <= this.pos.y + Square.width
+        let mx = (mouseX - controls.view.x) / controls.view.zoom;
+        let my = (mouseY - controls.view.y) / controls.view.zoom;
+        return  mx >= this.start.x && mx <= this.end.x &&
+                my >= this.start.y && my <= this.end.y
     }
 
     isInside(other) {

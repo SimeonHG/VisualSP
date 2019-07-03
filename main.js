@@ -9,6 +9,9 @@ let grid;
 let aisles = [];
 
 let selectedItems = [];
+let movingSelectedItems = false;
+let lastX = null;
+let lastY = null;
 
 let windowFactor = {
     width: 0.95,
@@ -67,21 +70,28 @@ function clickedOnSelected() {
 
 function mousePressed() {
     if (mouseButton === LEFT) {
-        if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
+        if (selectedItems.length > 0 && clickedOnSelected()) {
+            movingSelectedItems = true;
+            lastX = mouseX;
+            lastY = mouseY;
+        } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
             Selection.begin();
             Selection.update();
         } else if (Settings.mode == "movement"){
-            if (selectedItems.length > 0 && clickedOnSelected()) {
-                console.log("moving");
-            }
-
             Controls.move(controls).mousePressed();
         }
     }
 }
 
 function mouseDragged() {
-    if(Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select"){
+    if (movingSelectedItems) {
+        for (let item of selectedItems) {
+            item.move(createVector(mouseX - lastX, mouseY - lastY));
+            lastX = mouseX;
+            lastY = mouseY;
+        }
+    }
+    if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
       Selection.update();
     }
     if(Settings.mode == "movement"){
@@ -90,7 +100,8 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
-    if(Settings.mode == "aisles") {
+    movingSelectedItems = false;
+    if (Settings.mode == "aisles") {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
             aisle = new Aisle(aisleCoords.start, aisleCoords.end);
