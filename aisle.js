@@ -43,11 +43,12 @@ class Aisle extends Entity {
 	}
 
 	selected() {
-		this.color = {r: 0, g: 255, b: 0, a: 180};
+		stroke();
+		this._color = {r: 100, g: 149, b: 237, a: 100};
 	}
 
 	deselect() {
-		this.color = {r: 51, g: 51, b: 51, a: 120};
+		this._color = {r: 51, g: 51, b: 51, a: 120};
 	}
 
     json() {
