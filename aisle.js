@@ -50,7 +50,7 @@ class Aisle extends Entity {
 		for (const prop of props) {
 			let value = Reflect.get(this, prop);
 
-			if (Reflect.has(value, 'json')) {
+			if (value instanceof Object && Reflect.has(value, 'json')) {
 				obj[prop] = value.json();
 			} else {
 				obj[prop] = value;
