@@ -50,21 +50,4 @@ class Aisle extends Entity {
 	deselect() {
 		this._color = {r: 51, g: 51, b: 51, a: 120};
 	}
-
-    json() {
-		let obj = new Object();
-		let props = Reflect.ownKeys(this);
-
-		for (const prop of props) {
-			let value = Reflect.get(this, prop);
-
-			if (Reflect.has(value, 'json')) {
-				obj[prop] = value.json();
-			} else {
-				obj[prop] = value;
-			}
-		}
-
-		return obj;
-    }
 }
