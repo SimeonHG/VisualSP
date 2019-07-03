@@ -3,3 +3,7 @@ canvas {
     border-width: 5px;
     vertical-align: top;
 }
+
+br {
+    margin-bottom: 1%;
+}
