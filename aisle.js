@@ -50,18 +50,11 @@ class Aisle extends Entity {
 		return super.collisions(aisles);
 	}
 
-	select() {
-		for (let seg of this.segments) {
-			seg.select();
-		}
-		this._selected = true;
-	}
-
 	deselect() {
-		for (let seg of this.segments) {
-			seg.deselect();
+		super.deselect();
+		for (let segment of this.segments) {
+			segment.deselect();
 		}
-		this._selected = false;
 	}
 
     json() {

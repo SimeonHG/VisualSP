@@ -3,6 +3,7 @@ class Entity {
         this.normalize(start, end);
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
+        this._selected = false;
     }
 
     normalize(o1, o2) {
@@ -52,6 +53,15 @@ class Entity {
     remove(list) {
         list.splice(list.indexOf(this), 1);
     }
+
+    select() {
+		this._selected = true;
+        selectedItems.push(this);
+	}
+
+	deselect() {
+		this._selected = false;
+	}
 
     json() {
 		let obj = new Object();

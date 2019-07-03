@@ -25,14 +25,6 @@ class Segment extends Entity {
         pop();
     }
 
-    select() {
-        this._selected = true;
-    }
-
-    deselect() {
-        this._selected = false;
-    }
-
     collisions() {
         return super.collisions(this.aisle.segments);
     }

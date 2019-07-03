@@ -8,6 +8,8 @@ let drawn = false;
 let grid;
 let aisles = [];
 
+let selectedItems = [];
+
 let windowFactor = {
     width: 0.95,
     height: 0.94
@@ -97,13 +99,14 @@ function mouseReleased() {
         for(let aisle of aisles) {
             aisle.deselect();
         }
+        selectedItems = [];
         let aisleCoords = Selection.end();
         if (aisleCoords) {
             let selection = new Aisle(aisleCoords.start, aisleCoords.end);
             let colls = selection.collisions();
             let coll = colls[0];
-            console.log(colls);
-            if(colls.length == 1 && selection.isInside(coll)){ //&& Settings.viewModes().includes("show-segments")) {
+            console.log(selectedItems);
+            if(colls.length == 1 && selection.isInside(coll)) {
                 let segment = new Segment(aisleCoords.start, aisleCoords.end);
                 segment.attach(coll);
                 if(segment.collisions().length > 0) {
@@ -113,7 +116,7 @@ function mouseReleased() {
                 } else {
                     for(let col of selection.collisions()) {
                         col.select();
-                    }    
+                    }
                 }
                 segment.remove();
             } else {
