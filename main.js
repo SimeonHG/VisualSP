@@ -54,7 +54,7 @@ function deleteSelected() {
 }
 
 function keyPressed() {
-    if(keyCode == 46) 
+    if(keyCode == 46)
         deleteSelected();
 	EventListener.addKey(keyCode);
     translate(controls.view.x, controls.view.y);
@@ -93,9 +93,9 @@ function mouseDragged() {
     if (movingSelectedItems) {
         for (let item of selectedItems) {
             item.move(createVector(mouseX - lastX, mouseY - lastY));
-            lastX = mouseX;
-            lastY = mouseY;
         }
+        lastX = mouseX;
+        lastY = mouseY;
     }
     if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
       Selection.update();
