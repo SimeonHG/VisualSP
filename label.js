@@ -9,7 +9,7 @@ class Label {
 		let shortestDimension = min(this.entity._width, this.entity._height);
 		let longestDimension = max(this.entity._width, this.entity._height);
 		//	console.log(longestDimension / text.length + " : " + shortestDimension)
-		return min(longestDimension / text.length, shortestDimension);
+		return min(longestDimension / this.text.length, shortestDimension);
 	}
 
 	checkRotate() {
@@ -19,7 +19,7 @@ class Label {
     draw() {
     	fill(0);
         noStroke();
-        textSize(1 * this.getFactor());
+        textSize(1.5 * this.getFactor());
         textAlign(CENTER, CENTER);
 		let coords = this.entity.centerCoords();
 		let x = coords[0];
