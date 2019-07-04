@@ -26,6 +26,18 @@ class Entity {
         coords[1] = ((this.end.y - this.start.y) / 2) + this.start.y;
         return coords;
     }
+    
+    snap(position) {
+        let grid_size = Square.width;
+        return round(position / grid_size) * grid_size;
+    }
+
+    snapAll() {
+        for (const iterator of [this.start, this.end]) {
+            iterator.x = this.snap(iterator.x);
+            iterator.y = this.snap(iterator.y);
+        }
+    }
 
     move(direction) {
         this.start.x += direction.x;
