@@ -7,6 +7,7 @@ let canvas;
 let drawn = false;
 let grid;
 let aisles = [];
+let zones = [];
 
 let selectedItems = [];
 let movingSelectedItems = false;
@@ -46,6 +47,9 @@ function draw() {
     for (let aisle of aisles) {
         aisle.draw();
     }
+    for (let zone of zones) {
+        zone.draw();
+    }
     Selection.draw();
 }
 
@@ -75,7 +79,7 @@ function mousePressed() {
             movingSelectedItems = true;
             lastX = mouseX;
             lastY = mouseY;
-        } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
+        } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
             Selection.begin();
             Selection.update();
         } else if (Settings.mode == "movement"){
@@ -92,7 +96,7 @@ function mouseDragged() {
             lastY = mouseY;
         }
     }
-    if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
+    if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
       Selection.update();
     }
     if(Settings.mode == "movement"){
@@ -160,5 +164,15 @@ function mouseReleased() {
                 }
             }
         }
+    } else if(Settings.mode == "zones"){
+        let zoneCoords = Selection.end();
+        if (zoneCoords) {
+            zone = new Zone(zoneCoords.start, zoneCoords.end);
+            if (zone.collisions().length > 0) {
+                zone.destroy();
+            }
+            zones.push(zone);
+        }
+
     }
 }
