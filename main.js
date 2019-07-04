@@ -51,8 +51,10 @@ function draw() {
 
 function copySelected() {
     let newObj;
+    let newSelection = [];
     for (let item of selectedItems) {
         item.deselect();
+        selectedItems.splice(selectedItems.indexOf(item), 1);
         if (item instanceof Aisle) {
             newObj = new Aisle(item);
             newObj.setpos(createVector(0, 0));
@@ -64,6 +66,11 @@ function copySelected() {
             newObj.end = ({x: newObj.start.x + newObj._width, y: newObj.start.y + newObj._height});
             item._aisle.segments.push(newObj);
         }
+        newSelection.push(newObj);
+    }
+
+    for (let item of newSelection) {
+        item.select();
     }
 }
 
@@ -167,8 +174,10 @@ function mouseReleased() {
             let coords = Selection.end();
             if (coords) {
                 let selection = new Entity(coords.start, coords.end);
-                let colls = selection.collisions(aisles);
-                let coll = colls[0];
+                let collAisle = selection.collisions(aisles);
+                // let collArea = selection.collisions(areas);
+
+                let coll = collAisle[0];
 
                 if (!coll) {
                     return;
@@ -186,7 +195,7 @@ function mouseReleased() {
                     }
                     segment.remove();
                 }
-                for (let col of colls) {
+                for (let col of collAisle) {//.concat(collArea)) {
                     col.select();
                 }
             }
