@@ -34,12 +34,13 @@ function windowResized() {
 }
 
 let startPos, currentPos;
-
+let isCentered = false;
 function draw() {
     background(255);
     Controls.move(controls).keyboardMovement();
-    translate(controls.view.x, controls.view.y);
+    translate(width / 2, height / 2);
     scale(controls.view.zoom);
+    translate(controls.view.x, controls.view.y);
     grid.draw();
     for (let aisle of aisles) {
         aisle.draw();
