@@ -29,7 +29,6 @@ function typeLabel(){
     new Label(0, 0, "asddsa").draw();
 }
 
-
 function windowResized() {
     resizeCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
 }
@@ -37,7 +36,6 @@ function windowResized() {
 let startPos, currentPos;
 
 function draw() {
-    // console.log(mouseY);
     background(255);
     Controls.move(controls).keyboardMovement();
     translate(controls.view.x, controls.view.y);

@@ -66,12 +66,10 @@ class Controls {
 
             let prevX = controls.view.x;
             let prevY = controls.view.y;
-            controls.view.x -= (mouseX - controls.view.x) * width * zoom / 1000;
-            controls.view.y -= (mouseY - controls.view.y) * height * zoom / 1000;
+            // controls.view.x -= (mouseX - controls.view.x) * width * zoom / 1000;
+            // controls.view.y -= (mouseY - controls.view.y) * height * zoom / 1000;
             controls.view.zoom += zoom;
             
-            // console.log("constrols.view.x: " + controls.view.x);
-
             if (controls.view.zoom >= 1.6 && deltaY < 0) {
                 controls.view.zoom = 1.6;
                 controls.view.x = prevX;
