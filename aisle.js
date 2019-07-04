@@ -1,12 +1,20 @@
 class Aisle extends Entity {
 
 	constructor(start, end) {
-		super(start, end);
+
+		if(start instanceof Aisle) {
+			let other = start;
+			super(other);
+			this.segments = other.segments.map((e) => new Segment(e));
+			this._selected = other._selected;
+		} else {
+			super(start, end);
+			this._selected = false;
+			this.segments = [];
+		}
 
 		this._alpha = 120;
-		this._selected = false;
 		this._markedDestroy = false;
-		this.segments = [];
 	}
 
 	draw() {
@@ -36,6 +44,15 @@ class Aisle extends Entity {
 				segment.draw();
 			}
 		}
+	}
+
+	setpos(pos) {
+		let dir = {
+			x: pos.x - this.start.x,
+			y: pos.y - this.start.y
+		}
+	
+		this.move(dir);
 	}
 
 	move(direction) {

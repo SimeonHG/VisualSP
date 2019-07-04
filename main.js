@@ -49,6 +49,24 @@ function draw() {
     Selection.draw();
 }
 
+function copySelected() {
+    let newObj;
+    for (let item of selectedItems) {
+        item.deselect();
+        if (item instanceof Aisle) {
+            newObj = new Aisle(item);
+            newObj.setpos(createVector(0, 0));
+            aisles.push(newObj);
+        }
+        else if (item instanceof Segment) {
+            newObj = new Segment(item);                    
+            newObj.start = {x: 0, y: 0};
+            newObj.end = ({x: newObj.start.x + newObj._width, y: newObj.start.y + newObj._height});
+            item._aisle.segments.push(newObj);
+        }
+    }
+}
+
 function deleteSelected() {
     for(let item of selectedItems) {
         item.remove();
@@ -61,6 +79,11 @@ function keyPressed() {
 	EventListener.addKey(keyCode);
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
+
+    let keys = EventListener.getKeys();
+    if(keys.includes("CTRL") && keys.includes("C")) {
+        copySelected();
+    }
 }
 
 function keyReleased() {

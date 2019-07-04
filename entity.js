@@ -1,7 +1,19 @@
 class Entity {
 
     constructor(start, end) {
-        this.normalize(start, end);
+        if (start instanceof Entity) {
+            let other = start;
+            this.start = {
+                x: other.start.x,
+                y: other.start.y
+            };
+            this.end = {
+                x: other.end.x,
+                y: other.end.y
+            };
+        } else {
+            this.normalize(start, end);
+        }
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
         this._selected = false;
@@ -83,9 +95,9 @@ class Entity {
     }
 
     select() {
-		this._selected = true;
+        this._selected = true;
         selectedItems.push(this);
-	}
+    }
 
 	deselect() {
 		this._selected = false;
