@@ -27,9 +27,6 @@ function setup() {
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
     translate(-width/2, -height/2);
 }
-function typeLabel(){
-    new Label(0, 0, "asddsa").draw();
-}
 
 function windowResized() {
     resizeCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
