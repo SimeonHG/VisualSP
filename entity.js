@@ -26,7 +26,7 @@ class Entity {
         coords[1] = ((this.end.y - this.start.y) / 2) + this.start.y;
         return coords;
     }
-    
+
     snap(position) {
         let grid_size = Square.width;
         return round(position / grid_size) * grid_size;
@@ -62,10 +62,9 @@ class Entity {
     }
 
     isClicked() {
-        let mx = (mouseX - controls.view.x) / controls.view.zoom;
-        let my = (mouseY - controls.view.y) / controls.view.zoom;
-        return  mx >= this.start.x && mx <= this.end.x &&
-                my >= this.start.y && my <= this.end.y
+        let mousepos = Grid.normalize(createVector(mouseX, mouseY));
+        return  mousepos.x >= this.start.x && mousepos.x <= this.end.x &&
+                mousepos.y >= this.start.y && mousepos.y <= this.end.y
     }
 
     isInside(other) {

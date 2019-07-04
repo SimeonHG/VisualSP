@@ -14,8 +14,8 @@ let lastX = null;
 let lastY = null;
 
 let windowFactor = {
-    width: 0.95,
-    height: 0.94
+    width: 0.98,
+    height: 0.83
 }
 
 let input;
@@ -37,7 +37,6 @@ function windowResized() {
 let startPos, currentPos;
 let isCentered = false;
 function draw() {
-    console.log(Settings.mode);
     background(255);
     Controls.move(controls).keyboardMovement();
     translate(width / 2, height / 2);
@@ -52,19 +51,26 @@ function draw() {
 
 function copySelected() {
     let newObj;
+    let newSelection = [];
     for (let item of selectedItems) {
         item.deselect();
+        selectedItems.splice(selectedItems.indexOf(item), 1);
         if (item instanceof Aisle) {
             newObj = new Aisle(item);
             newObj.setpos(createVector(0, 0));
             aisles.push(newObj);
         }
         else if (item instanceof Segment) {
-            newObj = new Segment(item);                    
+            newObj = new Segment(item);
             newObj.start = {x: 0, y: 0};
             newObj.end = ({x: newObj.start.x + newObj._width, y: newObj.start.y + newObj._height});
             item._aisle.segments.push(newObj);
         }
+        newSelection.push(newObj);
+    }
+
+    for (let item of newSelection) {
+        item.select();
     }
 }
 
@@ -107,6 +113,10 @@ function mousePressed() {
             lastX = mouseX;
             lastY = mouseY;
         } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
+            for (let aisle of aisles) {
+                aisle.deselect();
+            }
+            selectedItems = [];
             Selection.begin();
             Selection.update();
         } else if (Settings.mode == "movement"){
@@ -122,17 +132,18 @@ function mouseDragged() {
         }
         lastX = mouseX;
         lastY = mouseY;
-    }
-    if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
-      Selection.update();
-    }
-    if(Settings.mode == "movement"){
+
+    } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
+        Selection.update();
+    } else if (Settings.mode == "movement"){
        Controls.move(controls).mouseDragged();
     }
 }
 
 function mouseReleased() {
     movingSelectedItems = false;
+    selectedItems.map((e) => e.snapAll())
+
     if (Settings.mode == "aisles") {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
@@ -157,29 +168,26 @@ function mouseReleased() {
             }
         }
     } else if(Settings.mode == "movement") {
-        selectedItems.map((e) => e.snapAll())
         Controls.move(controls).mouseReleased()
     } else if(Settings.mode == "select") {
         if (mouseY > 0) {
-            for (let aisle of aisles) {
-                aisle.deselect();
-            }
-            selectedItems = [];
-            let aisleCoords = Selection.end();
-            if (aisleCoords) {
-                let selection = new Aisle(aisleCoords.start, aisleCoords.end);
-                let colls = selection.collisions();
-                let coll = colls[0];
+            let coords = Selection.end();
+            if (coords) {
+                let selection = new Entity(coords.start, coords.end);
+                let collAisle = selection.collisions(aisles);
+                // let collArea = selection.collisions(areas);
+
+                let coll = collAisle[0];
 
                 if (!coll) {
                     return;
                 }
 
                 if (selection.isInside(coll)) {
-                    let segment = new Segment(aisleCoords.start, aisleCoords.end);
+                    let segment = new Segment(coords.start, coords.end);
                     segment.attach(coll);
                     if (segment.collisions().length > 0) {
-                        for (let seg of segment.collisions()) {
+                        for (let seg of segment.collisions(segments)) {
                             seg.select();
                         }
                         segment.remove();
@@ -187,7 +195,7 @@ function mouseReleased() {
                     }
                     segment.remove();
                 }
-                for (let col of selection.collisions()) {
+                for (let col of collAisle) {//.concat(collArea)) {
                     col.select();
                 }
             }

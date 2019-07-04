@@ -19,32 +19,14 @@ function exporter() {
     document.body.removeChild(element);
 }
 
-function beginCreateLabel() {
-    if (selectedItems.length == 1) {
-        if (inputBox) {
-            inputBox.remove();
-        }
-        if (inputBoxButton) {
-            inputBoxButton.remove();
-        }
-        Settings.mode = "labeling";
-        itemToLabel = selectedItems[0];
-        inputBox = createInput();
-        inputBox.position(itemToLabel.centerCoords()[0], itemToLabel.centerCoords()[1]);
-        inputBoxButton = createButton('Apply');
-        inputBoxButton.position(inputBox.x + inputBox.width, itemToLabel.centerCoords()[1]);
-        inputBoxButton.mousePressed(createLabel);
-    } else {
-        alert("Please select exactly one entity!");
-    } 
-}
-
 function createLabel() {
-    itemToLabel.setLabel(inputBox.value());
-    // console.log(inputBox.value());
-    inputBox.remove();
-    inputBoxButton.remove();
-    Settings.mode = "movement";
+    if (selectedItems.length == 1) {
+        let inputBox = document.getElementById("labelName");
+        itemToLabel = selectedItems[0];
+        itemToLabel.setLabel(inputBox.value);
+    } else {
+        alert("Please select exaclt yone entity!");
+    }
 }
 
 document.getElementById('importer').onchange = function(event) {

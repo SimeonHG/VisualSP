@@ -25,13 +25,13 @@
         <button onclick="Settings.setMode('segments')">Draw segments</button>
         <button onclick="deleteSelected()">Delete</button>
         <button onclick="Settings.setMode('select')">Select</button>
-        <button onClick="beginCreateLabel()">Label selected</button>
         <button onclick="exporter()">Export Map</button>
         
         <br>
 
         <input accept="application/json" type="file" id="importer">
-        
+        <input type="text" id="labelName" name="labelName" placeholder="Label name...">
+        <button onClick="createLabel()">Apply</button>
         <br>
         
         <form>
