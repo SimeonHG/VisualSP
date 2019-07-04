@@ -131,6 +131,7 @@ function mouseReleased() {
             }
         }
     } else if(Settings.mode == "movement") {
+        selectedItems.map((e) => e.snapAll())
         Controls.move(controls).mouseReleased()
     } else if(Settings.mode == "select") {
         if (mouseY > 0) {
