@@ -5,10 +5,16 @@ class Square {
     }
 
     isClicked() {  
-        return (mouseX / controls.view.zoom) - controls.view.x - (width / 2 / controls.view.zoom) >= this.pos.x &&
-                (mouseX / controls.view.zoom) - controls.view.x - (width / 2 / controls.view.zoom) <= this.pos.x + Square.width &&
-                (mouseY / controls.view.zoom) - controls.view.y - (height / 2 / controls.view.zoom) >= this.pos.y &&
-                (mouseY / controls.view.zoom) - controls.view.y - (height / 2 / controls.view.zoom) <= this.pos.y + Square.width
+        let coords = {
+            "x": mouseX,
+            "y": mouseY
+        }
+        let normalizedX = Grid.normalize(coords).x;
+        let normalizedY = Grid.normalize(coords).y;
+        return normalizedX >= this.pos.x &&
+                normalizedX <= this.pos.x + Square.width &&
+                normalizedY >= this.pos.y &&
+                normalizedY <= this.pos.y + Square.width
     }
 
     draw() {
