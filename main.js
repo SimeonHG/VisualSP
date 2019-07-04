@@ -24,6 +24,7 @@ function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
+    translate(-width/2, -height/2);
 }
 function typeLabel(){
     new Label(0, 0, "asddsa").draw();
