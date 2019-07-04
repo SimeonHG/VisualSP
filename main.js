@@ -108,6 +108,10 @@ function mousePressed() {
             lastX = mouseX;
             lastY = mouseY;
         } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
+            for (let aisle of aisles) {
+                aisle.deselect();
+            }
+            selectedItems = [];
             Selection.begin();
             Selection.update();
         } else if (Settings.mode == "movement"){
@@ -133,7 +137,8 @@ function mouseDragged() {
 
 function mouseReleased() {
     movingSelectedItems = false;
-    console.log(selectedItems);
+    selectedItems.map((e) => e.snapAll())
+
     if (Settings.mode == "aisles") {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
@@ -158,20 +163,13 @@ function mouseReleased() {
             }
         }
     } else if(Settings.mode == "movement") {
-        selectedItems.map((e) => e.snapAll())
         Controls.move(controls).mouseReleased()
     } else if(Settings.mode == "select") {
         if (mouseY > 0) {
-            for (let aisle of aisles) {
-                aisle.deselect();
-            }
-            selectedItems = [];
-
-
             let coords = Selection.end();
             if (coords) {
-                let selection = new Entity(coords.stat, coords.end);
-                let colls = selection.collisions();
+                let selection = new Entity(coords.start, coords.end);
+                let colls = selection.collisions(aisles);
                 let coll = colls[0];
 
                 if (!coll) {
@@ -179,10 +177,10 @@ function mouseReleased() {
                 }
 
                 if (selection.isInside(coll)) {
-                    let segment = new Segment(aisleCoords.start, aisleCoords.end);
+                    let segment = new Segment(coords.start, coords.end);
                     segment.attach(coll);
                     if (segment.collisions().length > 0) {
-                        for (let seg of segment.collisions()) {
+                        for (let seg of segment.collisions(segments)) {
                             seg.select();
                         }
                         segment.remove();
@@ -190,7 +188,7 @@ function mouseReleased() {
                     }
                     segment.remove();
                 }
-                for (let col of selection.collisions()) {
+                for (let col of colls) {
                     col.select();
                 }
             }
