@@ -49,8 +49,15 @@ function draw() {
     Selection.draw();
 }
 
+function deleteSelected() {
+    for(let item of selectedItems) {
+        item.remove();
+    }
+}
 
 function keyPressed() {
+    if(keyCode == 46) 
+        deleteSelected();
 	EventListener.addKey(keyCode);
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
