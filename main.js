@@ -37,6 +37,7 @@ function windowResized() {
 let startPos, currentPos;
 let isCentered = false;
 function draw() {
+    console.log(Settings.mode);
     background(255);
     Controls.move(controls).keyboardMovement();
     translate(width / 2, height / 2);

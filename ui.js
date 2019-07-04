@@ -27,15 +27,13 @@ function beginCreateLabel() {
         if (inputBoxButton) {
             inputBoxButton.remove();
         }
-        console.log(selectedItems);
+        Settings.mode = "labeling";
         itemToLabel = selectedItems[0];
         inputBox = createInput();
         inputBox.position(itemToLabel.centerCoords()[0], itemToLabel.centerCoords()[1]);
         inputBoxButton = createButton('Apply');
         inputBoxButton.position(inputBox.x + inputBox.width, itemToLabel.centerCoords()[1]);
         inputBoxButton.mousePressed(createLabel);
-
-        Settings.setMode("movement");
     } else {
         alert("Please select exactly one entity!");
     } 
@@ -46,6 +44,7 @@ function createLabel() {
     // console.log(inputBox.value());
     inputBox.remove();
     inputBoxButton.remove();
+    Settings.mode = "movement";
 }
 
 document.getElementById('importer').onchange = function(event) {

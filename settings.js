@@ -8,7 +8,6 @@ class Settings {
 		if (document.getElementById("show-segments").checked) {
 			vMs.push("show-segments");
 		}
-
 		return vMs;
 	}
 }
