@@ -8,7 +8,7 @@ class Label {
 	getFactor() {
 		let shortestDimension = min(this._entity._width, this._entity._height);
 		let longestDimension = max(this._entity._width, this._entity._height);
-		//	console.log(longestDimension / text.length + " : " + shortestDimension)
+
 		return min(longestDimension / this.text.length, shortestDimension);
 	}
 
@@ -21,9 +21,11 @@ class Label {
         noStroke();
         textSize(1.5 * this.getFactor());
         textAlign(CENTER, CENTER);
+		
 		let coords = this._entity.centerCoords();
 		let x = coords[0];
 		let y = coords[1];
+		
 		if (this.checkRotate()) {
          	push();
          	translate(x, y);
