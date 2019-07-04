@@ -55,17 +55,7 @@ function copySelected() {
     let newSelection = [];
     for (let item of selectedItems) {
         item.deselect();
-<<<<<<< HEAD
         if (item instanceof Segment) {
-=======
-        selectedItems.splice(selectedItems.indexOf(item), 1);
-        if (item instanceof Aisle) {
-            newObj = new Aisle(item);
-            newObj.setpos(createVector(0, 0));
-            aisles.push(newObj);
-        }
-        else if (item instanceof Segment) {
->>>>>>> 246330f88a1c4398df1cdaf4030d790cfd98e94b
             newObj = new Segment(item);
             newObj.start = {x: 0, y: 0};
             newObj.end = ({x: newObj.start.x + newObj._width, y: newObj.start.y + newObj._height});
@@ -82,10 +72,7 @@ function copySelected() {
         }
         newSelection.push(newObj);
     }
-<<<<<<< HEAD
     selectedItems = [];
-=======
->>>>>>> 246330f88a1c4398df1cdaf4030d790cfd98e94b
 
     for (let item of newSelection) {
         item.select();
@@ -130,15 +117,9 @@ function mousePressed() {
             movingSelectedItems = true;
             lastX = mouseX;
             lastY = mouseY;
-<<<<<<< HEAD
         } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
             for (let entity of aisles.concat(zones)) {
                 entity.deselect();
-=======
-        } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
-            for (let aisle of aisles) {
-                aisle.deselect();
->>>>>>> 246330f88a1c4398df1cdaf4030d790cfd98e94b
             }
             selectedItems = [];
             Selection.begin();
@@ -157,11 +138,7 @@ function mouseDragged() {
         lastX = mouseX;
         lastY = mouseY;
 
-<<<<<<< HEAD
     } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
-=======
-    } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
->>>>>>> 246330f88a1c4398df1cdaf4030d790cfd98e94b
         Selection.update();
     } else if (Settings.mode == "movement"){
        Controls.move(controls).mouseDragged();
@@ -203,32 +180,15 @@ function mouseReleased() {
             if (coords) {
                 let selection = new Entity(coords.start, coords.end);
                 let collAisle = selection.collisions(aisles);
-<<<<<<< HEAD
                 let collZone = selection.collisions(zones);
 
                 let coll = collAisle[0];
 
-                console.log(coll);
                 if (coll && selection.isInside(coll)) {
                     let segment = new Segment(coords.start, coords.end);
                     segment.attach(coll);
                     if (segment.collisions().length > 0) {
                         for (let seg of segment.collisions(coll.segments)) {
-=======
-                // let collArea = selection.collisions(areas);
-
-                let coll = collAisle[0];
-
-                if (!coll) {
-                    return;
-                }
-
-                if (selection.isInside(coll)) {
-                    let segment = new Segment(coords.start, coords.end);
-                    segment.attach(coll);
-                    if (segment.collisions().length > 0) {
-                        for (let seg of segment.collisions(segments)) {
->>>>>>> 246330f88a1c4398df1cdaf4030d790cfd98e94b
                             seg.select();
                         }
                         segment.remove();
@@ -236,12 +196,8 @@ function mouseReleased() {
                     }
                     segment.remove();
                 }
-<<<<<<< HEAD
 
                 for (let col of collAisle.concat(collZone)) {
-=======
-                for (let col of collAisle) {//.concat(collArea)) {
->>>>>>> 246330f88a1c4398df1cdaf4030d790cfd98e94b
                     col.select();
                 }
             }

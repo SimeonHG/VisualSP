@@ -5,7 +5,7 @@ class Zone extends Entity {
 		} else {
 			super(start, end);
 		}
-		
+
 		this._alpha = 60;
 		this._markedDestroy = false;
 	}
