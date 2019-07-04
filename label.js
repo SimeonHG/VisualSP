@@ -21,7 +21,7 @@ class Label {
         noStroke();
         textSize(1.5 * this.getFactor());
         textAlign(CENTER, CENTER);
-		let coords = this.entity.centerCoords();
+		let coords = this._entity.centerCoords();
 		let x = coords[0];
 		let y = coords[1];
 		if (this.checkRotate()) {

@@ -13,6 +13,13 @@ class Grid {
         }
     }
 
+    static normalize(coords) {
+        return {
+            x: (coords.x / controls.view.zoom) - controls.view.x - (width / 2 / controls.view.zoom),
+            y: (coords.y / controls.view.zoom) - controls.view.y - (height / 2 / controls.view.zoom)
+        }
+    }
+
     draw() {
         stroke(0);
         for (let y = 0; y <= this.height*Square.width; y += Square.width) {
