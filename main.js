@@ -14,8 +14,8 @@ let lastX = null;
 let lastY = null;
 
 let windowFactor = {
-    width: 0.95,
-    height: 0.94
+    width: 0.98,
+    height: 0.83
 }
 
 let input;
@@ -37,6 +37,8 @@ function windowResized() {
 let startPos, currentPos;
 let isCentered = false;
 function draw() {
+
+
     background(255);
     Controls.move(controls).keyboardMovement();
     translate(width / 2, height / 2);
@@ -59,7 +61,7 @@ function copySelected() {
             aisles.push(newObj);
         }
         else if (item instanceof Segment) {
-            newObj = new Segment(item);                    
+            newObj = new Segment(item);
             newObj.start = {x: 0, y: 0};
             newObj.end = ({x: newObj.start.x + newObj._width, y: newObj.start.y + newObj._height});
             item._aisle.segments.push(newObj);
@@ -121,17 +123,17 @@ function mouseDragged() {
         }
         lastX = mouseX;
         lastY = mouseY;
-    }
-    if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
-      Selection.update();
-    }
-    if(Settings.mode == "movement"){
+
+    } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select") {
+        Selection.update();
+    } else if (Settings.mode == "movement"){
        Controls.move(controls).mouseDragged();
     }
 }
 
 function mouseReleased() {
     movingSelectedItems = false;
+    console.log(selectedItems);
     if (Settings.mode == "aisles") {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
@@ -164,9 +166,11 @@ function mouseReleased() {
                 aisle.deselect();
             }
             selectedItems = [];
-            let aisleCoords = Selection.end();
-            if (aisleCoords) {
-                let selection = new Aisle(aisleCoords.start, aisleCoords.end);
+
+
+            let coords = Selection.end();
+            if (coords) {
+                let selection = new Entity(coords.stat, coords.end);
                 let colls = selection.collisions();
                 let coll = colls[0];
 
