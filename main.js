@@ -43,12 +43,12 @@ function draw() {
     translate(width / 2, height / 2);
     scale(controls.view.zoom);
     translate(controls.view.x, controls.view.y);
+    for (let zone of zones) {
+        zone.draw();
+    }
     grid.draw();
     for (let aisle of aisles) {
         aisle.draw();
-    }
-    for (let zone of zones) {
-        zone.draw();
     }
     Selection.draw();
 }
@@ -58,20 +58,24 @@ function copySelected() {
     let newSelection = [];
     for (let item of selectedItems) {
         item.deselect();
-        selectedItems.splice(selectedItems.indexOf(item), 1);
-        if (item instanceof Aisle) {
-            newObj = new Aisle(item);
-            newObj.setpos(createVector(0, 0));
-            aisles.push(newObj);
-        }
-        else if (item instanceof Segment) {
+        if (item instanceof Segment) {
             newObj = new Segment(item);
             newObj.start = {x: 0, y: 0};
             newObj.end = ({x: newObj.start.x + newObj._width, y: newObj.start.y + newObj._height});
             item._aisle.segments.push(newObj);
+        } else {
+            if (item instanceof Aisle) {
+                newObj = new Aisle(item);
+                aisles.push(newObj);
+            } else if (item instanceof Zone) {
+                newObj = new Zone(item);
+                zones.push(newObj);
+            }
+            newObj.setpos(createVector(0, 0));
         }
         newSelection.push(newObj);
     }
+    selectedItems = [];
 
     for (let item of newSelection) {
         item.select();
@@ -117,8 +121,8 @@ function mousePressed() {
             lastX = mouseX;
             lastY = mouseY;
         } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
-            for (let aisle of aisles) {
-                aisle.deselect();
+            for (let entity of aisles.concat(zones)) {
+                entity.deselect();
             }
             selectedItems = [];
             Selection.begin();
@@ -179,19 +183,16 @@ function mouseReleased() {
             if (coords) {
                 let selection = new Entity(coords.start, coords.end);
                 let collAisle = selection.collisions(aisles);
-                // let collArea = selection.collisions(areas);
+                let collZone = selection.collisions(zones);
 
                 let coll = collAisle[0];
 
-                if (!coll) {
-                    return;
-                }
-
-                if (selection.isInside(coll)) {
+                console.log(coll);
+                if (coll && selection.isInside(coll)) {
                     let segment = new Segment(coords.start, coords.end);
                     segment.attach(coll);
                     if (segment.collisions().length > 0) {
-                        for (let seg of segment.collisions(segments)) {
+                        for (let seg of segment.collisions(coll.segments)) {
                             seg.select();
                         }
                         segment.remove();
@@ -199,12 +200,13 @@ function mouseReleased() {
                     }
                     segment.remove();
                 }
-                for (let col of collAisle) {//.concat(collArea)) {
+
+                for (let col of collAisle.concat(collZone)) {
                     col.select();
                 }
             }
         }
-    } else if(Settings.mode == "zones"){
+    } else if (Settings.mode == "zones") {
         let zoneCoords = Selection.end();
         if (zoneCoords) {
             zone = new Zone(zoneCoords.start, zoneCoords.end);

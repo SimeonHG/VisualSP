@@ -85,6 +85,15 @@ class Entity {
         return false;
     }
 
+    setpos(pos) {
+		let dir = {
+			x: pos.x - this.start.x,
+			y: pos.y - this.start.y
+		}
+
+		this.move(dir);
+	}
+
     collisions(others) {
         let collisions = [];
 

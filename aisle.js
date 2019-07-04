@@ -46,15 +46,6 @@ class Aisle extends Entity {
 		}
 	}
 
-	setpos(pos) {
-		let dir = {
-			x: pos.x - this.start.x,
-			y: pos.y - this.start.y
-		}
-	
-		this.move(dir);
-	}
-
 	move(direction) {
 		super.move(direction);
 		for (let segment of this.segments) {

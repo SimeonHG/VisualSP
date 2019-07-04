@@ -1,16 +1,18 @@
 class Zone extends Entity {
 	constructor(start, end) {
-		super(start, end);
-
+		if (start instanceof Zone) {
+			super(start);
+		} else {
+			super(start, end);
+		}
+		
 		this._alpha = 60;
-		this._selected = false;
 		this._markedDestroy = false;
-
 	}
 	draw() {
 		push();
 		strokeWeight(2);
-		//console.log(hello);
+
 		fill(245, 221, 66, this._alpha);
 
 		if (this._selected) {
@@ -30,12 +32,10 @@ class Zone extends Entity {
 		pop();
 	}
 
-	move(direction) {
-		super.move(direction);
-	}
 	destroy() {
 		this._markedDestroy = true;
 	}
+
 	remove() {
 		super.remove(zones);
 	}
@@ -43,16 +43,5 @@ class Zone extends Entity {
 	collisions() {
 		return super.collisions(zones);
 	}
-	deselect() {
-		super.deselect();
-		
-	}
-
-
-
-
-
-
-
 
 }
