@@ -65,7 +65,7 @@ class Controls {
             controls.view.x -= (mouseX-controls.view.x)*width*zoom/1000;
             controls.view.y -= (mouseY-controls.view.y)*height*zoom/1000;
             controls.view.zoom += zoom;
-            console.log(controls.view.zoom);
+            //console.log(controls.view.zoom);
 
             if (controls.view.zoom >= 1.6) {
               controls.view.zoom = 1.6;
