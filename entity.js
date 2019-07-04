@@ -1,7 +1,19 @@
 class Entity {
 
     constructor(start, end) {
-        this.normalize(start, end);
+        if (start instanceof Entity) {
+            let other = start;
+            this.start = {
+                x: other.start.x,
+                y: other.start.y
+            };
+            this.end = {
+                x: other.end.x,
+                y: other.end.y
+            };
+        } else {
+            this.normalize(start, end);
+        }
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
         this._selected = false;
@@ -13,6 +25,18 @@ class Entity {
         coords[0] = ((this.end.x - this.start.x) / 2) + this.start.x;
         coords[1] = ((this.end.y - this.start.y) / 2) + this.start.y;
         return coords;
+    }
+    
+    snap(position) {
+        let grid_size = Square.width;
+        return round(position / grid_size) * grid_size;
+    }
+
+    snapAll() {
+        for (const iterator of [this.start, this.end]) {
+            iterator.x = this.snap(iterator.x);
+            iterator.y = this.snap(iterator.y);
+        }
     }
 
     move(direction) {
@@ -83,9 +107,9 @@ class Entity {
     }
 
     select() {
-		this._selected = true;
+        this._selected = true;
         selectedItems.push(this);
-	}
+    }
 
 	deselect() {
 		this._selected = false;

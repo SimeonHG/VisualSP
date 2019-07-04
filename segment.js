@@ -1,7 +1,13 @@
 class Segment extends Entity {
     constructor(start, end) {
-        super(start, end);
-        this._selected = false;
+        if(start instanceof Segment) {
+            let other = start;
+            super(other);
+            this._selected = other._selected;
+        } else {
+            super(start, end);
+            this._selected = false;
+        }
     }
 
     attach(aisle) {

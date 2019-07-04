@@ -16,7 +16,7 @@ class JSONParser {
         let temp_aisle, segments;
 
         for (const aisle of object.aisles) {
-            temp_aisle = new Aisle(aisle.start, aisle.end)
+            temp_aisle = new Aisle(aisle.start, aisle.end);
             segments = aisle.segments.map((e) => new Segment(e.start, e.end)); 
             temp_aisle.segments = segments;
 

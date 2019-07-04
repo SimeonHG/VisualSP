@@ -34,17 +34,36 @@ function windowResized() {
 }
 
 let startPos, currentPos;
-
+let isCentered = false;
 function draw() {
     background(255);
     Controls.move(controls).keyboardMovement();
-    translate(controls.view.x, controls.view.y);
+    translate(width / 2, height / 2);
     scale(controls.view.zoom);
+    translate(controls.view.x, controls.view.y);
     grid.draw();
     for (let aisle of aisles) {
         aisle.draw();
     }
     Selection.draw();
+}
+
+function copySelected() {
+    let newObj;
+    for (let item of selectedItems) {
+        item.deselect();
+        if (item instanceof Aisle) {
+            newObj = new Aisle(item);
+            newObj.setpos(createVector(0, 0));
+            aisles.push(newObj);
+        }
+        else if (item instanceof Segment) {
+            newObj = new Segment(item);                    
+            newObj.start = {x: 0, y: 0};
+            newObj.end = ({x: newObj.start.x + newObj._width, y: newObj.start.y + newObj._height});
+            item._aisle.segments.push(newObj);
+        }
+    }
 }
 
 function deleteSelected() {
@@ -59,6 +78,11 @@ function keyPressed() {
 	EventListener.addKey(keyCode);
     translate(controls.view.x, controls.view.y);
     scale(controls.view.zoom);
+
+    let keys = EventListener.getKeys();
+    if(keys.includes("CTRL") && keys.includes("C")) {
+        copySelected();
+    }
 }
 
 function keyReleased() {
@@ -131,6 +155,7 @@ function mouseReleased() {
             }
         }
     } else if(Settings.mode == "movement") {
+        selectedItems.map((e) => e.snapAll())
         Controls.move(controls).mouseReleased()
     } else if(Settings.mode == "select") {
         if (mouseY > 0) {

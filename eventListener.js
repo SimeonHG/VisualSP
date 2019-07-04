@@ -7,7 +7,6 @@ class EventListener {
 
 	static removeKey(key) {
 		let index = EventListener.keysPressed.indexOf(EventListener.keyCodeToKey[key]);
-		console.log(index);
 
 		if (index > -1) {
        		EventListener.keysPressed.splice(index, 1);
@@ -29,5 +28,7 @@ EventListener.keyCodeToKey =
 	"87" : "W",
 	"65" : "A",
 	"83" : "S", 
-	"68" : "D"
+	"68" : "D",
+	"17" : "CTRL",
+	"67" : "C"
 };

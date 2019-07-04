@@ -2,18 +2,18 @@ class Label {
 
 	constructor(entity, text) {
         this.text = text;
-		this.entity = entity;
+		this._entity = entity;
 	}
 
 	getFactor() {
-		let shortestDimension = min(this.entity._width, this.entity._height);
-		let longestDimension = max(this.entity._width, this.entity._height);
+		let shortestDimension = min(this._entity._width, this._entity._height);
+		let longestDimension = max(this._entity._width, this._entity._height);
 		//	console.log(longestDimension / text.length + " : " + shortestDimension)
 		return min(longestDimension / this.text.length, shortestDimension);
 	}
 
 	checkRotate() {
-		return this.entity._height > this.entity._width;
+		return this._entity._height > this._entity._width;
 	}
 
     draw() {
