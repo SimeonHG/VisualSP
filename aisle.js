@@ -1,6 +1,6 @@
 class Aisle extends Entity {
 
-    constructor(start, end) {
+    constructor(start, end, segments) {
 
         if (start instanceof Aisle) {
             let other = start;
@@ -37,7 +37,7 @@ class Aisle extends Entity {
             }
         }
 
-        if (this.invalid) {
+        if (this.isInvalid() && this._selected) {
             fill(120, 120, 120, this._alpha);
         }
 

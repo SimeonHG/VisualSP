@@ -11,9 +11,12 @@ class Entity {
                 x: other.end.x,
                 y: other.end.y
             };
+            this._selected = other._selected;
+
         } else {
             this.normalize(start, end);
         }
+        this._placed = false;
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
         this._selected = false;
@@ -111,7 +114,7 @@ class Entity {
         return collisions;
     }
 
-    invalid() {
+    isInvalid() {
         if (this.collisions().length > 0) {
             this.invalid = true;
         } else {

@@ -27,6 +27,11 @@ class Segment extends Entity {
             fill(50, 80, 200, 100);
             stroke(0, 0, 200);
         }
+
+        if (this.isInvalid() && this._selected) {
+            fill(120, 120, 120, this._alpha);
+        }
+
         rect(this.start.x, this.start.y, this.end.x - this.start.x, this.end.y - this.start.y);
         this.label.draw();
         pop();

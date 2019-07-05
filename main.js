@@ -25,12 +25,8 @@ function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
-<<<<<<< HEAD
-    translate(-width / 2, -height / 2);
-=======
-    controls.view.x = - width / 2;
-    controls.view.y = - height / 2;
->>>>>>> a0e7b1c67e3046aa00fbb0de1105b0ab78f77b3b
+    controls.view.x = -width / 2;
+    controls.view.y = -height / 2;
 }
 
 function windowResized() {
@@ -76,7 +72,7 @@ function copySelected() {
             }
             newObj.setpos(createVector(0, 0));
         }
-        if (!newObj.invalid()) {
+        if (!newObj.isInvalid()) {
             newSelection.push(newObj);
         }
     }
@@ -161,9 +157,10 @@ function mouseReleased() {
         let aisleCoords = Selection.end();
         if (aisleCoords) {
             aisle = new Aisle(aisleCoords.start, aisleCoords.end);
-            if (aisle.collisions().length > 0) {
+            if (aisle.isInvalid()) {
                 aisle.destroy();
             }
+
             aisles.push(aisle);
         }
     } else if (Settings.mode == "segments") {
