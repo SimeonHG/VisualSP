@@ -121,7 +121,14 @@ class Entity {
 
 	deselect() {
 		this._selected = false;
-	}
+    }
+    
+    resize(newEnd){
+        if(this._selected){
+            this.end = newEnd;
+            this.normalize(this.start, this.end);
+        }
+    }
 
     json() {
 		let obj = new Object();

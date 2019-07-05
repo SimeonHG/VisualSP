@@ -126,6 +126,19 @@ function mousePressed() {
             Selection.update();
         } else if (Settings.mode == "movement"){
             Controls.move(controls).mousePressed();
+        } else if (Settings.mode == "resize"){
+            if(Vector(mouseX, mouseY) === start){
+                //resize form top left
+
+            } else if(Vector(mouseX, mouseY) === end){
+                //resize form bottom right
+            }
+            else if(Vector(mouseX, mouseY) === Vector(start.x, end.y)){
+                //resize form bottom left
+            }
+            else if(Vector(mouseX, mouseY) === Vector(end.x, start.y)){
+                //resize form top right
+            }
         }
     }
 }
@@ -142,6 +155,8 @@ function mouseDragged() {
         Selection.update();
     } else if (Settings.mode == "movement"){
        Controls.move(controls).mouseDragged();
+    } else if (Settings.mode == "resize"){
+        //
     }
 }
 
@@ -183,6 +198,7 @@ function mouseReleased() {
                 let collZone = selection.collisions(zones);
 
                 let coll = collAisle[0];
+                selection.resize(coords-(10, 30));
 
                 if (coll && selection.isInside(coll)) {
                     let segment = new Segment(coords.start, coords.end);
@@ -212,5 +228,8 @@ function mouseReleased() {
             zones.push(zone);
         }
 
+    } else if (Settings.mode == "resize"){
+        Selection.resize(Vector(mouseX, mouseY));
     }
+    
 }
