@@ -48,11 +48,11 @@ class Entity {
     }
 
     move(direction) {
-        this.start.x += direction.x;
-        this.start.y += direction.y;
+        this.start.x += direction.x/controls.view.zoom;
+        this.start.y += direction.y/controls.view.zoom;
 
-        this.end.x += direction.x;
-        this.end.y += direction.y;
+        this.end.x += direction.x/controls.view.zoom;
+        this.end.y += direction.y/controls.view.zoom;
     }
 
     normalize(o1, o2) {
