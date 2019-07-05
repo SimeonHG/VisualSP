@@ -1,5 +1,6 @@
 class Segment extends Entity {
-    constructor(start, end) {
+
+    constructor(start, end, aisleId) {
         if (start instanceof Segment) {
             let other = start;
             super(other);
@@ -8,15 +9,22 @@ class Segment extends Entity {
             super(start, end);
             this._selected = false;
         }
+
+        Segment.segments.push(this);
+        this.id = Segment.segments.indexOf(this);
+        if (aisleId) {
+            this.aisleId = aisleId;
+        }
     }
 
     attach(aisle) {
-        this._aisle = aisle
+        this.aisleId = aisle.id;
         aisle.segments.push(this);
     }
 
     remove() {
-        super.remove(this._aisle.segments);
+        let aisle = Aisle.aisles[this.aisleId];
+        super.remove(aisle.segments);
     }
 
     draw() {
@@ -38,8 +46,11 @@ class Segment extends Entity {
     }
 
     collisions() {
-        return super.collisions(this._aisle.segments);
+        let aisle = Aisle.aisles[this.aisleId];
+        return super.collisions(aisle.segments);
     }
 
     //Add constraints to moving the label
 }
+
+Segment.segments = [];
