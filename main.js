@@ -171,6 +171,7 @@ function mouseDragged() {
     if (movingSelectedItems) {
         for (let item of selectedItems) {
             item.move(createVector(mouseX - lastX, mouseY - lastY));
+            item.isInvalid();
         }
         lastX = mouseX;
         lastY = mouseY;
@@ -204,7 +205,7 @@ function mouseReleased() {
             for (let aisle of aisles) {
                 if (segment.isInside(aisle)) {
                     segment.attach(aisle);
-                    if (segment.collisions().length > 0) {
+                    if (segment.isInvalid()) {
                         segment.remove();
                     }
                 }
@@ -223,7 +224,7 @@ function mouseReleased() {
         let zoneCoords = Selection.end();
         if (zoneCoords) {
             zone = new Zone(zoneCoords.start, zoneCoords.end);
-            if (zone.collisions().length > 0) {
+            if (zone.isInvalid()) {
                 zone.destroy();
             }
             zones.push(zone);

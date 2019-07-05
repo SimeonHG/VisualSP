@@ -117,8 +117,10 @@ class Entity {
     isInvalid() {
         if (this.collisions().length > 0) {
             this.invalid = true;
+            this._placed = false;
         } else {
             this.invalid = false;
+            this._placed = true;
         }
 
         return this.invalid;

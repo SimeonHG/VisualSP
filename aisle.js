@@ -37,7 +37,7 @@ class Aisle extends Entity {
             }
         }
 
-        if (this.isInvalid() && this._selected) {
+        if (!this._placed) {
             fill(120, 120, 120, this._alpha);
         }
 
@@ -49,18 +49,18 @@ class Aisle extends Entity {
                 segment.draw();
             }
         }
-	}
-	
-	snapAll() {
-		super.snapAll();
-		for (const iterator of this.segments) {
-			iterator.snapAll();
-		}
-	}
+    }
 
-	destroy() {
-		this._markedDestroy = true;
-	}
+    snapAll() {
+        super.snapAll();
+        for (const iterator of this.segments) {
+            iterator.snapAll();
+        }
+    }
+
+    destroy() {
+        this._markedDestroy = true;
+    }
 
     move(direction) {
         super.move(direction);
