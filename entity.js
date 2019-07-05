@@ -1,6 +1,7 @@
-class Entity {
+class Entity extends Object {
 
     constructor(start, end, label) {
+        super();
         if (start instanceof Entity) {
             let other = start;
             this.start = {
@@ -143,27 +144,28 @@ class Entity {
         this._selected = false;
     }
 
-    json() {
-        let obj = new Object();
-        let props = Reflect.ownKeys(this);
+}
 
-        for (const prop of props) {
-            if (prop.charAt(0) == '_')
-                continue;
+Object.json = (function () {
+    let obj = new Object();
+    let props = Reflect.ownKeys(this);
 
-            let value = Reflect.get(this, prop);
+    for (const prop of props) {
+        if (prop.charAt(0) == '_')
+            continue;
 
-            if (value instanceof Array) {
-                value = value.map((e) => e instanceof Object ? e.json() : e);
-            }
+        let value = Reflect.get(this, prop);
 
-            if (value instanceof Object && Reflect.has(value, 'json')) {
-                obj[prop] = value.json();
-            } else {
-                obj[prop] = value;
-            }
+        if (value instanceof Array) {
+            value = value.map((e) => e instanceof Object ? e.json() : e);
         }
 
-        return obj;
+        if (value instanceof Object && Reflect.has(value, 'json')) {
+            obj[prop] = value.json();
+        } else {
+            obj[prop] = value;
+        }
     }
-}
+
+    return obj;
+});

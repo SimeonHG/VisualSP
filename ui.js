@@ -3,7 +3,7 @@ let inputBox, inputBoxButton, itemToLabel;
 
 function exporter() {
     let element = document.createElement('a');
-    let payload = JSON.stringify(parser.export(aisles));
+    let payload = JSON.stringify(Aisle.aisles, JSONParser.export_filter);
     
     console.log(payload);
     
@@ -37,7 +37,7 @@ document.getElementById('importer').onchange = function(event) {
     reader.readAsText(event.target.files[0]);
     
     function onReaderLoad(event){
-        aisles = parser.import(event.target.result); 
+        Aisle.aisles = parser.import(event.target.result); 
     }
     
 }
