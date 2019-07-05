@@ -30,6 +30,22 @@ class Grid {
         }
     }
 
+    getSquare(x, y) {
+        return this.squares[x / Square.width][y / Square.width];
+    }
+
+    getSquareLocationInGrid(square) {
+        for (let i = 0; i < this.squares.length; i++) {
+            if (this.squares[i].indexOf(square) != -1) {
+                return {
+                    x: this.squares[i].indexOf(square),
+                    y: i
+                }
+            }
+        }
+
+    }
+
     getClickedSquare() {
         for (let squareRow of this.squares) {
             for (let square of squareRow) {

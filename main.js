@@ -27,6 +27,9 @@ function setup() {
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
     controls.view.x = -width / 2;
     controls.view.y = -height / 2;
+
+    picker = new Picker(grid.squares[0][0], grid.squares[2][2]);
+    picker.findRoute();
 }
 
 function windowResized() {
