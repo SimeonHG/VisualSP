@@ -1,6 +1,6 @@
 class Aisle extends Entity {
 
-    constructor(start, end) {
+    constructor(start, end, segments) {
 
         if (start instanceof Aisle) {
             let other = start;
