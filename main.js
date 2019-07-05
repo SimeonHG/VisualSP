@@ -6,8 +6,6 @@ const controls = {
 let canvas;
 let drawn = false;
 let grid;
-let aisles = [];
-let zones = [];
 
 let selectedItems = [];
 let movingSelectedItems = false;
@@ -42,11 +40,11 @@ function draw() {
     translate(width / 2, height / 2);
     scale(controls.view.zoom);
     translate(controls.view.x, controls.view.y);
-    for (let zone of zones) {
+    for (let zone of Zone.zones) {
         zone.draw();
     }
     grid.draw();
-    for (let aisle of aisles) {
+    for (let aisle of Aisle.aisles) {
         aisle.draw();
     }
     Selection.draw();
@@ -122,8 +120,8 @@ function getSelectedItems(coords) {
 
     let selection = new Entity(coords.start, coords.end);
 
-    let collAisle = selection.collisions(aisles);
-    let collZone = selection.collisions(zones);
+    let collAisle = selection.collisions(Aisle.aisles);
+    let collZone = selection.collisions(Zone.zones);
 
     let aisle = collAisle[0];
     let zone = collZone[0];
@@ -155,7 +153,7 @@ function mousePressed() {
             lastX = mouseX;
             lastY = mouseY;
         } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
-            for (let entity of aisles.concat(zones)) {
+            for (let entity of Aisle.aisles.concat(Zone.zones)) {
                 entity.deselect();
             }
             selectedItems = [];
@@ -194,15 +192,13 @@ function mouseReleased() {
             if (aisle.isInvalid()) {
                 aisle.destroy();
             }
-
-            aisles.push(aisle);
         }
     } else if (Settings.mode == "segments") {
         let segmentCoords = Selection.end();
         if (segmentCoords) {
             let segment = new Segment(segmentCoords.start, segmentCoords.end);
             //TODO: Optimize this
-            for (let aisle of aisles) {
+            for (let aisle of Aisle.aisles) {
                 if (segment.isInside(aisle)) {
                     segment.attach(aisle);
                     if (segment.isInvalid()) {
@@ -216,6 +212,9 @@ function mouseReleased() {
     } else if (Settings.mode == "select") {
         if (mouseY > 0 && mouseButton === LEFT) {
             let collisions = getSelectedItems(Selection.end());
+            if (!collisions) {
+                return;
+            }
             for (let col of collisions) {
                 col.select();
             }
@@ -227,7 +226,6 @@ function mouseReleased() {
             if (zone.isInvalid()) {
                 zone.destroy();
             }
-            zones.push(zone);
         }
 
     }
