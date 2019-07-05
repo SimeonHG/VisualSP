@@ -1,6 +1,6 @@
 class Entity {
 
-    constructor(start, end) {
+    constructor(start, end, label) {
         if (start instanceof Entity) {
             let other = start;
             this.start = {
@@ -17,7 +17,12 @@ class Entity {
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
         this._selected = false;
-        this.label = new Label(this, '');
+        this.invalid = false;
+        if (label == undefined) {
+            this.label = new Label(this, '');
+        } else {
+            this.label = label;
+        }
     }
 
     centerCoords() {
@@ -33,7 +38,7 @@ class Entity {
     }
 
     snapAll() {
-        for (const iterator of [this.start, this.end]) {
+        for (const iterator of[this.start, this.end]) {
             iterator.x = this.snap(iterator.x);
             iterator.y = this.snap(iterator.y);
         }
@@ -63,15 +68,15 @@ class Entity {
 
     isClicked() {
         let mousepos = Grid.normalize(createVector(mouseX, mouseY));
-        return  mousepos.x >= this.start.x && mousepos.x <= this.end.x &&
-                mousepos.y >= this.start.y && mousepos.y <= this.end.y
+        return mousepos.x >= this.start.x && mousepos.x <= this.end.x &&
+            mousepos.y >= this.start.y && mousepos.y <= this.end.y
     }
 
     isInside(other) {
-        return ((this.start.x >= other.start.x
-                    && this.start.y >= other.start.y
-                    && this.end.x <= other.end.x
-                    && this.end.y <= other.end.y) ? true : false);
+        return ((this.start.x >= other.start.x &&
+            this.start.y >= other.start.y &&
+            this.end.x <= other.end.x &&
+            this.end.y <= other.end.y) ? true : false);
     }
 
     collides(other) {
@@ -86,13 +91,13 @@ class Entity {
     }
 
     setpos(pos) {
-		let dir = {
-			x: pos.x - this.start.x,
-			y: pos.y - this.start.y
-		}
+        let dir = {
+            x: pos.x - this.start.x,
+            y: pos.y - this.start.y
+        }
 
-		this.move(dir);
-	}
+        this.move(dir);
+    }
 
     collisions(others) {
         let collisions = [];
@@ -104,6 +109,16 @@ class Entity {
         }
 
         return collisions;
+    }
+
+    invalid() {
+        if (this.collisions().length > 0) {
+            this.invalid = true;
+        } else {
+            this.invalid = false;
+        }
+
+        return this.invalid;
     }
 
     setLabel(text) {
@@ -119,31 +134,31 @@ class Entity {
         selectedItems.push(this);
     }
 
-	deselect() {
-		this._selected = false;
-	}
+    deselect() {
+        this._selected = false;
+    }
 
     json() {
-		let obj = new Object();
-		let props = Reflect.ownKeys(this);
+        let obj = new Object();
+        let props = Reflect.ownKeys(this);
 
-		for (const prop of props) {
-			if (prop.charAt(0) == '_')
-				continue;
+        for (const prop of props) {
+            if (prop.charAt(0) == '_')
+                continue;
 
-			let value = Reflect.get(this, prop);
+            let value = Reflect.get(this, prop);
 
             if (value instanceof Array) {
                 value = value.map((e) => e instanceof Object ? e.json() : e);
             }
 
-			if (value instanceof Object && Reflect.has(value, 'json')) {
-				obj[prop] = value.json();
-			} else {
-				obj[prop] = value;
-			}
-		}
+            if (value instanceof Object && Reflect.has(value, 'json')) {
+                obj[prop] = value.json();
+            } else {
+                obj[prop] = value;
+            }
+        }
 
-		return obj;
+        return obj;
     }
 }

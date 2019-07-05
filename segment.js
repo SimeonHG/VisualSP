@@ -1,6 +1,6 @@
 class Segment extends Entity {
     constructor(start, end) {
-        if(start instanceof Segment) {
+        if (start instanceof Segment) {
             let other = start;
             super(other);
             this._selected = other._selected;
