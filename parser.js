@@ -1,12 +1,10 @@
 
 class JSONParser {
-    export(objects) {
-        let output = { aisles: [] };
-        
-        for (const aisle of objects) {
-            output.aisles.push(aisle.json());
-        }
-        return output;
+    static export_filter(k, v) {
+        if (v.invalid)
+            return undefined;
+
+        return k[0] === '_' ? undefined : v;
     }
 
 
