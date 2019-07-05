@@ -25,7 +25,12 @@ function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
+<<<<<<< HEAD
     translate(-width / 2, -height / 2);
+=======
+    controls.view.x = - width / 2;
+    controls.view.y = - height / 2;
+>>>>>>> a0e7b1c67e3046aa00fbb0de1105b0ab78f77b3b
 }
 
 function windowResized() {
