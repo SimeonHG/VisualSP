@@ -49,7 +49,18 @@ class Aisle extends Entity {
                 segment.draw();
             }
         }
-    }
+	}
+	
+	snapAll() {
+		super.snapAll();
+		for (const iterator of this.segments) {
+			iterator.snapAll();
+		}
+	}
+
+	destroy() {
+		this._markedDestroy = true;
+	}
 
     move(direction) {
         super.move(direction);

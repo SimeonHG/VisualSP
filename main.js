@@ -25,8 +25,13 @@ function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
+<<<<<<< HEAD
     controls.view.x = -width / 2;
     controls.view.y = -height / 2;
+=======
+    controls.view.x = - width / 2;
+    controls.view.y = - height / 2;
+>>>>>>> 102ce24f91ea0489f5a1678f49fa405d752759fc
 }
 
 function windowResized() {
@@ -115,6 +120,39 @@ function clickedOnSelected() {
     return false;
 }
 
+function getSelectedItems(coords) {
+    if (!coords) {
+        return;
+    }
+
+    let selection = new Entity(coords.start, coords.end);
+
+    let collAisle = selection.collisions(aisles);
+    let collZone = selection.collisions(zones);
+
+    let aisle = collAisle[0];
+    let zone = collZone[0];
+
+    if (aisle && selection.isInside(aisle)) {
+        let segment = new Segment(coords.start, coords.end);
+        segment.attach(aisle);
+        if (segment.collisions().length > 0) {
+            let colls = segment.collisions(aisle.segments);
+            segment.remove();
+            return colls;
+        }
+        segment.remove();
+    }
+
+    if (zone && selection.isInside(zone)) {
+        if (collAisle.length > 0) {
+            return collAisle;
+        }
+    }
+
+    return collAisle.concat(collZone);
+}
+
 function mousePressed() {
     if (mouseButton === LEFT) {
         if (selectedItems.length > 0 && clickedOnSelected()) {
@@ -179,6 +217,13 @@ function mouseReleased() {
         }
     } else if (Settings.mode == "movement") {
         Controls.move(controls).mouseReleased()
+<<<<<<< HEAD
+    } else if(Settings.mode == "select") {
+        if (mouseY > 0 && mouseButton === LEFT) {
+            let collisions = getSelectedItems(Selection.end());
+            for (let col of collisions) {
+                col.select();
+=======
     } else if (Settings.mode == "select") {
         if (mouseY > 0) {
             let coords = Selection.end();
@@ -205,6 +250,7 @@ function mouseReleased() {
                 for (let col of collAisle.concat(collZone)) {
                     col.select();
                 }
+>>>>>>> 2190388e2c250c943236769bbf53afbb028e4c17
             }
         }
     } else if (Settings.mode == "zones") {

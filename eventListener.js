@@ -23,11 +23,10 @@ class EventListener {
 }
 
 EventListener.keysPressed = [];
-EventListener.keyCodeToKey = 
-{
+EventListener.keyCodeToKey = {
 	"87" : "W",
 	"65" : "A",
-	"83" : "S", 
+	"83" : "S",
 	"68" : "D",
 	"17" : "CTRL",
 	"67" : "C"
