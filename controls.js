@@ -29,19 +29,17 @@ class Controls {
         }
 
         function keyboardMovement() {
-            if (Settings.mode == "movement") {
-                if (EventListener.getKeys().includes("W")) {
-                    controls.view.y += 10;
-                }
-                if (EventListener.getKeys().includes("A")) {
-                    controls.view.x += 10;
-                }
-                if (EventListener.getKeys().includes("S")) {
-                    controls.view.y -= 10;
-                }
-                if (EventListener.getKeys().includes("D")) {
-                    controls.view.x -= 10;
-                }
+            if (EventListener.getKeys().includes("W")) {
+                controls.view.y += 10;
+            }
+            if (EventListener.getKeys().includes("A")) {
+                controls.view.x += 10;
+            }
+            if (EventListener.getKeys().includes("S")) {
+                controls.view.y -= 10;
+            }
+            if (EventListener.getKeys().includes("D")) {
+                controls.view.x -= 10;
             }
             
         }
