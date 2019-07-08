@@ -16,8 +16,8 @@ class Aisle extends Entity {
         this._alpha = 120;
         this._markedDestroy = false;
 
-		Aisle.aisles.push(this);
-		this.id = Aisle.aisles.indexOf(this);
+        Aisle.aisles.push(this);
+        this.id = Aisle.aisles.indexOf(this);
     }
 
     draw() {
@@ -40,7 +40,7 @@ class Aisle extends Entity {
             }
         }
 
-        if (!this._placed) {
+        if (this._invalid) {
             fill(120, 120, 120, this._alpha);
         }
 

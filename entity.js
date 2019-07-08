@@ -53,11 +53,11 @@ class Entity extends Object {
     }
 
     move(direction) {
-        this.start.x += direction.x/controls.view.zoom;
-        this.start.y += direction.y/controls.view.zoom;
+        this.start.x += direction.x / controls.view.zoom;
+        this.start.y += direction.y / controls.view.zoom;
 
-        this.end.x += direction.x/controls.view.zoom;
-        this.end.y += direction.y/controls.view.zoom;
+        this.end.x += direction.x / controls.view.zoom;
+        this.end.y += direction.y / controls.view.zoom;
     }
 
     normalize(o1, o2) {
@@ -123,15 +123,24 @@ class Entity extends Object {
     }
 
     isInvalid() {
-        if (this.collisions().length > 0) {
+        if (this.collisions().length > 0 && !this._placed) {
             this._invalid = true;
-            this._placed = false;
         } else {
+            if (this._invalid) {
+                this.snapAll();
+            }
+
             this._invalid = false;
-            this._placed = true;
         }
 
         return this._invalid;
+    }
+
+    place() {
+        if (!this.isInvalid()) {
+            this._placed = true;
+            this.snapAll();
+        }
     }
 
     setLabel(text) {
@@ -153,7 +162,7 @@ class Entity extends Object {
 
 }
 
-Object.json = (function () {
+Object.json = (function() {
     let obj = new Object();
     let props = Reflect.ownKeys(this);
 

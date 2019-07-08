@@ -40,16 +40,16 @@ let startPos, currentPos;
 let isCentered = false;
 
 
-function mouseIsInsideCanvas(){
-    return mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY>= 0;
+function mouseIsInsideCanvas() {
+    return mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY >= 0;
 }
 
 function draw() {
     background(255);
-    if(draggingForMovement && (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") && mouseIsInsideCanvas()){
+    if (draggingForMovement && (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") && mouseIsInsideCanvas()) {
         Controls.move(controls).moveEdged(canvas);
     }
-    if(Settings.mode != "typing"){
+    if (Settings.mode != "typing") {
         Controls.move(controls).keyboardMovement();
     }
     translate(width / 2, height / 2);
@@ -61,6 +61,9 @@ function draw() {
     grid.draw();
     for (let aisle of Aisle.aisles) {
         aisle.draw();
+        if (!aisle.isInvalid()) {
+            aisle._placed = true;
+        }
     }
     Selection.draw();
 }
@@ -164,7 +167,7 @@ function getSelectedItems(coords) {
 
 function mousePressed() {
     if (mouseButton === LEFT && mouseIsInsideCanvas()) {
-        
+
         if (selectedItems.length > 0 && clickedOnSelected()) {
             movingSelectedItems = true;
             lastX = mouseX;
@@ -185,12 +188,13 @@ function mousePressed() {
 
 function mouseDragged() {
     draggingForMovement = true;
-    
+
 
     if (movingSelectedItems) {
-        
+
         for (let item of selectedItems) {
-            item.move(createVector(mouseX - lastX - (offsetX*controls.view.zoom), mouseY - lastY - (offsetY*controls.view.zoom)));
+            item._placed = false;
+            item.move(createVector(mouseX - lastX - (offsetX * controls.view.zoom), mouseY - lastY - (offsetY * controls.view.zoom)));
             item.isInvalid();
         }
         lastX = mouseX;
@@ -199,7 +203,7 @@ function mouseDragged() {
         offsetY = 0;
 
     } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
-        if(!mouseIsInsideCanvas()) return;
+        if (!mouseIsInsideCanvas()) return;
         Selection.update();
     } else if (Settings.mode == "movement") {
         Controls.move(controls).mouseDragged();
@@ -209,7 +213,7 @@ function mouseDragged() {
 function mouseReleased() {
     draggingForMovement = false;
     movingSelectedItems = false;
-    selectedItems.map((e) => e.snapAll())
+    selectedItems.map((e) => e.place());
 
     if (Settings.mode == "aisles") {
         let aisleCoords = Selection.end();
