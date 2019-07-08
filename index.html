@@ -1,51 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Visual SP</title>
-        <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js"></script>
-        <script language="javascript" type="text/javascript" src="p5.dom.js"></script>
-        <script src = "eventListener.js"></script>
-        <script src = "main.js"></script>
-        <script src="entity.js"></script>
-        <script src = "parser.js"></script>
-        <script src = "square.js"></script>
-        <script src = "grid.js"></script>
-        <script src = "aisle.js"></script>
-        <script src = "segment.js"></script>
-        <script src = "selection.js"></script>
-        <script src = "settings.js"></script>
-        <script src = "controls.js"></script>
-        <script src = "label.js"></script>
-        <script src = "zone.js"></script>
-        <link rel = "stylesheet" href = "style.css" type = "text/css" media = "screen"/>
-    </head>
-    <body>
-        <button onclick="Settings.setMode('movement')">Movement</button>
-        <button onclick="Settings.setMode('aisles')">Draw aisles</button>
-        <button onclick="Settings.setMode('segments')">Draw segments</button>
-        <button onclick="Settings.setMode('zones')">Draw zones</button>
-        <button onclick="Settings.setMode('resize')">Resize</button>
-        <button onclick="deleteSelected()">Delete</button>
-        <button onclick="Settings.setMode('select')">Select</button>
-        <button onclick="exporter()">Export Map</button>
 
-        <br>
+<head>
+    <meta charset="utf-8">
+    <title>Visual SP</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js"></script>
+    <script language="javascript" type="text/javascript" src="p5.dom.js"></script>
+    <script src="main.js"></script>
+    <script src="eventListener.js"></script>
+    <script src="entity.js"></script>
+    <script src="parser.js"></script>
+    <script src="square.js"></script>
+    <script src="grid.js"></script>
+    <script src="aisle.js"></script>
+    <script src="segment.js"></script>
+    <script src="selection.js"></script>
+    <script src="settings.js"></script>
+    <script src="controls.js"></script>
+    <script src="label.js"></script>
+    <script src="zone.js"></script>
+    <script src="corner.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+</head>
 
-        <input accept="application/json" type="file" id="importer">
-        <input type="text" id="labelName" name="labelName" placeholder="Label name...">
-        <button onClick="createLabel()">Apply</button>
-        <br>
+<body>
+    <button onclick="Settings.setMode('movement')">Movement</button>
+    <button onclick="Settings.setMode('aisles')">Draw aisles</button>
+    <button onclick="Settings.setMode('segments')">Draw segments</button>
+    <button onclick="Settings.setMode('zones')">Draw zones</button>
+    <button onclick="deleteSelected()">Delete</button>
+    <button onclick="Settings.setMode('select')">Select</button>
+    <button onclick="Settings.setMode('resize')">Resize</button>
+    <button onclick="exporter()">Export Map</button>
 
-        <form>
-            <label class="checkbox-inline" >
+    <br>
+
+    <input accept="application/json" type="file" id="importer">
+    <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
+    <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
+    <br>
+
+    <form>
+        <label class="checkbox-inline">
                 <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
             </label>
-        </form>
+    </form>
 
 
-    </body>
-    <head>
-            <script src = "ui.js"></script>
-    </head>
+</body>
+
+<head>
+    <script src="ui.js"></script>
+</head>
+
 </html>

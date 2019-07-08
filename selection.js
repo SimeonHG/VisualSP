@@ -1,11 +1,23 @@
 class Selection {
 
-    static begin() {
-        Selection.start = grid.getClickedSquare();
+    static begin(pos) {
+        if (pos != undefined) {
+            Selection.start = pos;
+        } else {
+            Selection.start = grid.getClickedSquare();
+        }
+        Selection.current = grid.getClickedSquare();
     }
 
     static update() {
         Selection.current = grid.getClickedSquare();
+    }
+
+    static coords() {
+        return {
+            start: Selection.start,
+            end: Selection.current
+        };
     }
 
     static end() {
