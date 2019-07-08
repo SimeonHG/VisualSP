@@ -12,6 +12,8 @@ let movingSelectedItems = false;
 let lastX = null;
 let lastY = null;
 
+let draggingForMovement = false;
+
 let windowFactor = {
     width: 0.98,
     height: 0.83
@@ -34,8 +36,16 @@ function windowResized() {
 let startPos, currentPos;
 let isCentered = false;
 
+
+function mouseIsInsideCanvas(){
+    return mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY>= 0;
+}
+
 function draw() {
     background(255);
+    if(draggingForMovement && (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") && mouseIsInsideCanvas()){
+        Controls.move(controls).moveEdged(canvas);
+    }
     if(Settings.mode != "typing"){
         Controls.move(controls).keyboardMovement();
     }
@@ -148,8 +158,9 @@ function getSelectedItems(coords) {
     return collAisle.concat(collZone);
 }
 
+
 function mousePressed() {
-    if (mouseButton === LEFT && mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY>= 0) {
+    if (mouseButton === LEFT && mouseIsInsideCanvas()) {
         
         if (selectedItems.length > 0 && clickedOnSelected()) {
             movingSelectedItems = true;
@@ -170,6 +181,9 @@ function mousePressed() {
 }
 
 function mouseDragged() {
+    draggingForMovement = true;
+    
+
     if (movingSelectedItems) {
         for (let item of selectedItems) {
             item.move(createVector(mouseX - lastX, mouseY - lastY));
@@ -179,6 +193,7 @@ function mouseDragged() {
         lastY = mouseY;
 
     } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
+        if(!mouseIsInsideCanvas()) return;
         Selection.update();
     } else if (Settings.mode == "movement") {
         Controls.move(controls).mouseDragged();
@@ -186,6 +201,7 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
+    draggingForMovement = false;
     movingSelectedItems = false;
     selectedItems.map((e) => e.snapAll())
 

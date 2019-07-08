@@ -10,14 +10,15 @@ class Controls {
         function mouseDragged() {
             const {prevX, prevY, isDragging} = controls.viewPos;
             if(!isDragging) return;
+            if(!mouseIsInsideCanvas()) return;
 
             const pos = {x: mouseX, y: mouseY};
             const dx = pos.x - prevX;
             const dy = pos.y - prevY;
 
             if(prevX || prevY) {
-                controls.view.x += dx;
-                controls.view.y += dy;
+                controls.view.x += dx/controls.view.zoom;
+                controls.view.y += dy/controls.view.zoom;
                 controls.viewPos.prevX = pos.x, controls.viewPos.prevY = pos.y
             }
         }
@@ -43,12 +44,36 @@ class Controls {
             }
             
         }
+       
+
+
+        function moveEdged(canvas){
+            if(mouseX > 0.95 * canvas.width){
+                controls.view.x -= 20;
+        
+            }
+            if(mouseX < 0.05 * canvas.width + 0){
+                controls.view.x += 20;
+        
+            }
+            
+            if(mouseY > 0.95 * canvas.height){
+                controls.view.y -= 20;
+        
+            }
+            if(mouseY < 0.05 * canvas.height + 0){
+                controls.view.y += 20;
+        
+            }
+
+        }
 
         return {
             mousePressed,
             mouseDragged,
             mouseReleased,
-            keyboardMovement
+            keyboardMovement,
+            moveEdged
         }
     }
     static zoom(controls) {

@@ -25,7 +25,7 @@ class Entity extends Object {
             y: this._height
         }
         this._selected = false;
-        this.invalid = false;
+        this._invalid = false;
         if (label == undefined) {
             this.label = new Label(this, '');
         } else {
@@ -124,14 +124,14 @@ class Entity extends Object {
 
     isInvalid() {
         if (this.collisions().length > 0) {
-            this.invalid = true;
+            this._invalid = true;
             this._placed = false;
         } else {
-            this.invalid = false;
+            this._invalid = false;
             this._placed = true;
         }
 
-        return this.invalid;
+        return this._invalid;
     }
 
     setLabel(text) {

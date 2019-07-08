@@ -12,7 +12,7 @@ class Segment extends Entity {
 
         Segment.segments.push(this);
         this.id = Segment.segments.indexOf(this);
-        if (aisleId) {
+        if (aisleId !== undefined) {
             this.aisleId = aisleId;
         }
     }
