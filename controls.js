@@ -17,8 +17,8 @@ class Controls {
             const dy = pos.y - prevY;
 
             if(prevX || prevY) {
-                controls.view.x += dx;
-                controls.view.y += dy;
+                controls.view.x += dx/controls.view.zoom;
+                controls.view.y += dy/controls.view.zoom;
                 controls.viewPos.prevX = pos.x, controls.viewPos.prevY = pos.y
             }
         }
@@ -48,20 +48,20 @@ class Controls {
 
 
         function moveEdged(canvas){
-            if(mouseX > 0.9 * canvas.width){
+            if(mouseX > 0.95 * canvas.width){
                 controls.view.x -= 20;
         
             }
-            if(mouseX < 0.1 * canvas.width + 0){
+            if(mouseX < 0.05 * canvas.width + 0){
                 controls.view.x += 20;
         
             }
             
-            if(mouseY > 0.9 * canvas.height){
+            if(mouseY > 0.95 * canvas.height){
                 controls.view.y -= 20;
         
             }
-            if(mouseY < 0.1 * canvas.height + 0){
+            if(mouseY < 0.05 * canvas.height + 0){
                 controls.view.y += 20;
         
             }
