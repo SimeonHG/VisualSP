@@ -36,7 +36,9 @@ let isCentered = false;
 
 function draw() {
     background(255);
-    Controls.move(controls).keyboardMovement();
+    if(Settings.mode != "typing"){
+        Controls.move(controls).keyboardMovement();
+    }
     translate(width / 2, height / 2);
     scale(controls.view.zoom);
     translate(controls.view.x, controls.view.y);
@@ -148,7 +150,7 @@ function getSelectedItems(coords) {
 
 function mousePressed() {
     if (mouseButton === LEFT && mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY>= 0) {
-        console.log("y=" + mouseY +  "  x=" + mouseX);
+        
         if (selectedItems.length > 0 && clickedOnSelected()) {
             movingSelectedItems = true;
             lastX = mouseX;

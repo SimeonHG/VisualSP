@@ -32,8 +32,8 @@
         <br>
 
         <input accept="application/json" type="file" id="importer">
-        <input type="text" id="labelName" name="labelName" placeholder="Label name...">
-        <button onClick="createLabel()">Apply</button>
+        <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
+        <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
         <br>
 
         <form>
