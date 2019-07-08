@@ -15,6 +15,9 @@ class Aisle extends Entity {
 
         this._alpha = 120;
         this._markedDestroy = false;
+
+		Aisle.aisles.push(this);
+		this.id = Aisle.aisles.indexOf(this);
     }
 
     draw() {
@@ -74,11 +77,11 @@ class Aisle extends Entity {
     }
 
     remove() {
-        super.remove(aisles);
+        super.remove(Aisle.aisles);
     }
 
     collisions() {
-        return super.collisions(aisles);
+        return super.collisions(Aisle.aisles);
     }
 
     deselect() {
@@ -88,3 +91,5 @@ class Aisle extends Entity {
         }
     }
 }
+
+Aisle.aisles = [];

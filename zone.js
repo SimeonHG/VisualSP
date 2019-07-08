@@ -1,4 +1,5 @@
 class Zone extends Entity {
+
 	constructor(start, end) {
 		if (start instanceof Zone) {
 			super(start);
@@ -8,6 +9,9 @@ class Zone extends Entity {
 
 		this._alpha = 60;
 		this._markedDestroy = false;
+
+		Zone.zones.push(this);
+		this.id = Zone.zones.indexOf(this);
 	}
 	draw() {
 		push();
@@ -37,11 +41,12 @@ class Zone extends Entity {
 	}
 
 	remove() {
-		super.remove(zones);
+		super.remove(Zone.zones);
 	}
 
 	collisions() {
-		return super.collisions(zones);
+		return super.collisions(Zone.zones);
 	}
-
 }
+
+Zone.zones = [];
