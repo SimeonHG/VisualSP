@@ -1,21 +1,73 @@
 class Picker {
+	constructor(startSqr, destinationSqr) {
+		// console.log("destinationSqr: " + destinationSqr.pos.x);
+		this.start = new Node(startSqr);
+		this.destination = new Node(destinationSqr);
 
-	constructor(square, destinationSqr){
-		this.square= square;
-		this.destinationSqr = destinationSqr;
 		this.r = random(255);
 		this.g = random(255);
 		this.b = random(255);
+		this.openList = new Array();
+		this.closedList = new Array();
+		this.route = new Array();
 	}
 
 	findRoute() {
-		// console.log(this.square);
-		let sqrLocation = grid.getSquareLocationInGrid(this.square);
-		console.log(sqrLocation)
-		// if (grid.squares[squarePosInGrid.x][squarePosInGrid.y+1]) {
+		// console.log("start " + this.start.square);
 
-		// }
+		this.start.setScores(0, 0);
+		this.openList.push(this.start); 
+
+		while (this.openList.length > 0) {
+			this.openList.sort((a, b) => a.f - b.f);
+			// console.log("In loop");
+			
+			let currentNode = this.openList[0];
+			this.openList.shift();
+			this.closedList.push(currentNode);
+
+			if (currentNode.square.pos.x == this.destination.square.pos.x && currentNode.square.pos.y == this.destination.square.pos.y) {
+				// this is the end node!
+				console.log("FOUND IT!");
+				while(currentNode.parent != null) {
+					// console.log(currentNode);
+					this.route.push(currentNode);
+					currentNode = currentNode.parent;
+				}
+				this.route.push(currentNode);
+				// console.log(currentNode);
+				return;
+			}
+
+			currentNode.setChildren(grid.getAdjacent(currentNode.square).map((square) => new Node(square)));
+			currentNode.children.forEach((childNode) => {
+				if (this.closedList.includes(childNode)) {
+					//already processed this node
+					return;
+				}
+
+				let scores = childNode.calcScores(this.start, this.destination);
+				childNode.setScores(scores);
+
+				for (let openNode of this.openList) {
+					if (openNode.square == childNode.square && childNode.g > openNode.g) {
+						return;
+					}
+				}
+
+				this.openList.push(childNode);
+				this.openList.sort((a, b) => a.f - b.f);
+			});
+		}
  	}
+
+	drawRoute() {
+		if (this.route.length > 0) {
+			this.route.forEach((node) => {
+				node.draw();
+			})
+		}
+	}
 
 	draw(){
 		

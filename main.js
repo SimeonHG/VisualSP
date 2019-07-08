@@ -20,6 +20,7 @@ let windowFactor = {
 }
 
 let input;
+let picker;
 
 function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
@@ -28,7 +29,8 @@ function setup() {
     controls.view.x = -width / 2;
     controls.view.y = -height / 2;
 
-    picker = new Picker(grid.squares[0][0], grid.squares[2][2]);
+    // console.log(grid.squares[2][2]);
+    picker = new Picker(grid.squares[0][0], grid.squares[4][4]);
     picker.findRoute();
 }
 
@@ -53,6 +55,8 @@ function draw() {
         aisle.draw();
     }
     Selection.draw();
+
+    picker.drawRoute();
 }
 
 function copySelected() {
