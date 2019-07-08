@@ -11,6 +11,7 @@ class Grid {
                 this.squares[x].push(new Square(x * Square.width, y * Square.width));
             }
         }
+
     }
 
     static normalize(coords) {

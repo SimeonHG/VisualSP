@@ -14,13 +14,17 @@ class Picker {
 
 	findRoute() {
 		// console.log("start " + this.start.square);
+		if (this.destination.square.hasEntity || this.start.square.hasEntity) {
+			alert("Invalid destination or start!");
+			return;
+		}
 
 		this.start.setScores(0, 0);
 		this.openList.push(this.start); 
 
 		while (this.openList.length > 0) {
 			this.openList.sort((a, b) => a.f - b.f);
-			console.log(this.openList);
+			// console.log(this.openList);
 			// console.log("In loop");
 			
 			let currentNode = this.openList[0];
@@ -39,8 +43,10 @@ class Picker {
 				// console.log(currentNode);
 				return;
 			}
-
-			currentNode.setChildren(grid.getAdjacent(currentNode.square).map((square) => new Node(square)));
+			console.log("Before filter");
+			currentNode.setChildren(grid.getAdjacent(currentNode.square)
+				.map((square) => new Node(square))
+				.filter((node) => node.square.hasEntity == false));
 			currentNode.children.forEach((childNode) => {
 				if (this.closedList.includes(childNode)) {
 					//already processed this node
