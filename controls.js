@@ -44,17 +44,28 @@ class Controls {
             }
             
         }
-        function edgeRight(){
-            controls.view.x += 20;
-        }
-        function edgeLeft(){
-            controls.view.x -= 20;
-        }
-        function edgeTop(){
-            controls.view.y -= 20;
-        }
-        function edgeBottom(){
-            controls.view.y += 20;
+       
+
+
+        function moveEdged(canvas){
+            if(mouseX > 0.9 * canvas.width){
+                controls.view.x -= 20;
+        
+            }
+            if(mouseX < 0.1 * canvas.width + 0){
+                controls.view.x += 20;
+        
+            }
+            
+            if(mouseY > 0.9 * canvas.height){
+                controls.view.y -= 20;
+        
+            }
+            if(mouseY < 0.1 * canvas.height + 0){
+                controls.view.y += 20;
+        
+            }
+
         }
 
         return {
@@ -62,10 +73,7 @@ class Controls {
             mouseDragged,
             mouseReleased,
             keyboardMovement,
-            edgeBottom,
-            edgeLeft,
-            edgeRight,
-            edgeTop
+            moveEdged
         }
     }
     static zoom(controls) {

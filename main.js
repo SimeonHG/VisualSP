@@ -44,7 +44,7 @@ function mouseIsInsideCanvas(){
 function draw() {
     background(255);
     if(draggingForMovement && (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") && mouseIsInsideCanvas()){
-        edgeMovement();
+        Controls.move(controls).moveEdged(canvas);
     }
     if(Settings.mode != "typing"){
         Controls.move(controls).keyboardMovement();
@@ -158,32 +158,6 @@ function getSelectedItems(coords) {
     return collAisle.concat(collZone);
 }
 
-function edgeMovement(){
-    
-
-
-    if(mouseX > 0.9 * canvas.width){
-        Controls.move(controls).edgeLeft();
-
-    }
-    if(mouseX < 0.1 * canvas.width + 0){
-        Controls.move(controls).edgeRight();
-
-    }
-    
-    if(mouseY > 0.9 * canvas.height){
-        Controls.move(controls).edgeTop();
-
-    }
-    if(mouseY < 0.1 * canvas.height + 0){
-        Controls.move(controls).edgeBottom();
-
-    }
-    
-    
-    
-
-}
 
 function mousePressed() {
     if (mouseButton === LEFT && mouseIsInsideCanvas()) {
@@ -208,11 +182,7 @@ function mousePressed() {
 
 function mouseDragged() {
     draggingForMovement = true;
-    if(mouseX < 0.1 * canvas.height + 0){
-        Controls.move(controls).edgeBottom();
-
-    }
-
+    
 
     if (movingSelectedItems) {
         for (let item of selectedItems) {
