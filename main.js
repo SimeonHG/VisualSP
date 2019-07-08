@@ -12,6 +12,8 @@ let movingSelectedItems = false;
 let lastX = null;
 let lastY = null;
 
+let draggingForMovement = false;
+
 let windowFactor = {
     width: 0.98,
     height: 0.83
@@ -41,6 +43,9 @@ function mouseIsInsideCanvas(){
 
 function draw() {
     background(255);
+    if(draggingForMovement && (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") && mouseIsInsideCanvas()){
+        edgeMovement();
+    }
     if(Settings.mode != "typing"){
         Controls.move(controls).keyboardMovement();
     }
@@ -153,6 +158,33 @@ function getSelectedItems(coords) {
     return collAisle.concat(collZone);
 }
 
+function edgeMovement(){
+    
+
+
+    if(mouseX > 0.9 * canvas.width){
+        Controls.move(controls).edgeLeft();
+
+    }
+    if(mouseX < 0.1 * canvas.width + 0){
+        Controls.move(controls).edgeRight();
+
+    }
+    
+    if(mouseY > 0.9 * canvas.height){
+        Controls.move(controls).edgeTop();
+
+    }
+    if(mouseY < 0.1 * canvas.height + 0){
+        Controls.move(controls).edgeBottom();
+
+    }
+    
+    
+    
+
+}
+
 function mousePressed() {
     if (mouseButton === LEFT && mouseIsInsideCanvas()) {
         
@@ -175,6 +207,13 @@ function mousePressed() {
 }
 
 function mouseDragged() {
+    draggingForMovement = true;
+    if(mouseX < 0.1 * canvas.height + 0){
+        Controls.move(controls).edgeBottom();
+
+    }
+
+
     if (movingSelectedItems) {
         for (let item of selectedItems) {
             item.move(createVector(mouseX - lastX, mouseY - lastY));
@@ -184,6 +223,7 @@ function mouseDragged() {
         lastY = mouseY;
 
     } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
+        if(!mouseIsInsideCanvas()) return;
         Selection.update();
     } else if (Settings.mode == "movement") {
         Controls.move(controls).mouseDragged();
@@ -191,6 +231,7 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
+    draggingForMovement = false;
     movingSelectedItems = false;
     selectedItems.map((e) => e.snapAll())
 

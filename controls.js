@@ -44,12 +44,28 @@ class Controls {
             }
             
         }
+        function edgeRight(){
+            controls.view.x += 20;
+        }
+        function edgeLeft(){
+            controls.view.x -= 20;
+        }
+        function edgeTop(){
+            controls.view.y -= 20;
+        }
+        function edgeBottom(){
+            controls.view.y += 20;
+        }
 
         return {
             mousePressed,
             mouseDragged,
             mouseReleased,
-            keyboardMovement
+            keyboardMovement,
+            edgeBottom,
+            edgeLeft,
+            edgeRight,
+            edgeTop
         }
     }
     static zoom(controls) {
