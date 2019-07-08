@@ -147,13 +147,15 @@ function getSelectedItems(coords) {
 }
 
 function mousePressed() {
-    if (mouseButton === LEFT) {
+    if (mouseButton === LEFT && mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY>= 0) {
+        console.log("y=" + mouseY +  "  x=" + mouseX);
         if (selectedItems.length > 0 && clickedOnSelected()) {
             movingSelectedItems = true;
             lastX = mouseX;
             lastY = mouseY;
         } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
             for (let entity of Aisle.aisles.concat(Zone.zones)) {
+
                 entity.deselect();
             }
             selectedItems = [];
