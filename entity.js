@@ -30,8 +30,8 @@ class Entity {
     }
 
     markSquares() {
-        for (let x = this.start.x; x <= this.end.x; x += Square.width) {
-            for (let y = this.start.y; y <= this.end.y; y += Square.width) {
+        for (let x = this.start.x; x < this.end.x; x += Square.width) {
+            for (let y = this.start.y; y < this.end.y; y += Square.width) {
                     grid.getSquare(x, y).hasEntity = true;
             }
         }

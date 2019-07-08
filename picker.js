@@ -24,7 +24,7 @@ class Picker {
 
 		while (this.openList.length > 0) {
 			this.openList.sort((a, b) => a.f - b.f);
-			// console.log(this.openList);
+			console.log(this.openList);
 			// console.log("In loop");
 			
 			let currentNode = this.openList[0];
@@ -43,7 +43,7 @@ class Picker {
 				// console.log(currentNode);
 				return;
 			}
-			console.log("Before filter");
+			// console.log("Before filter");
 			currentNode.setChildren(grid.getAdjacent(currentNode.square)
 				.map((square) => new Node(square))
 				.filter((node) => node.square.hasEntity == false));
