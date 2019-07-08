@@ -24,7 +24,6 @@ class Square {
     }
 
     draw() {
-        fill(this.color.r, this.color.g, this.color.b);
         rect(this.pos.x, this.pos.y, Square.width, Square.width);
     }
 

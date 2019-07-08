@@ -23,16 +23,26 @@ class Picker {
 		this.openList.push(this.start); 
 
 		while (this.openList.length > 0) {
+			// console.log(this.closedList);
 			this.openList.sort((a, b) => a.f - b.f);
-			console.log(this.openList);
-			// console.log("In loop");
 			
 			let currentNode = this.openList[0];
+			console.log("row: " + grid.getSquareLocationInGrid(currentNode.square).row + ", col: " + grid.getSquareLocationInGrid(currentNode.square).col);
 			this.openList.shift();
-			this.closedList.push(currentNode);
+		
+			let includes = false;
+			this.closedList.forEach(node => {
+				if (node.equals(currentNode)) {
+					includes = true;
+				}
+			});
+			if (!includes) {
+				this.closedList.push(currentNode);
+			}
+			
 
+			// WIN CONDITION
 			if (currentNode.square.pos.x == this.destination.square.pos.x && currentNode.square.pos.y == this.destination.square.pos.y) {
-				// this is the end node!
 				console.log("FOUND IT!");
 				while(currentNode.parent != null) {
 					// console.log(currentNode);
@@ -40,30 +50,32 @@ class Picker {
 					currentNode = currentNode.parent;
 				}
 				this.route.push(currentNode);
-				// console.log(currentNode);
 				return;
 			}
-			// console.log("Before filter");
+
 			currentNode.setChildren(grid.getAdjacent(currentNode.square)
 				.map((square) => new Node(square))
-				.filter((node) => node.square.hasEntity == false));
-			currentNode.children.forEach((childNode) => {
-				if (this.closedList.includes(childNode)) {
-					//already processed this node
-					return;
-				}
+				.filter((node) => node.square.hasEntity == false)
+				.filter(node => {
+					this.closedList.forEach(closedListNode => {
+						if (closedListNode.equals(node)) {
+							return false;
+						}
+					});
+					return true;
+				}));
 
+			currentNode.children.forEach((childNode) => {
 				let scores = childNode.calcScores(this.start, this.destination);
 				childNode.setScores(scores.g, scores.h);
 
 				for (let openNode of this.openList) {
-					if (openNode.square == childNode.square && childNode.g > openNode.g) {
+					if (openNode.equals(childNode)) {
 						return;
 					}
 				}
 
 				this.openList.push(childNode);
-				this.openList.sort((a, b) => a.f - b.f);
 			});
 		}
  	}

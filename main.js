@@ -29,7 +29,7 @@ function setup() {
     controls.view.x = -width / 2;
     controls.view.y = -height / 2;
 
-    picker = new Picker(grid.squares[0][0], grid.squares[4][5]);
+    picker = new Picker(grid.squares[0][0], grid.squares[8][8]);
 
 }
 
@@ -56,6 +56,11 @@ function draw() {
     Selection.draw();
 
     picker.drawRoute();
+    // picker.openList.forEach(node => node.drawColor({
+    //     r: 0,
+    //     g: 150,
+    //     b: 25
+    // }));
 }
 
 function copySelected() {

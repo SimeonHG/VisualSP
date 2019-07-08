@@ -35,4 +35,13 @@ class Node {
         fill(150, 0, 0);
         this.square.draw();
     }
+
+    drawColor(color) {
+        fill(color.r, color.g, color.b);
+        this.square.draw();
+    }
+
+    equals(other) {
+        return this.square == other.square;
+    }
 }
