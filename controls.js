@@ -10,6 +10,7 @@ class Controls {
         function mouseDragged() {
             const {prevX, prevY, isDragging} = controls.viewPos;
             if(!isDragging) return;
+            if(!mouseIsInsideCanvas()) return;
 
             const pos = {x: mouseX, y: mouseY};
             const dx = pos.x - prevX;

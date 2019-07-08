@@ -34,6 +34,11 @@ function windowResized() {
 let startPos, currentPos;
 let isCentered = false;
 
+
+function mouseIsInsideCanvas(){
+    return mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY>= 0;
+}
+
 function draw() {
     background(255);
     if(Settings.mode != "typing"){
@@ -149,7 +154,7 @@ function getSelectedItems(coords) {
 }
 
 function mousePressed() {
-    if (mouseButton === LEFT && mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY>= 0) {
+    if (mouseButton === LEFT && mouseIsInsideCanvas()) {
         
         if (selectedItems.length > 0 && clickedOnSelected()) {
             movingSelectedItems = true;
