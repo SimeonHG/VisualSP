@@ -38,24 +38,24 @@ class Grid {
         let sqrLocation = this.getSquareLocationInGrid(square);
         let adjacent = new Array();
         //Need 2 refactor this at some point
-        if (sqrLocation.row + 1 <= this.height && sqrLocation.col +1 <= this.width) {
-            adjacent.push(this.squares[sqrLocation.row + 1][sqrLocation.col + 1]);
+        if (sqrLocation.col + 1 <= this.width) {
+            adjacent.push(this.squares[sqrLocation.row][sqrLocation.col + 1]);
         }
-        if (sqrLocation.row + 1 <= this.height && sqrLocation.col - 1 >= 0) {
-            adjacent.push(this.squares[sqrLocation.row + 1][sqrLocation.col - 1]);
+        if (sqrLocation.row + 1 <= this.height) {
+            adjacent.push(this.squares[sqrLocation.row + 1][sqrLocation.col]);
         }
-        if (sqrLocation.row - 1 >= 0 && sqrLocation.col + 1 <= this.width) {
-            adjacent.push(this.squares[sqrLocation.row - 1][sqrLocation.col + 1]);
+        if (sqrLocation.row - 1 >= 0) {
+            adjacent.push(this.squares[sqrLocation.row - 1][sqrLocation.col]);
         }
-        if (sqrLocation.row - 1 >= 0 && sqrLocation.col - 1 >= 0) {
-            adjacent.push(this.squares[sqrLocation.row - 1][sqrLocation.col - 1]);
+        if (sqrLocation.col - 1 >= 0) {
+            adjacent.push(this.squares[sqrLocation.row][sqrLocation.col - 1]);
         }
 
         return adjacent;
     }
 
     getSquareLocationInGrid(square) {
-        console.log(square);
+        // console.log(square);
         for (let i = 0; i < this.squares.length; i++) {
             if (this.squares[i].indexOf(square) != -1) {
                 return {

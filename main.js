@@ -30,7 +30,7 @@ function setup() {
     controls.view.y = -height / 2;
 
     // console.log(grid.squares[2][2]);
-    picker = new Picker(grid.squares[0][0], grid.squares[4][4]);
+    picker = new Picker(grid.squares[0][0], grid.squares[15][4]);
     picker.findRoute();
 }
 

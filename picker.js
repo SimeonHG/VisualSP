@@ -20,6 +20,7 @@ class Picker {
 
 		while (this.openList.length > 0) {
 			this.openList.sort((a, b) => a.f - b.f);
+			console.log(this.openList);
 			// console.log("In loop");
 			
 			let currentNode = this.openList[0];
@@ -47,7 +48,7 @@ class Picker {
 				}
 
 				let scores = childNode.calcScores(this.start, this.destination);
-				childNode.setScores(scores);
+				childNode.setScores(scores.g, scores.h);
 
 				for (let openNode of this.openList) {
 					if (openNode.square == childNode.square && childNode.g > openNode.g) {
