@@ -22,6 +22,21 @@ class Segment extends Entity {
         aisle.segments.push(this);
     }
 
+    move(dir) {
+        let aisle = Aisle.aisles[this.aisleId];
+        if (this.start.x + this._width + dir.x >= aisle.end.x ||
+            this.start.x + dir.x <= aisle.start.x) {
+            dir.x = 0;
+        }
+
+        if (this.start.y + this._height + dir.y >= aisle.end.y ||
+            this.start.y + dir.y <= aisle.start.y) {
+            dir.y = 0;
+        }
+
+        super.move(dir);
+    }
+
     remove() {
         let aisle = Aisle.aisles[this.aisleId];
         super.remove(aisle.segments);
