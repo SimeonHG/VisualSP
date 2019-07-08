@@ -190,8 +190,7 @@ function mouseDragged() {
     if (movingSelectedItems) {
         
         for (let item of selectedItems) {
-            item.move(createVector(mouseX - lastX - offsetX, mouseY - lastY - offsetY));
-            console.log("ofX = " + offsetX + "   ofY = " + offsetY);
+            item.move(createVector(mouseX - lastX - (offsetX*controls.view.zoom), mouseY - lastY - (offsetY*controls.view.zoom)));
             item.isInvalid();
         }
         lastX = mouseX;
