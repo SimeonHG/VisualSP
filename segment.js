@@ -24,14 +24,49 @@ class Segment extends Entity {
 
     move(dir) {
         let aisle = Aisle.aisles[this.aisleId];
-        if (this.start.x + this._width + dir.x >= aisle.end.x ||
-            this.start.x + dir.x <= aisle.start.x) {
+
+        let mousePos = {
+            x: mouseX,
+            y: mouseY
+        };
+
+        let invalidPos = dimension => (this.start[dimension] + dir[dimension] + this._dimensions[dimension] >= aisle.end[dimension]) ||
+                                      (this.start[dimension] + dir[dimension] <= aisle.start[dimension]);
+
+        let invalidMouse = dimension => {
+            if (mousePos[dimension] >= aisle.end[dimension] - this._dimensions[dimension]/2) {
+                return 1;
+            }
+            if (mousePos[dimension] <= aisle.start[dimension] + this._dimensions[dimension]/2) {
+                return -1;
+            }
+            return 0;
+        };
+
+        let res;
+        if ((res = invalidMouse('x')) || invalidPos('x')) {
             dir.x = 0;
+
+            switch (res) {
+                case 1:
+                    this.setpos(createVector(aisle.end.x - this._width, this.start.y));
+                    break;
+                case -1:
+                    this.setpos(createVector(aisle.start.x, this.start.y));
+                    break;
+            }
         }
 
-        if (this.start.y + this._height + dir.y >= aisle.end.y ||
-            this.start.y + dir.y <= aisle.start.y) {
+        if ((res = invalidMouse('y')) || invalidPos('y')) {
             dir.y = 0;
+            switch (res) {
+                case 1:
+                    this.setpos(createVector(this.start.x, aisle.end.y - this._height));
+                    break;
+                case -1:
+                    this.setpos(createVector(this.start.x, aisle.start.y));
+                    break;
+            }
         }
 
         super.move(dir);

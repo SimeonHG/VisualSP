@@ -20,6 +20,10 @@ class Entity extends Object {
         this._placed = false;
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
+        this._dimensions = {
+            x: this._width,
+            y: this._height
+        }
         this._selected = false;
         this.invalid = false;
         if (label == undefined) {
@@ -95,12 +99,15 @@ class Entity extends Object {
     }
 
     setpos(pos) {
-        let dir = {
-            x: pos.x - this.start.x,
-            y: pos.y - this.start.y
+        this.start = {
+            x: pos.x,
+            y: pos.y
         }
 
-        this.move(dir);
+        this.end = {
+            x: this.start.x + this._width,
+            y: this.start.y + this._height
+        }
     }
 
     collisions(others) {
