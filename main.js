@@ -12,6 +12,9 @@ let movingSelectedItems = false;
 let lastX = null;
 let lastY = null;
 
+let offsetX = 0;
+let offsetY = 0;
+
 let draggingForMovement = false;
 
 let windowFactor = {
@@ -185,12 +188,16 @@ function mouseDragged() {
     
 
     if (movingSelectedItems) {
+        
         for (let item of selectedItems) {
-            item.move(createVector(mouseX - lastX, mouseY - lastY));
+            item.move(createVector(mouseX - lastX - offsetX, mouseY - lastY - offsetY));
+            console.log("ofX = " + offsetX + "   ofY = " + offsetY);
             item.isInvalid();
         }
         lastX = mouseX;
         lastY = mouseY;
+        offsetX = 0;
+        offsetY = 0;
 
     } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
         if(!mouseIsInsideCanvas()) return;
