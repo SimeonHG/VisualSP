@@ -9,7 +9,7 @@ class Picker {
 		this.b = random(255);
 		this.openList = new Array();
 		this.closedList = new Array();
-		this.route = new Array();
+		//this.route = new Array();
 	}
 
 	findRoute() {
@@ -43,11 +43,13 @@ class Picker {
 			if (currentNode.square.pos.x == this.destination.square.pos.x && currentNode.square.pos.y == this.destination.square.pos.y) {
 				console.log("FOUND IT!");
 				while(currentNode.parent != null) {
-					this.route.push(currentNode);
+					Picker.route.push(currentNode);
 					currentNode = currentNode.parent;
 				}
-				this.route.push(currentNode);
+				Picker.route.push(currentNode);
+				this.animateRoute();
 				return;
+
 			}
 
 			currentNode.setChildren(grid.getAdjacent(currentNode.square)
@@ -75,20 +77,40 @@ class Picker {
 				this.openList.push(childNode);
 			});
 		}
- 	}
+	 }
+	 
 
-	drawRoute() {
-		if (this.route.length > 0) {
-			this.route.forEach((node) => {
-				node.draw();
-			})
+
+	animateRoute() {
+		if (Picker.route.length > 0) {
+			this.clearRoute();	
+			let i = 0;
+			let id = setInterval(function(){ 
+				
+				Node.nodes.push(Picker.route[i++]);
+				if(i == Picker.route.length){
+					clearInterval(id);
+				}
+			}, 100); /// change to time/picker.route.length
 		}
 	}
 
+	clearRoute(){
+		Node.nodes = [];
+	}
+
+	
+	
+
+
+	
+
 	draw(){
 		
-		fill(this.r, this.g, this.b, 100);
+		fill(this.r, this.g, this.b, 20);
 		ellipse(this.x, this.y, 20, 20);
 	}
 
+
 }
+Picker.route = [];

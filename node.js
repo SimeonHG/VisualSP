@@ -32,7 +32,9 @@ class Node {
     }
 
     draw() {
-        fill(150, 0, 0);
+        let nodeColor = color(100, 50, 150);
+        nodeColor.setAlpha(50);
+        fill(nodeColor);
         this.square.draw();
     }
 
@@ -45,3 +47,5 @@ class Node {
         return this.square == other.square;
     }
 }
+
+Node.nodes = []

@@ -36,6 +36,7 @@ function setup() {
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
     controls.view.x = -width / 2;
     controls.view.y = -height / 2;
+    
 
     picker = new Picker(grid.squares[0][0], grid.squares[8][8]);
 }
@@ -77,8 +78,11 @@ function draw() {
             aisle._placed = true;
         }
     }
+    for (let node of Node.nodes) {
+        node.draw();
+    }
     Selection.draw();
-    picker.drawRoute();
+   // picker.drawRoute();
 
     if (currentRoute.start !=null) {
         currentRoute.start.drawColor({
@@ -305,3 +309,4 @@ function findRoute() {
         alert("Path not selected!");
     }
 }
+
