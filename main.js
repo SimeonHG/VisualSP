@@ -193,15 +193,8 @@ function getSelectedItems(coords) {
     return collAisle.concat(collZone);
 }
 
-<<<<<<< HEAD
-
-function mousePressed() {
-    if (mouseButton === LEFT && mouseIsInsideCanvas()) {
-
-=======
 function mousePressed(e) {
     if (mouseButton === LEFT) {
->>>>>>> pathfinding
         if (selectedItems.length > 0 && clickedOnSelected()) {
             movingSelectedItems = true;
             lastX = mouseX;
