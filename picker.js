@@ -23,11 +23,10 @@ class Picker {
 		this.openList.push(this.start); 
 
 		while (this.openList.length > 0) {
-			// console.log(this.closedList);
 			this.openList.sort((a, b) => a.f - b.f);
 			
 			let currentNode = this.openList[0];
-			console.log("row: " + grid.getSquareLocationInGrid(currentNode.square).row + ", col: " + grid.getSquareLocationInGrid(currentNode.square).col);
+			// console.log("row: " + grid.getSquareLocationInGrid(currentNode.square).row + ", col: " + grid.getSquareLocationInGrid(currentNode.square).col);
 			this.openList.shift();
 		
 			let includes = false;
@@ -39,13 +38,11 @@ class Picker {
 			if (!includes) {
 				this.closedList.push(currentNode);
 			}
-			
 
 			// WIN CONDITION
 			if (currentNode.square.pos.x == this.destination.square.pos.x && currentNode.square.pos.y == this.destination.square.pos.y) {
 				console.log("FOUND IT!");
 				while(currentNode.parent != null) {
-					// console.log(currentNode);
 					this.route.push(currentNode);
 					currentNode = currentNode.parent;
 				}
@@ -92,10 +89,6 @@ class Picker {
 		
 		fill(this.r, this.g, this.b, 100);
 		ellipse(this.x, this.y, 20, 20);
-		//
-		// this.x += random(-20, 20);
-  		// this.y += random(-20, 20);
-
 	}
 
 }

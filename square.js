@@ -27,6 +27,11 @@ class Square {
         rect(this.pos.x, this.pos.y, Square.width, Square.width);
     }
 
+    drawColor(color) {
+        fill(color.r, color.g, color.b);
+        rect(this.pos.x, this.pos.y, Square.width, Square.width);
+    }
+
     json() {
         return { x: this.pos.x, y: this.pos.y };
     }

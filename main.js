@@ -3,6 +3,11 @@ const controls = {
     viewPos: { prevX: null, prevY: null, isDragging: false },
 }
 
+const currentRoute = {
+    start: null,
+    end: null
+}
+
 let canvas;
 let drawn = false;
 let grid;
@@ -30,11 +35,14 @@ function setup() {
     controls.view.y = -height / 2;
 
     picker = new Picker(grid.squares[0][0], grid.squares[8][8]);
-
 }
 
 function windowResized() {
     resizeCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
+}
+
+function mouseIsInsideCanvas() {
+    return mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY >= 0;
 }
 
 let startPos, currentPos;
@@ -54,13 +62,23 @@ function draw() {
         aisle.draw();
     }
     Selection.draw();
-
     picker.drawRoute();
-    // picker.openList.forEach(node => node.drawColor({
-    //     r: 0,
-    //     g: 150,
-    //     b: 25
-    // }));
+
+    if (currentRoute.start !=null) {
+        currentRoute.start.drawColor({
+            r: 0,
+            g: 200,
+            b: 25
+        });
+    }
+    if (currentRoute.end != null) {
+        // console.log(currentRoute);
+        currentRoute.end.drawColor({
+            r: 15,
+            g: 100,
+            b: 200
+        });
+    }
 }
 
 function copySelected() {
@@ -159,7 +177,7 @@ function getSelectedItems(coords) {
     return collAisle.concat(collZone);
 }
 
-function mousePressed() {
+function mousePressed(e) {
     if (mouseButton === LEFT) {
         if (selectedItems.length > 0 && clickedOnSelected()) {
             movingSelectedItems = true;
@@ -174,8 +192,15 @@ function mousePressed() {
             Selection.update();
         } else if (Settings.mode == "movement") {
             Controls.move(controls).mousePressed();
+        } else if (Settings.mode == "routeSelect" && mouseIsInsideCanvas()) {
+            currentRoute.start = grid.getClickedSquareObj();
+        }
+    } else if (mouseButton === CENTER) {
+        if (Settings.mode == "routeSelect") {
+                currentRoute.end = grid.getClickedSquareObj();
         }
     }
+    return false;
 }
 
 function mouseDragged() {
@@ -240,10 +265,15 @@ function mouseReleased() {
             }
             zones.push(zone);
         }
-
-    }
+    } 
+    return false;
 }
 
 function findRoute() {
-   picker.findRoute(); 
+    if (currentRoute.start != null && currentRoute.end != null) {
+        picker = new Picker(currentRoute.start, currentRoute.end);
+        picker.findRoute();
+    } else {
+        alert("Path not selected!");
+    }
 }

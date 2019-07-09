@@ -80,4 +80,15 @@ class Grid {
             }
         }
     }
+    
+
+    getClickedSquareObj() {
+        for (let squareRow of this.squares) {
+            for (let square of squareRow) {
+                if (square.isClicked()) {
+                    return square;
+                }
+            }
+        }
+    }
 }
