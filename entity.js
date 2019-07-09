@@ -26,10 +26,10 @@ class Entity extends Object {
         }
         this._selected = false;
         this._invalid = false;
-        if (label == undefined) {
+        if (label == undefined || label == "") {
             this.label = new Label(this, '');
         } else {
-            this.label = label;
+            this.label = new Label(this, label);
         }
         Entity.entities.push(this);
         this.setCorners();

@@ -3,7 +3,7 @@ let inputBox, inputBoxButton, itemToLabel;
 
 function exporter() {
     let element = document.createElement('a');
-    let payload = JSON.stringify(Aisle.aisles, JSONParser.export_filter);
+    let payload = JSON.stringify({'aisles': Aisle.aisles, 'zones': Zone.zones}, JSONParser.export_filter);
     
     console.log(payload);
     

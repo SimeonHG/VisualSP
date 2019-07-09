@@ -1,24 +1,24 @@
 class Segment extends Entity {
 
-    constructor(start, end, aisleId) {
+    constructor(start, end, lable, aisleId) {
         if (start instanceof Segment) {
             let other = start;
             super(other);
             this._selected = other._selected;
         } else {
-            super(start, end);
+            super(start, end, lable);
             this._selected = false;
         }
 
         Segment.segments.push(this);
-        this.id = Segment.segments.indexOf(this);
+        this._id = Segment.segments.indexOf(this);
         if (aisleId !== undefined) {
             this.aisleId = aisleId;
         }
     }
 
     attach(aisle) {
-        this.aisleId = aisle.id;
+        this.aisleId = aisle._id;
         aisle.segments.push(this);
     }
 

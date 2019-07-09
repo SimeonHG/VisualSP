@@ -1,6 +1,6 @@
 class Aisle extends Entity {
 
-    constructor(start, end, segments) {
+    constructor(start, end, lable, segments) {
 
         if (start instanceof Aisle) {
             let other = start;
@@ -8,7 +8,7 @@ class Aisle extends Entity {
             this.segments = other.segments.map((e) => new Segment(e));
             this._selected = other._selected;
         } else {
-            super(start, end);
+            super(start, end, lable);
             this._selected = false;
             this.segments = segments == undefined ? [] : segments;
         }
@@ -17,7 +17,7 @@ class Aisle extends Entity {
         this._markedDestroy = false;
 
         Aisle.aisles.push(this);
-        this.id = Aisle.aisles.indexOf(this);
+        this._id = Aisle.aisles.indexOf(this);
     }
 
     draw() {

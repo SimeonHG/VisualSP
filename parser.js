@@ -14,12 +14,17 @@ class JSONParser {
         let temp_aisle, segments;
         console.log(object);
         
-        for (const aisle of object) {
-            temp_aisle = new Aisle(aisle.start, aisle.end);
-            segments = aisle.segments.map((e) => new Segment(e.start, e.end, e.aisleId)); 
+        for (const aisle of object.aisles) {
+            temp_aisle = new Aisle(...Object.values(aisle));
+            // temp_aisle = new Aisle(aisle.start, aisle.end);
+            segments = aisle.segments.map((e) => new Segment(...Object.values(e))); 
             temp_aisle.segments = segments;
 
             map.push(temp_aisle);
+        }
+
+        for (const zone of object.zones) {
+            Zone.zones.push(new Zone(...Object.values(zone)))
         }
         
         return map;
