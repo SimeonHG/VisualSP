@@ -26,9 +26,9 @@ class Aisle extends Entity {
         strokeWeight(3);
 
         fill(51, 51, 51, 180);
-
+        
         if (this._selected) {
-            fill(100, 149, 237, 160);
+            fill(0, 0, 180, 120);
             stroke(0, 0, 255);
         }
 

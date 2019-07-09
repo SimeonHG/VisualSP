@@ -1,27 +1,42 @@
 class Corner {
-    constructor(x, y, size = 10) {
+    constructor(x, y, size = 20) {
         this.pos = {
             x: x,
             y: y
         }
         this.size = size;
+        this.active = false;
     }
 
     draw() {
+        if (!this.active) {
+            return;
+        }
         circle(this.pos.x, this.pos.y, this.size);
     }
 
     isClicked() {
-        let coords = {
-            "x": mouseX,
-            "y": mouseY
+        if (!this.active) {
+            return;
         }
 
-        let normalizedX = Grid.normalize(coords).x;
-        let normalizedY = Grid.normalize(coords).y;
-        return normalizedX >= this.pos.x &&
-            normalizedX <= this.pos.x + this.size &&
-            normalizedY >= this.pos.y &&
-            normalizedY <= this.pos.y + this.size
+        let mouseVec = createVector(mouseX, mouseY);
+        mouseVec.sub(createVector(this.pos.x, this.pos.y));
+        
+        let coords = Grid.normalize(mouseVec);
+        let nX = coords.x;
+        let nY = coords.y;
+
+        let dist = sqrt(nX*nX + nY*nY);
+ 
+        return dist <= this.size;
+    }
+
+    activate() {
+        this.active = true;
+    }
+
+    deactivate() {
+        this.active = false;
     }
 }

@@ -85,11 +85,10 @@ class Segment extends Entity {
         strokeWeight(2);
         fill(65, 120, 70, 200);
         if (this._selected) {
-            fill(50, 80, 200, 100);
-            stroke(0, 0, 200);
+            fill(0, 0, 180, 120);
+            stroke(0, 0, 255);
         }
-
-        if (this.isInvalid() && this._selected) {
+        if (this.isInvalid()) {
             fill(120, 120, 120, this._alpha);
         }
 

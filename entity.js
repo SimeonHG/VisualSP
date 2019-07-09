@@ -46,8 +46,8 @@ class Entity extends Object {
         this._corners = [];
 
         this._corners.push(new Corner(this.start.x, this.start.y));
-        this._corners.push(new Corner(this.end.x, this.start.y));
-        this._corners.push(new Corner(this.end.x, this.end.y));
+        this._corners.push(new Corner(this.end.x  , this.start.y));
+        this._corners.push(new Corner(this.end.x  , this.end.y));
         this._corners.push(new Corner(this.start.x, this.end.y));
     }
 
@@ -72,6 +72,7 @@ class Entity extends Object {
             iterator.x = this.snap(iterator.x);
             iterator.y = this.snap(iterator.y);
         }
+        this.setCorners();
     }
 
     move(direction) {
@@ -80,6 +81,7 @@ class Entity extends Object {
 
         this.end.x += direction.x / controls.view.zoom;
         this.end.y += direction.y / controls.view.zoom;
+        this.setCorners();
     }
 
     normalize(o1, o2) {
@@ -159,10 +161,12 @@ class Entity extends Object {
     }
 
     place() {
-        if (!this.isInvalid()) {
-            this._placed = true;
-            this.snapAll();
-        }
+        this._placed = true;         
+        this.snapAll();
+    }
+
+    pick() {
+        this._placed = false;
     }
 
     setLabel(text) {
@@ -175,31 +179,38 @@ class Entity extends Object {
 
     select() {
         this._selected = true;
+        this.setCorners();
+        for (let corner of this._corners) {
+            corner.activate();
+        }
         selectedItems.push(this);
     }
 
     deselect() {
         this._selected = false;
+        for (let corner of this._corners) {
+            corner.deactivate();
+        }
     }
 
     beginResize(corner) {
         let index = this._corners.indexOf(corner);
-        console.log(index);
         index = (index + 2) % 4;
-        console.log(index);
         Selection.begin(this._corners[index].pos);
     }
 
     resize(coords) {
         this.start = coords.start;
         this.end = coords.end;
-        this._width = abs(this.start.x - this.end.x);
-        this._height = abs(this.start.y - this.end.y);
+        this._width = Math.abs(coords.start.x - coords.end.x);
+        this._height = Math.abs(coords.start.y - coords.end.y);
+        this.normalize(this.start, this.end);       
         this._dimensions = {
             x: this._width,
             y: this._height
-        }
+        };
         this.setCorners();
+        this.isInvalid();
     }
 }
 

@@ -68,6 +68,10 @@ function draw() {
         }
     }
     Selection.draw();
+    if (!resizingEntity) {
+        return;
+    }
+    console.log(resizingEntity._selected);
 }
 
 function copySelected() {
@@ -83,7 +87,6 @@ function copySelected() {
         } else {
             if (item instanceof Aisle) {
                 newObj = new Aisle(item);
-                aisles.push(newObj);
             } else if (item instanceof Zone) {
                 newObj = new Zone(item);
                 zones.push(newObj);
@@ -168,7 +171,7 @@ function getSelectedItems(coords) {
 
 
 function mousePressed() {
-    for (let entity of Entity.entities) {
+    for (let entity of selectedItems) {
         for (let corner of entity.getCorners()) {
             if (corner.isClicked()) {
                 entity.beginResize(corner);
@@ -205,7 +208,8 @@ function mouseDragged() {
 
         for (let item of selectedItems) {
             item._placed = false;
-            item.move(createVector(mouseX - lastX - (offsetX * controls.view.zoom), mouseY - lastY - (offsetY * controls.view.zoom)));
+            let coords = Grid.normalize(createVector(mouseX - lastX, mouseY - lastY));
+            item.move(createVector(coords.x, coords.y));
             item.isInvalid();
         }
         lastX = mouseX;
@@ -229,11 +233,12 @@ function mouseReleased() {
     movingSelectedItems = false;
     selectedItems.map((e) => e.place());
 
+    let selectionCoords = Selection.end();
+
     if (resizingEntity) {
-        Selection.end();
         resizingEntity = null;
     } else if (Settings.mode == "aisles") {
-        let aisleCoords = Selection.end();
+        let aisleCoords = selectionCoords;
         if (aisleCoords) {
             aisle = new Aisle(aisleCoords.start, aisleCoords.end);
             if (aisle.isInvalid()) {
@@ -241,7 +246,7 @@ function mouseReleased() {
             }
         }
     } else if (Settings.mode == "segments") {
-        let segmentCoords = Selection.end();
+        let segmentCoords = selectionCoords;
         if (segmentCoords) {
             let segment = new Segment(segmentCoords.start, segmentCoords.end);
             //TODO: Optimize this
@@ -258,7 +263,7 @@ function mouseReleased() {
         Controls.move(controls).mouseReleased()
     } else if (Settings.mode == "select") {
         if (mouseY > 0 && mouseButton === LEFT) {
-            let collisions = getSelectedItems(Selection.end());
+            let collisions = getSelectedItems(selectionCoords);
             if (!collisions) {
                 return;
             }
@@ -267,7 +272,7 @@ function mouseReleased() {
             }
         }
     } else if (Settings.mode == "zones") {
-        let zoneCoords = Selection.end();
+        let zoneCoords = selectionCoords;
         if (zoneCoords) {
             zone = new Zone(zoneCoords.start, zoneCoords.end);
             if (zone.isInvalid()) {
