@@ -286,7 +286,8 @@ function mouseReleased() {
             }
         }
     } else if (Settings.mode == "segments") {
-        let segmentCoords = Selection.end();
+        let segmentCoords = selectionCoords;
+
         if (segmentCoords) {
             let segment = new Segment(segmentCoords.start, segmentCoords.end);
             //TODO: Optimize this
@@ -312,7 +313,7 @@ function mouseReleased() {
             }
         }
     } else if (Settings.mode == "zones") {
-        let zoneCoords = Selection.end();
+        let zoneCoords = selectionCoords;
         if (zoneCoords) {
             zone = new Zone(zoneCoords.start, zoneCoords.end);
             if (zone.isInvalid()) {
