@@ -33,13 +33,13 @@ class Segment extends Entity {
         mousePos = Grid.normalize(mousePos);
 
         let invalidPos = dimension => (this.start[dimension] + dir[dimension] + this._dimensions[dimension] >= aisle.end[dimension]) ||
-            (this.start[dimension] + dir[dimension] <= aisle.start[dimension]);
+                                      (this.start[dimension] + dir[dimension] <= aisle.start[dimension]);
 
         let invalidMouse = dimension => {
-            if (mousePos[dimension] >= aisle.end[dimension] - this._dimensions[dimension] / 2) {
+            if (mousePos[dimension] >= aisle.end[dimension] - this._dimensions[dimension]/2) {
                 return 1;
             }
-            if (mousePos[dimension] <= aisle.start[dimension] + this._dimensions[dimension] / 2) {
+            if (mousePos[dimension] <= aisle.start[dimension] + this._dimensions[dimension]/2) {
                 return -1;
             }
             return 0;

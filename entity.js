@@ -33,6 +33,9 @@ class Entity extends Object {
         }
         Entity.entities.push(this);
         this.setCorners();
+
+        this.markSquares();
+
     }
 
     draw() {
@@ -54,6 +57,14 @@ class Entity extends Object {
         this._corners[1].setpos(createVector(this.end.x  , this.start.y));
         this._corners[2].setpos(createVector(this.end.x  , this.end.y));
         this._corners[3].setpos(createVector(this.start.x, this.end.y));        
+    }
+
+    markSquares() {
+        for (let x = this.start.x; x < this.end.x; x += Square.width) {
+            for (let y = this.start.y; y < this.end.y; y += Square.width) {
+                    grid.getSquare(x, y).hasEntity = true;
+            }
+        }
     }
 
     centerCoords() {
@@ -166,12 +177,10 @@ class Entity extends Object {
     }
 
     place() {
-        this._placed = true;         
-        this.snapAll();
-    }
-
-    pick() {
-        this._placed = false;
+        if (!this.isInvalid()) {
+            this._placed = true;
+            this.snapAll();
+        }
     }
 
     setLabel(text) {

@@ -3,6 +3,11 @@ const controls = {
     viewPos: { prevX: null, prevY: null, isDragging: false },
 }
 
+const currentRoute = {
+    start: null,
+    end: null
+}
+
 let canvas;
 let drawn = false;
 let grid;
@@ -25,6 +30,7 @@ let windowFactor = {
 }
 
 let input;
+let picker;
 
 function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
@@ -32,10 +38,16 @@ function setup() {
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
     controls.view.x = -width / 2;
     controls.view.y = -height / 2;
+
+    picker = new Picker(grid.squares[0][0], grid.squares[8][8]);
 }
 
 function windowResized() {
     resizeCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
+}
+
+function mouseIsInsideCanvas() {
+    return mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY >= 0;
 }
 
 let startPos, currentPos;
@@ -68,10 +80,27 @@ function draw() {
         }
     }
     Selection.draw();
-    if (!resizingEntity) {
-        return;
+    // console.log(!resizingEntity);
+    
+    // console.log(resizingEntity._selected);
+    picker.drawRoute();
+
+    if (currentRoute.start !=null) {
+        console.log(currentRoute);
+        currentRoute.start.drawColor({
+            r: 0,
+            g: 200,
+            b: 25
+        });
     }
-    console.log(resizingEntity._selected);
+    if (currentRoute.end != null) {
+        console.log(currentRoute);
+        currentRoute.end.drawColor({
+            r: 15,
+            g: 100,
+            b: 200
+        });
+    }
 }
 
 function copySelected() {
@@ -189,15 +218,25 @@ function mousePressed() {
             lastY = mouseY;
         } else if (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") {
             for (let entity of Aisle.aisles.concat(Zone.zones)) {
-
                 entity.deselect();
             }
             selectedItems = [];
             Selection.begin();
+            Selection.update();
         } else if (Settings.mode == "movement") {
             Controls.move(controls).mousePressed();
+        } else if (Settings.mode == "routeSelect") {
+            console.log("INSIDE IF");
+            currentRoute.start = grid.getClickedSquareObj();
+            console.log(currentRoute);
+        }
+    } else if (mouseButton === CENTER && mouseIsInsideCanvas()) {
+        if (Settings.mode == "routeSelect") {
+                currentRoute.end = grid.getClickedSquareObj();
+                console.log(currentRoute);
         }
     }
+    return false;
 }
 
 function mouseDragged() {
@@ -247,7 +286,7 @@ function mouseReleased() {
             }
         }
     } else if (Settings.mode == "segments") {
-        let segmentCoords = selectionCoords;
+        let segmentCoords = Selection.end();
         if (segmentCoords) {
             let segment = new Segment(segmentCoords.start, segmentCoords.end);
             //TODO: Optimize this
@@ -273,12 +312,22 @@ function mouseReleased() {
             }
         }
     } else if (Settings.mode == "zones") {
-        let zoneCoords = selectionCoords;
+        let zoneCoords = Selection.end();
         if (zoneCoords) {
             zone = new Zone(zoneCoords.start, zoneCoords.end);
             if (zone.isInvalid()) {
                 zone.destroy();
             }
         }
+    } 
+    return false;
+}
+
+function findRoute() {
+    if (currentRoute.start != null && currentRoute.end != null) {
+        picker = new Picker(currentRoute.start, currentRoute.end);
+        picker.findRoute();
+    } else {
+        alert("Path not selected!");
     }
 }

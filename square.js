@@ -2,6 +2,12 @@ class Square {
 
     constructor(x, y) {
         this.pos = createVector(x, y);
+        this.hasEntity = false;
+        this.color = {
+            r: 0,
+            g: 0,
+            b: 0
+        }
     }
 
     isClicked() {  
@@ -18,6 +24,11 @@ class Square {
     }
 
     draw() {
+        rect(this.pos.x, this.pos.y, Square.width, Square.width);
+    }
+
+    drawColor(color) {
+        fill(color.r, color.g, color.b);
         rect(this.pos.x, this.pos.y, Square.width, Square.width);
     }
 
