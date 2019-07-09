@@ -18,7 +18,6 @@ class Entity extends Object {
             this.normalize(start, end);
         }
         this._placed = false;
-        this._corners = [];
         this._width = abs(this.start.x - this.end.x);
         this._height = abs(this.start.y - this.end.y);
         this._dimensions = {
@@ -43,12 +42,18 @@ class Entity extends Object {
     }
 
     setCorners() {
-        this._corners = [];
-
-        this._corners.push(new Corner(this.start.x, this.start.y));
-        this._corners.push(new Corner(this.end.x  , this.start.y));
-        this._corners.push(new Corner(this.end.x  , this.end.y));
-        this._corners.push(new Corner(this.start.x, this.end.y));
+        if (!this._corners) {
+            this._corners = [];
+            this._corners.push(new Corner(this.start.x, this.start.y));
+            this._corners.push(new Corner(this.end.x  , this.start.y));
+            this._corners.push(new Corner(this.end.x  , this.end.y));
+            this._corners.push(new Corner(this.start.x, this.end.y));
+            return;
+        }
+        this._corners[0].setpos(createVector(this.start.x, this.start.y));
+        this._corners[1].setpos(createVector(this.end.x  , this.start.y));
+        this._corners[2].setpos(createVector(this.end.x  , this.end.y));
+        this._corners[3].setpos(createVector(this.start.x, this.end.y));        
     }
 
     centerCoords() {

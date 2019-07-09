@@ -8,6 +8,11 @@ class Corner {
         this.active = false;
     }
 
+    setpos(coords) {
+        this.pos.x = coords.x;
+        this.pos.y = coords.y;
+    }
+
     draw() {
         if (!this.active) {
             return;
@@ -22,8 +27,8 @@ class Corner {
 
         let mouseVec = createVector(mouseX, mouseY);
         mouseVec.sub(createVector(this.pos.x, this.pos.y));
-        
         let coords = Grid.normalize(mouseVec);
+
         let nX = coords.x;
         let nY = coords.y;
 

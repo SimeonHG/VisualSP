@@ -208,8 +208,9 @@ function mouseDragged() {
 
         for (let item of selectedItems) {
             item._placed = false;
-            let coords = Grid.normalize(createVector(mouseX - lastX, mouseY - lastY));
-            item.move(createVector(coords.x, coords.y));
+            // let coords = Grid.normalize(createVector());
+            item.move(createVector(mouseX - lastX, mouseY - lastY));
+            // console.log(coords.x, coords.y);
             item.isInvalid();
         }
         lastX = mouseX;
