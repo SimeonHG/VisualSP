@@ -86,9 +86,24 @@ class Picker {
 	}
 
 	draw(){
-		
 		fill(this.r, this.g, this.b, 100);
 		ellipse(this.x, this.y, 20, 20);
+	}
+
+	drawClosedList() {
+		this.closedList.forEach(node => node.drawWithScores({
+			r: 100,
+			g: 100,
+			b: 100
+		}));
+	}
+
+	drawOpenList() {
+		this.openList.forEach(node => node.drawWithScores({
+			r: 0,
+			g: 100,
+			b: 100
+		}));
 	}
 
 }

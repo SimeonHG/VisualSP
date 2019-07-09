@@ -97,8 +97,8 @@ class Controls {
             // controls.view.y -= (mouseY - controls.view.y) * height * zoom / 1000;
             controls.view.zoom += zoom;
             
-            if (controls.view.zoom >= 1.6 && deltaY < 0) {
-                controls.view.zoom = 1.6;
+            if (controls.view.zoom >= 2.4 && deltaY < 0) {
+                controls.view.zoom = 2.4;
                 // controls.view.x = prevX;
                 // controls.view.y = prevY;
             } else if (controls.view.zoom <= 0.2 && deltaY > 0) {

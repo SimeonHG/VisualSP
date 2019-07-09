@@ -83,6 +83,8 @@ function draw() {
     // console.log(!resizingEntity);
     
     // console.log(resizingEntity._selected);
+    // picker.drawOpenList();
+    // picker.drawClosedList();
     picker.drawRoute();
 
     if (currentRoute.start !=null) {
