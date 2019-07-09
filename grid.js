@@ -11,6 +11,7 @@ class Grid {
                 this.squares[x].push(new Square(x * Square.width, y * Square.width));
             }
         }
+
     }
 
     static normalize(coords) {
@@ -30,6 +31,43 @@ class Grid {
         }
     }
 
+    getSquare(x, y) {
+        return this.squares[x / Square.width][y / Square.width];
+    }
+
+    getAdjacent(square) {
+        let sqrLocation = this.getSquareLocationInGrid(square);
+        let adjacent = new Array();
+        //Need 2 refactor this at some point
+        if (sqrLocation.row + 1 <= this.width) {
+            adjacent.push(this.squares[sqrLocation.col][sqrLocation.row + 1]);
+        }
+        if (sqrLocation.col + 1 <= this.height) {
+            adjacent.push(this.squares[sqrLocation.col + 1][sqrLocation.row]);
+        }
+        if (sqrLocation.col - 1 >= 0) {
+            adjacent.push(this.squares[sqrLocation.col - 1][sqrLocation.row]);
+        }
+        if (sqrLocation.row - 1 >= 0) {
+            adjacent.push(this.squares[sqrLocation.col][sqrLocation.row - 1]);
+        }
+
+        return adjacent;
+    }
+
+    getSquareLocationInGrid(square) {
+        // console.log(square);
+        for (let i = 0; i < this.squares.length; i++) {
+            if (this.squares[i].indexOf(square) != -1) {
+                return {
+                    row: this.squares[i].indexOf(square),
+                    col: i
+                }
+            }
+        }
+
+    }
+
     getClickedSquare() {
         for (let squareRow of this.squares) {
             for (let square of squareRow) {
@@ -38,6 +76,17 @@ class Grid {
                         x: square.pos.x,
                         y: square.pos.y
                     };
+                }
+            }
+        }
+    }
+    
+
+    getClickedSquareObj() {
+        for (let squareRow of this.squares) {
+            for (let square of squareRow) {
+                if (square.isClicked()) {
+                    return square;
                 }
             }
         }
