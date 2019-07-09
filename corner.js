@@ -25,15 +25,15 @@ class Corner {
             return;
         }
 
-        let mouseVec = createVector(mouseX, mouseY);
+        let mousePos = Grid.normalize(createVector(mouseX, mouseY));
+        let mouseVec = createVector(mousePos.x, mousePos.y);
         mouseVec.sub(createVector(this.pos.x, this.pos.y));
-        let coords = Grid.normalize(mouseVec);
 
-        let nX = coords.x;
-        let nY = coords.y;
+        let mX = mouseVec.x;
+        let mY = mouseVec.y;
 
-        let dist = sqrt(nX*nX + nY*nY);
- 
+        let dist = sqrt(mX*mX + mY*mY);
+
         return dist <= this.size;
     }
 
