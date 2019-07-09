@@ -56,7 +56,6 @@ class Grid {
     }
 
     getSquareLocationInGrid(square) {
-        // console.log(square);
         for (let i = 0; i < this.squares.length; i++) {
             if (this.squares[i].indexOf(square) != -1) {
                 return {

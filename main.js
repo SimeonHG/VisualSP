@@ -88,7 +88,6 @@ function draw() {
     picker.drawRoute();
 
     if (currentRoute.start !=null) {
-        console.log(currentRoute);
         currentRoute.start.drawColor({
             r: 0,
             g: 200,
@@ -96,7 +95,6 @@ function draw() {
         });
     }
     if (currentRoute.end != null) {
-        console.log(currentRoute);
         currentRoute.end.drawColor({
             r: 15,
             g: 100,

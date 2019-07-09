@@ -1,6 +1,5 @@
 class Picker {
 	constructor(startSqr, destinationSqr) {
-		// console.log("destinationSqr: " + destinationSqr.pos.x);
 		this.start = new Node(startSqr);
 		this.destination = new Node(destinationSqr);
 
@@ -13,7 +12,6 @@ class Picker {
 	}
 
 	findRoute() {
-		// console.log("start " + this.start.square);
 		if (this.destination.square.hasEntity || this.start.square.hasEntity) {
 			alert("Invalid destination or start!");
 			return;
@@ -26,7 +24,6 @@ class Picker {
 			this.openList.sort((a, b) => a.f - b.f);
 			
 			let currentNode = this.openList[0];
-			// console.log("row: " + grid.getSquareLocationInGrid(currentNode.square).row + ", col: " + grid.getSquareLocationInGrid(currentNode.square).col);
 			this.openList.shift();
 		
 			let includes = false;
@@ -41,7 +38,6 @@ class Picker {
 
 			// WIN CONDITION
 			if (currentNode.square.pos.x == this.destination.square.pos.x && currentNode.square.pos.y == this.destination.square.pos.y) {
-				console.log("FOUND IT!");
 				while(currentNode.parent != null) {
 					this.route.push(currentNode);
 					currentNode = currentNode.parent;

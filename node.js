@@ -29,7 +29,6 @@ class Node {
         this.g = g;
         this.h = h;
         this.f = this.g + this.h;
-        // console.log("g: " + this.g.toFixed(2));
     }
 
     draw() {
