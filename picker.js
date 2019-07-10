@@ -79,7 +79,7 @@ class Picker {
 
 	animateRoute() {
 		if (Picker.route.length > 0) {
-			this.clearRoute();	
+			//this.clearRoute();	
 			let i = 0;
 			let id = setInterval(function(){ 
 				
