@@ -89,7 +89,7 @@ function draw() {
     // console.log(resizingEntity._selected);
     // picker.drawOpenList();
     // picker.drawClosedList();
-    picker.drawRoute();
+    // picker.drawRoute();
 
     if (currentRoute.start !=null) {
         currentRoute.start.drawColor({

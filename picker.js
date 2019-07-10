@@ -1,14 +1,14 @@
 class Picker {
-	constructor(startSqr, destinationSqr) {
+	constructor(startSqr, pickLog) {
 		this.start = new Node(startSqr);
-		this.destination = new Node(destinationSqr);
+		// this.pickLog =
 
 		this.r = random(255);
 		this.g = random(255);
 		this.b = random(255);
 		this.openList = new Array();
 		this.closedList = new Array();
-		//this.route = new Array();
+		this.route = new Array();
 	}
 
 	findRoute() {
@@ -39,10 +39,10 @@ class Picker {
 			// WIN CONDITION
 			if (currentNode.square.pos.x == this.destination.square.pos.x && currentNode.square.pos.y == this.destination.square.pos.y) {
 				while(currentNode.parent != null) {
-					Picker.route.push(currentNode);
+					this.route.push(currentNode);
 					currentNode = currentNode.parent;
 				}
-				Picker.route.push(currentNode);
+				this.route.push(currentNode);
 				this.animateRoute();
 				return;
 
@@ -78,14 +78,15 @@ class Picker {
 
 
 	animateRoute() {
-		if (Picker.route.length > 0) {
+		if (this.route.length > 0) {
 			//this.clearRoute();	
 			let i = 0;
-			let id = setInterval(function(){ 
+			let id = setInterval(() => { 
 				
-				Node.nodes.push(Picker.route[i++]);
-				if(i == Picker.route.length){
+				Node.nodes.push(this.route[i++]);
+				if (i == this.route.length) {
 					clearInterval(id);
+					// this.clearRoute();
 				}
 			}, 100); /// change to time/picker.route.length
 		}
@@ -94,12 +95,6 @@ class Picker {
 	clearRoute(){
 		Node.nodes = [];
 	}
-
-	
-	
-
-
-	
 
 	draw(){
 		fill(this.r, this.g, this.b, 100);
