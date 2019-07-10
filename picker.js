@@ -1,8 +1,10 @@
 class Picker {
-	constructor(startSqr, destination) {
+	constructor(startSqr, pickLog) {
 		this.start = new Node(startSqr);
-		// this.pickLog =
-		this.destination = new Node(destination);
+		this.destination = null;
+		this.pickLog = pickLog;
+		this.taskCounter = 0;
+		this.tempSquares = [];
 
 		this.r = random(255);
 		this.g = random(255);
@@ -10,6 +12,16 @@ class Picker {
 		this.openList = new Array();
 		this.closedList = new Array();
 		this.route = new Array();
+	}
+
+	findNextDestination() {
+		let segment = Segment.findSegmentById(parseInt(this.pickLog[this.taskCounter].location));
+		this.tempSquares = segment.getAdjacentFreeSquares();
+		let distances = this.tempSquares.map(square => {
+			square.euclideanDistance(this.start.square);
+		});
+		console.log(distances);
+		this.taskCounter++;
 	}
 
 	findRoute() {
@@ -97,8 +109,13 @@ class Picker {
 	}
 
 	draw(){
-		fill(this.r, this.g, this.b, 100);
-		ellipse(this.x, this.y, 20, 20);
+		for (let square of this.tempSquares) {
+			square.drawColor({
+				r: 200,
+				g: 0,
+				b: 0
+			});
+		}
 	}
 
 	drawClosedList() {

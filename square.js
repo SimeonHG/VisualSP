@@ -35,6 +35,11 @@ class Square {
     json() {
         return { x: this.pos.x, y: this.pos.y };
     }
+
+    euclideanDistance(otherSqr) {
+        console.log(Math.pow(this.pos.y - otherSqr.pos.y, 2));
+        return Math.sqrt(Math.pow(this.pos.y - otherSqr.pos.y, 2) + Math.pow(this.pos.x - otherSqr.pos.x, 2)) / Square.width;
+    }
 }
 
 Square.width = 20;

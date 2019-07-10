@@ -4,8 +4,7 @@ const controls = {
 }
 
 const currentRoute = {
-    start: null,
-    end: null
+    start: null
 }
 
 let canvas;
@@ -100,20 +99,13 @@ function draw() {
     // console.log(resizingEntity._selected);
     // picker.drawOpenList();
     // picker.drawClosedList();
-    // picker.drawRoute();
+    picker.draw();
 
     if (currentRoute.start !=null) {
         currentRoute.start.drawColor({
             r: 0,
             g: 200,
             b: 25
-        });
-    }
-    if (currentRoute.end != null) {
-        currentRoute.end.drawColor({
-            r: 15,
-            g: 100,
-            b: 200
         });
     }
 }
@@ -241,14 +233,7 @@ function mousePressed() {
         } else if (Settings.mode == "movement") {
             Controls.move(controls).mousePressed();
         } else if (Settings.mode == "routeSelect") {
-            console.log("INSIDE IF");
             currentRoute.start = grid.getClickedSquareObj();
-            console.log(currentRoute);
-        }
-    } else if (mouseButton === CENTER && mouseIsInsideCanvas()) {
-        if (Settings.mode == "routeSelect") {
-                currentRoute.end = grid.getClickedSquareObj();
-                console.log(currentRoute);
         }
     }
 }
@@ -339,9 +324,13 @@ function mouseReleased() {
 }
 
 function findRoute() {
-    if (currentRoute.start != null && currentRoute.end != null) {
-        picker = new Picker(currentRoute.start, currentRoute.end);
-        picker.findRoute();
+    if (currentRoute.start != null) {
+        picker = new Picker(currentRoute.start, [
+                {
+                    "location": "0"
+                }
+        ]);
+        picker.findNextDestination();
     } else {
         alert("Path not selected!");
     }

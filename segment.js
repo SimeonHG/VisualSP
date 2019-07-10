@@ -76,6 +76,7 @@ class Segment extends Entity {
 
     remove() {
         let aisle = Aisle.aisles[this.aisleId];
+        super.remove(Segment.segments);
         super.remove(aisle.segments);
     }
 
@@ -100,6 +101,38 @@ class Segment extends Entity {
     collisions() {
         let aisle = Aisle.aisles[this.aisleId];
         return super.collisions(aisle.segments);
+    }
+
+    getAdjacentFreeSquares() {
+        console.log(Entity.entities);
+        let adjacentFreeSquares = [];
+
+        let startSquare = grid.getSquare(this.start.x, this.start.y);
+        let endSquare = grid.getSquare(this.end.x - Square.width, this.end.y - Square.width);
+        
+        let startLoc = grid.getSquareLocationInGrid(startSquare);
+        let endLoc = grid.getSquareLocationInGrid(endSquare);
+        for (let i = startLoc.row; i <= endLoc.row; i++) {
+            for (let j = startLoc.col; j <= endLoc.col; j++) {
+                let adjacents = grid.getAdjacent(grid.squares[j][i]);
+                for (let adjacent of adjacents) {
+                    if (!adjacent.hasEntity) {
+                        adjacentFreeSquares.push(adjacent);
+                    }
+                }
+            }
+        }
+
+        return adjacentFreeSquares;
+    }
+
+    static findSegmentById(id) {
+        // console.log(Segment.segments);
+        if (Segment.segments[id]) {
+            // console.log("INSIDE IF");
+            return Segment.segments[id];
+        }
+        return null;
     }
 
     //Add constraints to moving the label
