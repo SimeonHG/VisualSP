@@ -17,6 +17,12 @@ class Segment extends Entity {
         }
     }
 
+    static updateIds() {
+        for (let segment of this.segments) {
+            segment._id = this._id = this.segments.indexOf(segment);
+        }
+    }
+
     attach(aisle) {
         this.aisleId = aisle._id;
         aisle.segments.push(this);
@@ -75,9 +81,13 @@ class Segment extends Entity {
     }
 
     remove() {
+
         let aisle = Aisle.aisles[this.aisleId];
+        if (aisle) {
+            super.remove(aisle.segments);
+        }
         super.remove(Segment.segments);
-        super.remove(aisle.segments);
+        Segment.updateIds();
     }
 
     draw() {
@@ -109,7 +119,7 @@ class Segment extends Entity {
 
         let startSquare = grid.getSquare(this.start.x, this.start.y);
         let endSquare = grid.getSquare(this.end.x - Square.width, this.end.y - Square.width);
-        
+
         let startLoc = grid.getSquareLocationInGrid(startSquare);
         let endLoc = grid.getSquareLocationInGrid(endSquare);
         for (let i = startLoc.row; i <= endLoc.row; i++) {

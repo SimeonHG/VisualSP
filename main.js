@@ -44,7 +44,7 @@ function setup() {
     speedSlider = createSlider(1, 16, 8);
     speedSlider.position(30, 45);
     // speedSlider.style('width', '80px');
-    
+
 
     picker = new Picker(grid.squares[0][0], grid.squares[8][8]);
 }
@@ -95,7 +95,7 @@ function draw() {
     }
     Selection.draw();
     // console.log(!resizingEntity);
-    
+
     // console.log(resizingEntity._selected);
     // picker.drawOpenList();
     // picker.drawClosedList();
@@ -193,6 +193,7 @@ function getSelectedItems(coords) {
             segment.remove();
             return colls;
         }
+        console.log("alo");
         segment.remove();
     }
 
@@ -298,6 +299,7 @@ function mouseReleased() {
                     }
                 }
             }
+            segment.remove();
         }
     } else if (Settings.mode == "movement") {
         Controls.move(controls).mouseReleased()
@@ -319,7 +321,7 @@ function mouseReleased() {
                 zone.destroy();
             }
         }
-    } 
+    }
     return false;
 }
 
@@ -335,4 +337,3 @@ function findRoute() {
         alert("Path not selected!");
     }
 }
-
