@@ -32,12 +32,19 @@ let windowFactor = {
 let input;
 let picker;
 
+let speedSlider;
+
 function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
     canvas.mouseWheel(e => Controls.zoom(controls).worldZoom(e));
     controls.view.x = -width / 2;
     controls.view.y = -height / 2;
+
+
+    speedSlider = createSlider(1, 16, 8);
+    speedSlider.position(30, 45);
+    // speedSlider.style('width', '80px');
     
 
     picker = new Picker(grid.squares[0][0], grid.squares[8][8]);
@@ -60,6 +67,10 @@ function mouseIsInsideCanvas() {
 }
 
 function draw() {
+    let speed = speedSlider.value()
+    Settings.timescale = speed;
+    // console.log(document.getElementById("timescale"));
+    document.getElementById("timescale").innerHTML = `${speed}x`;
     background(255);
     if (draggingForMovement && (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") && mouseIsInsideCanvas()) {
         Controls.move(controls).moveEdged(canvas);
@@ -240,7 +251,6 @@ function mousePressed() {
                 console.log(currentRoute);
         }
     }
-    return false;
 }
 
 function mouseDragged() {

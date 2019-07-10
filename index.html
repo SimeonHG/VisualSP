@@ -34,19 +34,19 @@
         <button onclick="findRoute()">Find route</button>
         <button onclick="exporter()">Export Map</button>
 
-        <br>
+        <p id = "timescale"></p>
 
         <input accept="application/json" type="file" id="importer">
         <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
         <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
+        
         <br>
 
         <form>
             <label class="checkbox-inline" >
                 <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
             </label>
-    </form>
-
+        </form>
 
 </body>
 

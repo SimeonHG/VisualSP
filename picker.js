@@ -1,7 +1,8 @@
 class Picker {
-	constructor(startSqr, pickLog) {
+	constructor(startSqr, destination) {
 		this.start = new Node(startSqr);
 		// this.pickLog =
+		this.destination = new Node(destination);
 
 		this.r = random(255);
 		this.g = random(255);
@@ -78,22 +79,21 @@ class Picker {
 
 
 	animateRoute() {
-		if (this.route.length > 0) {
-			//this.clearRoute();	
-			let i = 0;
-			let id = setInterval(() => { 
-				
-				Node.nodes.push(this.route[i++]);
-				if (i == this.route.length) {
-					clearInterval(id);
-					// this.clearRoute();
-				}
-			}, 100); /// change to time/picker.route.length
-		}
+
+		setTimeout(() => {
+			Node.nodes.push(this.route[Picker.animationIndex++]);
+			if (Picker.animationIndex != this.route.length-1) {
+				this.animateRoute();
+			}	
+			else{
+				this.clearRoute();
+			}
+		}, 20000/(this.route.length*Settings.timescale));
 	}
 
 	clearRoute(){
-		Node.nodes = [];
+		// Node.nodes = [];
+		Picker.animationIndex = 0;
 	}
 
 	draw(){
@@ -118,3 +118,5 @@ class Picker {
 	}
 
 }
+
+Picker.animationIndex = 0;
