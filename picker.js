@@ -102,7 +102,6 @@ class Picker {
 	
 
 	draw(){
-<<<<<<< HEAD
 		fill(this.r, this.g, this.b, 100);
 		ellipse(this.x, this.y, 20, 20);
 	}
@@ -124,13 +123,3 @@ class Picker {
 	}
 
 }
-=======
-		
-		fill(this.r, this.g, this.b, 20);
-		ellipse(this.x, this.y, 20, 20);
-	}
-
-
-}
-Picker.route = [];
->>>>>>> basic animation done

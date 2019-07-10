@@ -84,16 +84,12 @@ function draw() {
         node.draw();
     }
     Selection.draw();
-<<<<<<< HEAD
     // console.log(!resizingEntity);
     
     // console.log(resizingEntity._selected);
     // picker.drawOpenList();
     // picker.drawClosedList();
     picker.drawRoute();
-=======
-   // picker.drawRoute();
->>>>>>> basic animation done
 
     if (currentRoute.start !=null) {
         currentRoute.start.drawColor({
