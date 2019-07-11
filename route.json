@@ -1,34 +1,34 @@
 [
     {
         "completed": "2019-07-09T10:29:49.186Z",
-        "location": "J-R12" 
+        "location": "0" 
     },
     {
         "completed": "2019-07-09T10:31:47.186Z",
-        "location": "J-L1" 
+        "location": "1" 
     },
     {
         "completed": "2019-07-09T10:31:57.186Z",
-        "location": "J-L6" 
+        "location": "2" 
     },
     {
         "completed": "2019-07-09T10:32:29.186Z",
-        "location": "J-RE2" 
+        "location": "3" 
     },
     {
         "completed": "2019-07-09T10:33:07.186Z",
-        "location": "J-R1" 
+        "location": "4" 
     },
     {
         "completed": "2019-07-09T10:33:59.186Z",
-        "location": "J-L11" 
+        "location": "5" 
     },
     {
         "completed": "2019-07-09T10:36:21.186Z",
-        "location": "J-L12" 
+        "location": "6" 
     },
     {
         "completed": "2019-07-09T10:39:01.186Z",
-        "location": "J-RE1" 
+        "location": "7" 
     }
 ]

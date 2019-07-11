@@ -344,10 +344,10 @@ function findRoute(path) {
                 "location": "0"
             },
             {
-                "location": "5"
+                "location": "1"
             },
             {
-                "location": "40"
+                "location": "2"
             }
         ]);
         console.log(Segment.segments)
@@ -366,12 +366,12 @@ function findRoute(path) {
 
 function routeImport(textObj) {
     
-    let path = JSON.parse(textObj, (k, v) => k == 'completed' ? new Date(v) : v);
+    let path = JSON.parse(textObj, routeFilter);
     Timer.init()
     findRoute(path);
 }
 
-function filter(k, v) {
+function routeFilter(k, v) {
     if (k == 'completed') {
         Timer.addDate(v)
         return new Date(v)

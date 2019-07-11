@@ -11,7 +11,7 @@ class Timer {
     }
 
     static calculateDistance(prevTime, nextTime) {
-        return nextTime - prevTime;        
+        return nextTime - prevTime;
     }
 
     static parseTime(distance) {
@@ -21,7 +21,7 @@ class Timer {
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         let parsedTime = {
-            days: days, 
+            days: days,
             hours: hours,
             minutes: minutes,
             seconds: seconds
@@ -62,11 +62,11 @@ class Timer {
                 } else {
                     date = Timer.currentTime;
                 }
-                
+
                 if (Settings.timescale < 0) {
-                    date -= 1000;
+                    date -= 1;
                 } else {
-                    date += 1000;
+                    date += 1;
                 }
                 let time = Timer.parseTime(date);
                 document.getElementById("timer").innerHTML = time.hours + "h "
@@ -79,7 +79,7 @@ class Timer {
                     Timer.running = false;
                 }
 
-            }, 1000 / abs(Settings.timescale));
+            }, 1 / abs(Settings.timescale));
         }
     }
 }
