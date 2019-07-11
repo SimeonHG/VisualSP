@@ -15,6 +15,8 @@ class Segment extends Entity {
         if (aisleId !== undefined) {
             this.aisleId = aisleId;
         }
+
+        super.markSquares();
     }
 
     static updateIds() {
@@ -84,7 +86,7 @@ class Segment extends Entity {
 
         let aisle = Aisle.aisles[this.aisleId];
         if (aisle) {
-            super.remove(aisle.segments);
+            super.remove(aisle.segments, true);
         }
         super.remove(Segment.segments);
         this.aisleId = null;
