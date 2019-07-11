@@ -42,7 +42,7 @@ function setup() {
 
 
     speedSlider = createSlider(-16, 16, 0);
-    speedSlider.position(width*0.4, 45);
+    speedSlider.position(width*0.45, height*0.05);
     // speedSlider.style('width', '80px');
 
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         <title>Visual SP</title>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/p5.js"></script>
@@ -22,55 +23,52 @@
         <script src="corner.js"></script>
         <script src = "node.js"></script>
         <script src = "timer.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
         <link rel = "stylesheet" href = "style.css" type = "text/css" media = "screen"/>
     </head>
     <body>
-        <div id="modeDiv">
-            <h4>Mode</h4>
-            <button onclick="Settings.setMode('movement')">Movement</button>
-            <button onclick="Settings.setMode('aisles')">Draw aisles</button>
-            <button onclick="Settings.setMode('segments')">Draw segments</button>
-            <button onclick="Settings.setMode('zones')">Draw zones</button>
-            <br>
-            <button onclick="deleteSelected()">Delete</button>
-            <button onclick="Settings.setMode('select')">Select</button>
-            <button onclick="Settings.setMode('routeSelect'); //alert('Use LMB to select start and RMB to select end')">Select route</button>
-            <button onclick="findRoute()">Find route</button>
-            <button onclick="exporter()">Export Map</button>
-            <br>
-            <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
-            <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
-            <form>
-                <label class="checkbox-inline" >
-                    <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
-                </label>
-            </form>
-        </div>
-
-        <div id="importDiv">
-            <h4>Import</h4>
-            <label for="importer">map:</label>
-            <input accept="application/json" type="file" id="importer">
-
-            <label for="route">route:</label>
-            <input accept="application/json" type="file" id="route">
-        </div>
-
-        <div id = 'timescale'>
-        </div>
-        <p id="timer"></p>
-
-        <input accept="application/json" type="file" id="importer">
-        <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
-        <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
-        
         <br>
+        <div class="container is-fluid">
+        <div class="columns is-centered">
+            <div class="column">
+                <h4 class="title is-4">Mode selection</h4>
+                <div class="buttons">
+                    <button class="button" onclick="Settings.setMode('movement')">Movement</button>
+                    <button class="button" onclick="Settings.setMode('aisles')">Draw aisles</button>
+                    <button class="button" onclick="Settings.setMode('segments')">Draw segments</button>
+                    <button class="button" onclick="Settings.setMode('zones')">Draw zones</button>
+                    <button class="button" onclick="deleteSelected()">Delete</button>
+                    <button class="button" onclick="Settings.setMode('select')">Select</button>
+                    <button class="button" onclick="Settings.setMode('routeSelect');">Select route</button>
+                    <button class="button" onclick="findRoute()">Find route</button>
+                    <button class="button" onclick="exporter()">Export Map</button>
+                    <br>
+                    <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
+                    <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
+                </div>
+                <form>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
+                    </label>
+                </form>
+            </div>
+            <div class="column has-text-centered">
+                <div id="timescale">
+                </div>
+            </div>
+            <div class="column">
+                <h4 class="title is-4">Import</h4>
+                <label for="importer">map:</label>
+                <input accept="application/json" type="file" id="importer">
+                
+                <label for="route">route:</label>
+                <input accept="application/json" type="file" id="route">
+                <p id="timer"></p>
+            </div>
+        </div>
+        </div>
 
-        <form>
-            <label class="checkbox-inline" >
-                <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
-            </label>
-        </form>
+        
 </body>
 
 <head>
