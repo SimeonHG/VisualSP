@@ -21,6 +21,7 @@
         <script src = "picker.js"></script>
         <script src="corner.js"></script>
         <script src = "node.js"></script>
+        <script src = "timer.js"></script>
         <link rel = "stylesheet" href = "style.css" type = "text/css" media = "screen"/>
     </head>
     <body>
@@ -56,8 +57,20 @@
         </div>
 
         <div id = 'timescale'>
-            asd
         </div>
+        <p id="timer"></p>
+
+        <input accept="application/json" type="file" id="importer">
+        <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
+        <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
+        
+        <br>
+
+        <form>
+            <label class="checkbox-inline" >
+                <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
+            </label>
+        </form>
 </body>
 
 <head>

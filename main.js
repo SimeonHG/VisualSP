@@ -49,6 +49,14 @@ function setup() {
     picker = new Picker(grid.squares[0][0], [{
         "location": "0"
     }]);
+
+    //example for dates
+    Timer.addDate("2019-07-09T10:31:47.162Z");
+    Timer.addDate("2019-07-09T10:32:47.163Z");
+    Timer.addDate("2019-07-09T10:33:20.164Z");
+    Timer.addDate("2019-07-09T10:34:10.165Z");
+
+    Timer.calculateTime();
 }
 
 function windowResized() {
@@ -70,7 +78,6 @@ function mouseIsInsideCanvas() {
 function draw() {
     let speed = speedSlider.value()
     Settings.timescale = speed;
-    // console.log(document.getElementById("timescale"));
     let pTime = document.getElementById("timescale");
     pTime.innerHTML = `${speed}x`;
     pTime.left = '35%';
@@ -98,9 +105,7 @@ function draw() {
         node.draw();
     }
     Selection.draw();
-    // console.log(!resizingEntity);
-
-    // console.log(resizingEntity._selected);
+    
     // picker.drawOpenList();
     // picker.drawClosedList();
     picker.draw();
@@ -111,6 +116,10 @@ function draw() {
             g: 200,
             b: 25
         });
+    }
+    if(!Timer.running) {
+        Timer.updateTimer();
+        Timer.running = true;
     }
 }
 
@@ -221,6 +230,8 @@ function mousePressed() {
             }
         }
     }
+
+    Settings.timescale = 0;
 
     if (mouseButton === LEFT && mouseIsInsideCanvas()) {
 
