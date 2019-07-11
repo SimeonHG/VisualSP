@@ -347,31 +347,7 @@ function findRoute(path) {
                 "location": "5"
             },
             {
-                "location": "8"
-            },
-            {
                 "location": "40"
-            },
-            {
-                "location": "60"
-            },
-            {
-                "location": "85"
-            },
-            {
-                "location": "100"
-            },
-            {
-                "location": "110"
-            }, 
-            {
-                "location": "150"
-            }
-            , {
-                "location": "140"
-            }
-            , {
-                "location": "186"
             }
         ]);
         console.log(Segment.segments)
@@ -381,6 +357,7 @@ function findRoute(path) {
         while (picker.findNextDestination()) {
             picker.findRoute();
         }
+        // picker.route = picker.route.reverse();
         picker.animateRoute();
     } else {
         alert("Path not selected!");

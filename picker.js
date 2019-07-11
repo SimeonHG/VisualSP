@@ -23,6 +23,10 @@ class Picker {
 			// alert("No such location");
 			return false;
 		}
+
+		// if (this.destination != null) {
+		// 	this.start = this.destination;
+		// }
 		
 		let adjacent = segment.getAdjacentFreeSquares();
 		let distancesForSquares = {}
@@ -33,7 +37,6 @@ class Picker {
 
 		let minDist = min(Object.keys(distancesForSquares));
 		let destination = distancesForSquares[minDist];
-		console.log(destination);
 
 		this.tempSquares.push(destination);
 
@@ -75,10 +78,6 @@ class Picker {
 					currentNode = currentNode.parent;
 				}
 				this.route.push(currentNode);
-				// this.route = this.route.reverse();
-				// this.animateRoute();
-				this.start = this.destination;
-				this.destination = null;
 
 				return;
 
