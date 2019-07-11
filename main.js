@@ -344,10 +344,37 @@ function findRoute(path) {
                 "location": "0"
             },
             {
-                "location": "1"
+                "location": "5"
+            },
+            {
+                "location": "8"
+            },
+            {
+                "location": "40"
+            },
+            {
+                "location": "60"
+            },
+            {
+                "location": "85"
+            },
+            {
+                "location": "100"
+            },
+            {
+                "location": "110"
+            }, 
+            {
+                "location": "150"
+            }
+            , {
+                "location": "140"
+            }
+            , {
+                "location": "186"
             }
         ]);
-
+        console.log(Segment.segments)
         } else {
             picker = new Picker(currentRoute.start, path);
         }

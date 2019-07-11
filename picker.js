@@ -17,11 +17,13 @@ class Picker {
 	findNextDestination() {
 		if (this.pickLog.length <= this.taskCounter) 
 			return false;
+
 		let segment = Segment.findSegmentById(parseInt(this.pickLog[this.taskCounter].location));
 		if (!segment) {
-			alert("No such location");
+			// alert("No such location");
 			return false;
 		}
+		
 		let adjacent = segment.getAdjacentFreeSquares();
 		let distancesForSquares = {}
 		adjacent.forEach(square => {
@@ -33,7 +35,6 @@ class Picker {
 		let destination = distancesForSquares[minDist];
 		console.log(destination);
 
-		this.tempSquares = [];
 		this.tempSquares.push(destination);
 
 		this.destination = new Node(destination);
@@ -76,6 +77,9 @@ class Picker {
 				this.route.push(currentNode);
 				// this.route = this.route.reverse();
 				// this.animateRoute();
+				this.start = this.destination;
+				this.destination = null;
+
 				return;
 
 			}
@@ -106,8 +110,7 @@ class Picker {
 				this.openList.push(childNode);
 			});
 		}
-		// this.start = this.destination;
-		// this.destination = null;
+		
 	 }
 	 
 

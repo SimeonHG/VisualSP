@@ -117,7 +117,6 @@ class Segment extends Entity {
     }
 
     getAdjacentFreeSquares() {
-        console.log(Entity.entities);
         let adjacentFreeSquares = [];
 
         let startSquare = grid.getSquare(this.start.x, this.start.y);
