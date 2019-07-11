@@ -30,8 +30,7 @@ class Timer {
         return parsedTime;
     }
 
-    //to do: call calculateTime on every step of animation
-    static calculateTime() {
+    static calculateDeltas(pickerDate) {
         let distance;
 
         let prevTime;
@@ -39,12 +38,12 @@ class Timer {
 
         for(let i = 0; i < Timer.date.length; i++) {
             
-            nextTime = Timer.date[i];
+            nextTime = pickerDate[i];
             
             if(i == 0) {
                 prevTime = nextTime;
             } else {
-                prevTime = Timer.date[i - 1];
+                prevTime = pickerDate[i - 1];
             }
             distance = Timer.calculateDistance(prevTime, nextTime);
 

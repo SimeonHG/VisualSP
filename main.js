@@ -49,15 +49,6 @@ function setup() {
     picker = new Picker(grid.squares[0][0], [{
         "location": "0"
     }]);
-
-    //example for dates
-    Timer.addDate("2019-07-09T10:31:47.162Z");
-    Timer.addDate("2019-07-09T10:32:47.163Z");
-    Timer.addDate("2019-07-09T10:33:20.164Z");
-    Timer.addDate("2019-07-09T10:34:10.165Z");
-    Timer.calculateTime();
-    Timer.init();
-
 }
 
 function windowResized() {
@@ -351,13 +342,19 @@ function findRoute(path) {
         if (!path) {
             picker = new Picker(currentRoute.start, [{
                 "location": "0"
-            }]);
+            },
+            {
+                "location": "1"
+            }
+        ]);
 
         } else {
             picker = new Picker(currentRoute.start, path);
         }
-        picker.findNextDestination();
-        picker.findRoute();
+        while (picker.findNextDestination()) {
+            picker.findRoute();
+        }
+        picker.animateRoute();
     } else {
         alert("Path not selected!");
     }
@@ -366,5 +363,5 @@ function findRoute(path) {
 function routeImport(textObj) {
     
     let path = JSON.parse(textObj, (k, v) => k == 'completed' ? new Date(v) : v);
-    findRoute(path)
+    findRoute(path);
 }
