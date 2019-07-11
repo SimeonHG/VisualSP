@@ -342,6 +342,7 @@ function findRoute(path) {
 }
 
 function routeImport(textObj) {
-    let path = JSON.parse(textObj, (k, v) => {return k == 'completed' ? new Date(v) : v});
+    
+    let path = JSON.parse(textObj, (k, v) => k == 'completed' ? new Date(v) : v);
     findRoute(path)
 }
