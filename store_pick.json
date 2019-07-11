@@ -1,0 +1,3 @@
+{"aisles":[
+    {"start":{"x":40,"y":20},"end":{"x":280,"y":260},"label":{"text":"alaba"},"segments":[{"start":{"x":60,"y":60},"end":{"x":120,"y":120},"label":{"text":""},"aisleId":0},{"start":{"x":160,"y":80},"end":{"x":220,"y":180},"label":{"text":"alaba"},"aisleId":0}]},{"start":{"x":420,"y":80},"end":{"x":760,"y":320},"label":{"text":"alaba"},"segments":[{"start":{"x":660,"y":80},"end":{"x":760,"y":160},"label":{"text":"ala"},"aisleId":1}]}],"zones":[{"start":{"x":40,"y":20},"end":{"x":1000,"y":440},"label":{"text":""},"id":0},
+    {"start":{"x":40,"y":20},"end":{"x":1000,"y":440},"label":{"text":""},"id":0}]}
