@@ -1,135 +1,3 @@
-// Implements the astar search algorithm in javascript using a Binary Heap.
-// Includes Binary Heap (with modifications) from Marijn Haverbeke.
-// http://eloquentjavascript.net/appendix2.html
-
-function sparseIndexOf(arr, value) {
-	return Object.keys(arr).find(function (k) {
-		return arr[k] === value;
-	})
-}
-
-function BinaryHeap(scoreFunction) {
-	this.content = [];
-	this.scoreFunction = scoreFunction;
-}
-
-BinaryHeap.prototype = {
-	push: function (element) {
-		// Add the new element to the end of the array.
-		this.content.push(element);
-		// Allow it to bubble up.
-		this.bubbleUp(this.content.length - 1);
-	},
-
-	pop: function () {
-		// Store the first element so we can return it later.
-		var result = this.content[0];
-		// Get the element at the end of the array.
-		var end = this.content.pop();
-		// If there are any elements left, put the end element at the
-		// start, and let it sink down.
-		if (this.content.length > 0) {
-			this.content[0] = end;
-			this.sinkDown(0);
-		}
-		return result;
-	},
-
-	remove: function (node) {
-		var length = this.content.length;
-		// To remove a value, we must search through the array to find
-		// it.
-		for (var i = 0; i < length; i++) {
-			if (this.content[i] != node) continue;
-			// When it is found, the process seen in 'pop' is repeated
-			// to fill up the hole.
-			var end = this.content.pop();
-			// If the element we popped was the one we needed to remove,
-			// we're done.
-			if (i == length - 1) break;
-			// Otherwise, we replace the removed element with the popped
-			// one, and allow it to float up or sink down as appropriate.
-			this.content[i] = end;
-			this.bubbleUp(i);
-			this.sinkDown(i);
-			break;
-		}
-	},
-
-	size: function () {
-		return this.content.length;
-	},
-
-	bubbleUp: function (n) {
-		// Fetch the element that has to be moved.
-		var element = this.content[n], score = this.scoreFunction(element);
-		// When at 0, an element can not go up any further.
-		while (n > 0) {
-			// Compute the parent element's index, and fetch it.
-			var parentN = Math.floor((n + 1) / 2) - 1,
-				parent = this.content[parentN];
-			// If the parent has a lesser score, things are in order and we
-			// are done.
-			if (score >= this.scoreFunction(parent))
-				break;
-
-			// Otherwise, swap the parent with the current element and
-			// continue.
-			this.content[parentN] = element;
-			this.content[n] = parent;
-			n = parentN;
-		}
-	},
-
-	sinkDown: function (n) {
-		// Look up the target element and its score.
-		var length = this.content.length,
-			element = this.content[n],
-			elemScore = this.scoreFunction(element);
-
-		while (true) {
-			// Compute the indices of the child elements.
-			var child2N = (n + 1) * 2, child1N = child2N - 1;
-			// This is used to store the new position of the element,
-			// if any.
-			var swap = null;
-			// If the first child exists (is inside the array)...
-			if (child1N < length) {
-				// Look it up and compute its score.
-				var child1 = this.content[child1N],
-					child1Score = this.scoreFunction(child1);
-				// If the score is less than our element's, we need to swap.
-				if (child1Score < elemScore)
-					swap = child1N;
-			}
-			// Do the same checks for the other child.
-			if (child2N < length) {
-				var child2 = this.content[child2N],
-					child2Score = this.scoreFunction(child2);
-				if (child2Score < (swap == null ? elemScore : child1Score))
-					swap = child2N;
-			}
-
-			// No need to swap further, we are done.
-			if (swap == null) break;
-
-			// Otherwise, swap and continue.
-			this.content[n] = this.content[swap];
-			this.content[swap] = element;
-			n = swap;
-		}
-	},
-
-	includesElement: function(element) {
-		for (let node of this.content) {
-			if (element.equals(node)) {
-				return true;
-			}
-		}
-		return false;
-	}
-};
-
 class Picker {
 	constructor(startSqr, pickLog) {
 		this.start = new Node(startSqr);
@@ -141,7 +9,7 @@ class Picker {
 		this.r = random(255);
 		this.g = random(255);
 		this.b = random(255);
-		this.openHeap = new BinaryHeap(i => i);
+		this.openList = new Array();
 		this.closedList = new Array();
 		this.route = new Array();
 	}
@@ -177,22 +45,28 @@ class Picker {
 			return;
 		}
 
-		this.openHeap = new BinaryHeap((node) => node.f);
-
 		this.start.setScores(0, 0);
-		this.openHeap.push(this.start); 
+		this.openList.push(this.start);
 
-		while (this.openHeap.size() > 0) {			
-			let currentNode = this.openHeap.pop();
-		
-			let clIndex = this.closedList.findIndex(node => node.equals(currentNode));
-			if (clIndex == -1) {
+		while (this.openList.length > 0) {
+			this.openList.sort((a, b) => a.f - b.f);
+
+			let currentNode = this.openList[0];
+			this.openList.shift();
+
+			let includes = false;
+			this.closedList.forEach(node => {
+				if (node.equals(currentNode)) {
+					includes = true;
+				}
+			});
+			if (!includes) {
 				this.closedList.push(currentNode);
 			}
 
 			// WIN CONDITION
-			if (currentNode.equals(this.destination)) {
-				while(currentNode.parent != null) {
+			if (currentNode.square.pos.x == this.destination.square.pos.x && currentNode.square.pos.y == this.destination.square.pos.y) {
+				while (currentNode.parent != null) {
 					this.route.push(currentNode);
 					currentNode = currentNode.parent;
 				}
@@ -206,9 +80,11 @@ class Picker {
 				.map((square) => new Node(square))
 				.filter((node) => node.square.hasEntity == false)
 				.filter(node => {
-					if (this.closedList.findIndex(node => node.equals(currentNode)) == -1) {
-						return false;
-					}
+					this.closedList.forEach(closedListNode => {
+						if (closedListNode.equals(node)) {
+							return false;
+						}
+					});
 					return true;
 				}));
 
@@ -216,12 +92,14 @@ class Picker {
 				let scores = childNode.calcScores(this.start, this.destination);
 				childNode.setScores(scores.g, scores.h);
 
-				if (this.openHeap.includesElement(childNode)) {
-					//THIS IS A PROBLEM
-					console.log("Does include");
-					return;
+				for (let openNode of this.openList) {
+					if (openNode.equals(childNode)) {
+						return;
+						//DO SMTH HERE!!!
+					}
 				}
-				this.openHeap.push(childNode);
+
+				this.openList.push(childNode);
 			});
 		}
 	 }
