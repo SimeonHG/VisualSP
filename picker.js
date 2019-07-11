@@ -2,6 +2,12 @@
 // Includes Binary Heap (with modifications) from Marijn Haverbeke.
 // http://eloquentjavascript.net/appendix2.html
 
+function sparseIndexOf(arr, value) {
+	return Object.keys(arr).find(function (k) {
+		return arr[k] === value;
+	})
+}
+
 function BinaryHeap(scoreFunction) {
 	this.content = [];
 	this.scoreFunction = scoreFunction;
@@ -115,8 +121,12 @@ BinaryHeap.prototype = {
 	},
 
 	includesElement: function(element) {
-		
-		return (this.content.indexOf(element) == -1) ? false : true;
+		for (let node of this.content) {
+			if (element.equals(node)) {
+				return true;
+			}
+		}
+		return false;
 	}
 };
 
@@ -174,8 +184,7 @@ class Picker {
 
 		while (this.openHeap.size() > 0) {			
 			let currentNode = this.openHeap.pop();
-			
-			//Rewrite this with findIndex()+
+		
 			let clIndex = this.closedList.findIndex(node => node.equals(currentNode));
 			if (clIndex == -1) {
 				this.closedList.push(currentNode);
