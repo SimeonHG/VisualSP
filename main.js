@@ -55,8 +55,9 @@ function setup() {
     Timer.addDate("2019-07-09T10:32:47.163Z");
     Timer.addDate("2019-07-09T10:33:20.164Z");
     Timer.addDate("2019-07-09T10:34:10.165Z");
-    Timer.init();
     Timer.calculateTime();
+    Timer.init();
+
 }
 
 function windowResized() {

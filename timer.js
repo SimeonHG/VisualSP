@@ -5,7 +5,7 @@ class Timer {
     }
 
     static init() { 
-        let time = Timer.parseTime(Timer.date[0]);
+        let time = Timer.parseTime(Math.min(...Timer.date));
         document.getElementById("timer").innerHTML = time.hours + "h "
         + time.minutes + "m " + time.seconds + "s ";
     }
@@ -59,7 +59,7 @@ class Timer {
             setTimeout(() => {
                 let date;
                 if (Timer.currentTime == 0) {
-                    date = Timer.date[0];
+                    date = Math.min(...Timer.date);
                 } else {
                     date = Timer.currentTime;
                 }
@@ -73,7 +73,7 @@ class Timer {
                 document.getElementById("timer").innerHTML = time.hours + "h "
                 + time.minutes + "m " + time.seconds + "s ";
 
-                if (date < Timer.date[Timer.date.length - 1] && date > Timer.date[0]) {
+                if (date < Math.max(...Timer.date) && date > Math.min(...Timer.date)) {
                     Timer.currentTime = date;
                     this.updateTimer();
                 } else {
