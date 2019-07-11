@@ -362,6 +362,7 @@ function findRoute(path) {
             indexOfRoute++;
         }
         // picker.route = picker.route.reverse();
+		picker.resetAnimationIndex();
         picker.animateRoute();
     } else {
         alert("Path not selected!");

@@ -24,9 +24,9 @@ class Picker {
 			return false;
 		}
 
-		// if (this.destination != null) {
-		// 	this.start = this.destination;
-		// }
+		if (this.destination != null) {
+			this.start = this.destination;
+		}
 		
 		let adjacent = segment.getAdjacentFreeSquares();
 		let distancesForSquares = {}
@@ -116,6 +116,7 @@ class Picker {
 
 
 	animateRoute() {
+<<<<<<< HEAD
 		Node.nodes.push([]);
 		console.log(Picker.animationIndex);
 
@@ -133,11 +134,24 @@ class Picker {
 		// else{
 		// 	this.resetAnimationIndex();
 		// }
+=======
+		setTimeout(() => {
+			Node.nodes.push(this.route[Picker.animationIndex]);
+			Picker.animationIndex -= 1;
+			console.log(Picker.animationIndex);
+			if (Picker.animationIndex >= 0) {
+				this.animateRoute();
+			}	
+			else {
+				this.resetAnimationIndex();
+			}
+		}, 20000/(this.route.length*Settings.timescale));
+>>>>>>> 4bec01c3002477a95debf45e0ccef8342235ea8e
 	}
 
 	resetAnimationIndex(){
 		// Node.nodes = [];
-		Picker.animationIndex = 0;
+		Picker.animationIndex = this.route.length - 1;
 	}
 
 	draw(){
