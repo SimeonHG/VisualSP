@@ -33,9 +33,6 @@ class Entity extends Object {
         }
         Entity.entities.push(this);
         this.setCorners();
-
-        this.markSquares();
-
     }
 
     draw() {
@@ -187,7 +184,7 @@ class Entity extends Object {
         this.label = new Label(this, text);
     }
 
-    remove(list) {
+    remove(list, shouldUpdateSquares) {
         let startSqr = grid.getSquare(this.start.x, this.start.y);
         let endSqr = grid.getSquare(this.end.x, this.end.y);
 
@@ -196,8 +193,11 @@ class Entity extends Object {
         list.splice(list.indexOf(this), 1);
         Entity.entities.splice(Entity.entities.indexOf(this), 1);
 
-        for (let entity of Entity.entities) {
-            entity.updateSquares();
+        if (shouldUpdateSquares) {
+            for (let entity of Entity.entities) {
+                entity.updateSquares();
+            }
+
         }
     }
 

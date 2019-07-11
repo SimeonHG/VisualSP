@@ -5,8 +5,9 @@ class Timer {
     }
 
     static init() { 
-        document.getElementById("timer").innerHTML = hours + "h "
-        + minutes + "m " + seconds + "s ";
+        let time = Timer.parseTime(Timer.date[0]);
+        document.getElementById("timer").innerHTML = time.hours + "h "
+        + time.minutes + "m " + time.seconds + "s ";
     }
 
     static calculateDistance(prevTime, nextTime) {
@@ -58,7 +59,6 @@ class Timer {
             setTimeout(() => {
                 let date;
                 if (Timer.currentTime == 0) {
-                    console.log("evi si maikkata")
                     date = Timer.date[0];
                 } else {
                     date = Timer.currentTime;

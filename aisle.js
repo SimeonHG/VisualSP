@@ -18,6 +18,7 @@ class Aisle extends Entity {
 
         Aisle.aisles.push(this);
         this._id = Aisle.aisles.indexOf(this);
+        super.markSquares();
     }
 
     draw() {
@@ -79,7 +80,7 @@ class Aisle extends Entity {
     }
 
     remove() {
-        super.remove(Aisle.aisles);
+        super.remove(Aisle.aisles, true);
     }
 
     collisions() {
