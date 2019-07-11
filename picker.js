@@ -15,10 +15,12 @@ class Picker {
 	}
 
 	findNextDestination() {
+		if (this.pickLog.length <= this.taskCounter) 
+			return false;
 		let segment = Segment.findSegmentById(parseInt(this.pickLog[this.taskCounter].location));
 		if (!segment) {
 			alert("No such location");
-			return;
+			return false;
 		}
 		let adjacent = segment.getAdjacentFreeSquares();
 		let distancesForSquares = {}
@@ -37,6 +39,7 @@ class Picker {
 		this.destination = new Node(destination);
 
 		this.taskCounter++;
+		return true;
 	}
 
 	findRoute() {
@@ -71,7 +74,8 @@ class Picker {
 					currentNode = currentNode.parent;
 				}
 				this.route.push(currentNode);
-				this.animateRoute();
+				// this.route = this.route.reverse();
+				// this.animateRoute();
 				return;
 
 			}
@@ -102,24 +106,25 @@ class Picker {
 				this.openList.push(childNode);
 			});
 		}
+		// this.start = this.destination;
+		// this.destination = null;
 	 }
 	 
 
 
 	animateRoute() {
-
 		setTimeout(() => {
 			Node.nodes.push(this.route[Picker.animationIndex++]);
 			if (Picker.animationIndex != this.route.length-1) {
 				this.animateRoute();
 			}	
 			else{
-				this.clearRoute();
+				this.resetAnimationIndex();
 			}
 		}, 20000/(this.route.length*Settings.timescale));
 	}
 
-	clearRoute(){
+	resetAnimationIndex(){
 		// Node.nodes = [];
 		Picker.animationIndex = 0;
 	}
