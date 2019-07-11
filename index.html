@@ -43,8 +43,16 @@
                     <button class="button" onclick="findRoute()">Find route</button>
                     <button class="button" onclick="exporter()">Export Map</button>
                     <br>
-                    <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
-                    <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
+                        </p>
+                        <p class="control">
+                            <button class="button is-primary" onclick="createLabel(); Settings.setMode('movement')">
+                                Apply
+                            </button>
+                        </p>
+                    </div>
                 </div>
                 <form>
                     <label class="checkbox-inline">
