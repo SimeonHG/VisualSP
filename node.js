@@ -22,7 +22,7 @@ class Node {
     }
 
     distanceToDestination(destination) {
-        return Math.sqrt(Math.pow(this.square.pos.y - destination.square.pos.y, 2) + Math.pow(this.square.pos.x - destination.square.pos.x, 2)) / Square.width;
+        return this.square.manhattanDistance(destination.square);
     }
 
     setScores(g, h) {

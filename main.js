@@ -269,7 +269,6 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
-    console.log(Entity.entities);
     draggingForMovement = false;
     movingSelectedItems = false;
     selectedItems.map((e) => e.place());

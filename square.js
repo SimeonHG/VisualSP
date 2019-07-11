@@ -39,6 +39,10 @@ class Square {
     euclideanDistance(otherSqr) {
         return Math.sqrt(Math.pow(this.pos.y - otherSqr.pos.y, 2) + Math.pow(this.pos.x - otherSqr.pos.x, 2)) / Square.width;
     }
+
+    manhattanDistance(otherSqr) {
+        return (Math.abs(this.pos.x - otherSqr.pos.x) + Math.abs(this.pos.y - otherSqr.pos.y)) / Square.width;
+    }
 }
 
 Square.width = 20;

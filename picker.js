@@ -20,9 +20,9 @@ class Picker {
 			alert("No such location");
 			return;
 		}
-		this.tempSquares = segment.getAdjacentFreeSquares();
+		let adjacent = segment.getAdjacentFreeSquares();
 		let distancesForSquares = {}
-		this.tempSquares.forEach(square => {
+		adjacent.forEach(square => {
 			let dist = square.euclideanDistance(this.start.square);
 			distancesForSquares[dist] = square;
 		});
@@ -95,6 +95,7 @@ class Picker {
 				for (let openNode of this.openList) {
 					if (openNode.equals(childNode)) {
 						return;
+						//DO SMTH HERE!!!
 					}
 				}
 
