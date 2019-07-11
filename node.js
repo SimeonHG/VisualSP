@@ -62,4 +62,4 @@ class Node {
     }
 }
 
-Node.nodes = []
+Node.nodes = [];

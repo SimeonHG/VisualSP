@@ -41,7 +41,7 @@ function setup() {
     controls.view.y = -height / 2;
 
 
-    speedSlider = createSlider(-16, 16, 0);
+    speedSlider = createSlider(-16, 16, 1);
     speedSlider.position(width*0.45, height*0.05);
     // speedSlider.style('width', '80px');
 
@@ -93,8 +93,10 @@ function draw() {
             aisle._placed = true;
         }
     }
-    for (let node of Node.nodes) {
-        node.draw();
+    for (let nodeList of Node.nodes) {
+        for(let node of nodeList){
+            node.draw();
+        }
     }
     Selection.draw();
     
@@ -341,15 +343,12 @@ function findRoute(path) {
     if (currentRoute.start != null) {
         if (!path) {
             picker = new Picker(currentRoute.start, [{
-                "completed": "2019-07-09T10:31:57.186Z",
                 "location": "0"
             },
             {
-                "completed": "2019-07-09T10:32:57.186Z",
                 "location": "5"
             },
             {
-                "completed": "2019-07-09T10:33:57.186Z",
                 "location": "40"
             }
         ]);
@@ -357,8 +356,10 @@ function findRoute(path) {
         } else {
             picker = new Picker(currentRoute.start, path);
         }
+        let indexOfRoute = 0;
         while (picker.findNextDestination()) {
-            picker.findRoute();
+            picker.findRoute(indexOfRoute);
+            indexOfRoute++;
         }
         // picker.route = picker.route.reverse();
         picker.animateRoute();
@@ -371,6 +372,7 @@ function routeImport(textObj) {
     
     let path = JSON.parse(textObj, findRoutes);
     Timer.init();
+    Timer.calculateDeltas(Timer.date);
     findRoute(path);
 }
 
@@ -379,5 +381,5 @@ function findRoutes(k, v) {
         Timer.addDate(v);
         return v;
     }
-    return v
+    return v;
 }

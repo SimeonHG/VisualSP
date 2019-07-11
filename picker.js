@@ -46,7 +46,7 @@ class Picker {
 		return true;
 	}
 
-	findRoute() {
+	findRoute(index) {
 		if (this.destination.square.hasEntity || this.start.square.hasEntity) {
 			alert("Invalid destination or start!");
 			return;
@@ -54,7 +54,8 @@ class Picker {
 
 		this.start.setScores(0, 0);
 		this.openList.push(this.start);
-
+		
+		this.route.push([]);
 		while (this.openList.length > 0) {
 			this.openList.sort((a, b) => a.f - b.f);
 
@@ -74,11 +75,11 @@ class Picker {
 			// WIN CONDITION
 			if (currentNode.square.pos.x == this.destination.square.pos.x && currentNode.square.pos.y == this.destination.square.pos.y) {
 				while (currentNode.parent != null) {
-					this.route.push(currentNode);
+					this.route[index].push(currentNode);
 					currentNode = currentNode.parent;
 				}
-				this.route.push(currentNode);
-
+				this.route[index].push(currentNode);
+				console.log("index" + index);
 				return;
 
 			}
@@ -115,15 +116,23 @@ class Picker {
 
 
 	animateRoute() {
-		setTimeout(() => {
-			Node.nodes.push(this.route[Picker.animationIndex++]);
-			if (Picker.animationIndex != this.route.length-1) {
-				this.animateRoute();
-			}	
-			else{
-				this.resetAnimationIndex();
-			}
-		}, 20000/(this.route.length*Settings.timescale));
+		Node.nodes.push([]);
+		console.log(Picker.animationIndex);
+
+		for(let i = 0; i < this.route[Picker.animationIndex].length - 1; i++) {
+			let k = Picker.animationIndex;
+			setTimeout(() => {
+				console.log(Timer.deltas[k] / (this.route[k].length * Settings.timescale));
+				Node.nodes[k].push(this.route[k][i]);
+			}, Timer.deltas[k] / (this.route[k].length * Settings.timescale));
+		}
+		if (Picker.animationIndex != this.route.length-1) {
+			Picker.animationIndex++;
+			this.animateRoute();
+		}	
+		// else{
+		// 	this.resetAnimationIndex();
+		// }
 	}
 
 	resetAnimationIndex(){
@@ -158,5 +167,5 @@ class Picker {
 	}
 
 }
-
+Picker.deltaIndex = 0;
 Picker.animationIndex = 0;

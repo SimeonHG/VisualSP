@@ -49,6 +49,7 @@ class Timer {
 
             Timer.deltas.push(distance);
         }
+        console.log(Timer.deltas);
     }
 
     static updateTimer() {
