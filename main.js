@@ -363,7 +363,7 @@ function findRoute(path) {
         }
         // picker.route = picker.route.reverse();
 		picker.resetAnimationIndex();
-        picker.animateRoute();
+        picker.animateRoutes(0);
     } else {
         alert("Path not selected!");
     }

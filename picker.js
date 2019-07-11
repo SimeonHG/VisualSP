@@ -12,6 +12,7 @@ class Picker {
 		this.openList = new Array();
 		this.closedList = new Array();
 		this.route = new Array();
+		this.moving = false;
 	}
 
 	findNextDestination() {
@@ -24,9 +25,9 @@ class Picker {
 			return false;
 		}
 
-		if (this.destination != null) {
-			this.start = this.destination;
-		}
+		// if (this.destination != null) {
+		// 	this.start = this.destination;
+		// }
 		
 		let adjacent = segment.getAdjacentFreeSquares();
 		let distancesForSquares = {}
@@ -113,45 +114,31 @@ class Picker {
 		
 	 }
 	 
-
-
-	animateRoute() {
-<<<<<<< HEAD
+	animateRoutes(routeIndex=0) {
 		Node.nodes.push([]);
-		console.log(Picker.animationIndex);
-
-		for(let i = 0; i < this.route[Picker.animationIndex].length - 1; i++) {
-			let k = Picker.animationIndex;
-			setTimeout(() => {
-				console.log(Timer.deltas[k] / (this.route[k].length * Settings.timescale));
-				Node.nodes[k].push(this.route[k][i]);
-			}, Timer.deltas[k] / (this.route[k].length * Settings.timescale));
-		}
-		if (Picker.animationIndex != this.route.length-1) {
-			Picker.animationIndex++;
-			this.animateRoute();
+		this.animateRoute(this.route[routeIndex].length - 1, routeIndex);
+		routeIndex++;
+		console.log("routeIndex = " + routeIndex);
+		if (routeIndex < this.route.length) {
+			this.moving = true;
+			this.animateRoutes(routeIndex);
 		}	
-		// else{
-		// 	this.resetAnimationIndex();
-		// }
-=======
+	}
+
+	animateRoute(nodeIndex, routeIndex) {
 		setTimeout(() => {
-			Node.nodes.push(this.route[Picker.animationIndex]);
-			Picker.animationIndex -= 1;
-			console.log(Picker.animationIndex);
-			if (Picker.animationIndex >= 0) {
-				this.animateRoute();
-			}	
-			else {
-				this.resetAnimationIndex();
+			console.log("nodeIndex = " + nodeIndex);
+
+			Node.nodes[routeIndex].push(this.route[routeIndex][nodeIndex]);
+			if(nodeIndex > 0) {
+				this.animateRoute(--nodeIndex, routeIndex);
 			}
-		}, 20000/(this.route.length*Settings.timescale));
->>>>>>> 4bec01c3002477a95debf45e0ccef8342235ea8e
+		}, Timer.deltas[routeIndex] / (this.route[routeIndex].length * Settings.timescale));
 	}
 
 	resetAnimationIndex(){
 		// Node.nodes = [];
-		Picker.animationIndex = this.route.length - 1;
+		Picker.animationIndex = 0;
 	}
 
 	draw(){
