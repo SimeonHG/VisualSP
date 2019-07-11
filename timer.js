@@ -51,28 +51,41 @@ class Timer {
         }
     }
 
-    static updateTimer(date) {
+    static updateTimer() {
         if(Settings.timescale == 0) {
             Timer.running = false;
         } else {
             setTimeout(() => {
-                if(date == undefined) {
+                let date;
+                if (Timer.currentTime == 0) {
+                    console.log("evi si maikkata")
                     date = Timer.date[0];
+                } else {
+                    date = Timer.currentTime;
                 }
-                date+=1000;
+                
+                if (Settings.timescale < 0) {
+                    date -= 1000;
+                } else {
+                    date += 1000;
+                }
                 let time = Timer.parseTime(date);
                 document.getElementById("timer").innerHTML = time.hours + "h "
                 + time.minutes + "m " + time.seconds + "s ";
 
-                if(date < Timer.date[Timer.date.length - 1]) {
-                    this.updateTimer(date);
+                if (date < Timer.date[Timer.date.length - 1] && date > Timer.date[0]) {
+                    Timer.currentTime = date;
+                    this.updateTimer();
+                } else {
+                    Timer.running = false;
                 }
 
-            }, 1000 / Settings.timescale);
+            }, 1000 / abs(Settings.timescale));
         }
     }
 }
 
+Timer.currentTime = 0;
 Timer.running = false;
 Timer.index = 0;
 Timer.date = [];

@@ -41,7 +41,7 @@ function setup() {
     controls.view.y = -height / 2;
 
 
-    speedSlider = createSlider(1, 16, 8);
+    speedSlider = createSlider(-16, 16, 0);
     speedSlider.position(width*0.4, 45);
     // speedSlider.style('width', '80px');
 
@@ -118,9 +118,10 @@ function draw() {
         });
     }
     if(!Timer.running) {
-        Timer.updateTimer();
         Timer.running = true;
+        Timer.updateTimer();
     }
+
 }
 
 function copySelected() {
