@@ -341,12 +341,15 @@ function findRoute(path) {
     if (currentRoute.start != null) {
         if (!path) {
             picker = new Picker(currentRoute.start, [{
+                "completed": "2019-07-09T10:31:57.186Z",
                 "location": "0"
             },
             {
+                "completed": "2019-07-09T10:32:57.186Z",
                 "location": "5"
             },
             {
+                "completed": "2019-07-09T10:33:57.186Z",
                 "location": "40"
             }
         ]);
@@ -366,15 +369,15 @@ function findRoute(path) {
 
 function routeImport(textObj) {
     
-    let path = JSON.parse(textObj, (k, v) => k == 'completed' ? new Date(v) : v);
-    Timer.init()
+    let path = JSON.parse(textObj, findRoutes);
+    Timer.init();
     findRoute(path);
 }
 
-function filter(k, v) {
+function findRoutes(k, v) {
     if (k == 'completed') {
-        Timer.addDate(v)
-        return new Date(v)
+        Timer.addDate(v);
+        return v;
     }
     return v
 }

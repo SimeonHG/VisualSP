@@ -1,7 +1,7 @@
 class Timer {
 
     static addDate(newDate) {
-        Timer.date.push(newDate.getTime());
+        Timer.date.push(new Date(newDate).getTime());
     }
 
     static init() { 
