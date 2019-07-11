@@ -41,3 +41,16 @@ document.getElementById('importer').onchange = function(event) {
     }
     
 }
+
+document.getElementById('route').onchange = function(event) {
+    console.log(event);
+    
+    let reader = new FileReader();
+    reader.onload = onReaderLoad;
+    reader.readAsText(event.target.files[0]);
+    
+    function onReaderLoad(event){
+        routeImport(event.target.result); 
+    }
+    
+}

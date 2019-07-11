@@ -24,6 +24,7 @@
         <link rel = "stylesheet" href = "style.css" type = "text/css" media = "screen"/>
     </head>
     <body>
+        <h4>Mode</h4>
         <button onclick="Settings.setMode('movement')">Movement</button>
         <button onclick="Settings.setMode('aisles')">Draw aisles</button>
         <button onclick="Settings.setMode('segments')">Draw segments</button>
@@ -35,8 +36,15 @@
         <button onclick="exporter()">Export Map</button>
 
         <p id = "timescale"></p>
-
+        <h4>Import</h4>
+        <label for="importer">map:</label>
         <input accept="application/json" type="file" id="importer">
+
+        <label for="route">route:</label>
+        <input accept="application/json" type="file" id="route">
+        
+        <br>
+
         <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
         <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
         

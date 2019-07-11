@@ -330,16 +330,17 @@ function mouseReleased() {
     return false;
 }
 
-function findRoute() {
+function findRoute(path) {
     if (currentRoute.start != null) {
-        picker = new Picker(currentRoute.start, [
-                {
-                    "location": "0"
-                }
-        ]);
+        picker = new Picker(currentRoute.start, path);
         picker.findNextDestination();
         picker.findRoute();
     } else {
         alert("Path not selected!");
     }
+}
+
+function routeImport(textObj) {
+    let path = JSON.parse(textObj, (k, v) => {return k == 'completed' ? new Date(v) : v});
+    findRoute(path)
 }
