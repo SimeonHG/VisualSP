@@ -42,7 +42,7 @@ function setup() {
 
 
     speedSlider = createSlider(1, 16, 8);
-    speedSlider.position(30, 45);
+    speedSlider.position(width*0.4, 45);
     // speedSlider.style('width', '80px');
 
 
@@ -69,7 +69,9 @@ function draw() {
     let speed = speedSlider.value()
     Settings.timescale = speed;
     // console.log(document.getElementById("timescale"));
-    document.getElementById("timescale").innerHTML = `${speed}x`;
+    let pTime = document.getElementById("timescale");
+    pTime.innerHTML = `${speed}x`;
+    pTime.left = '35%';
     background(255);
     if (draggingForMovement && (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") && mouseIsInsideCanvas()) {
         Controls.move(controls).moveEdged(canvas);
@@ -290,7 +292,7 @@ function mouseReleased() {
 
         if (segmentCoords) {
             let segment = new Segment(segmentCoords.start, segmentCoords.end);
-            
+
             //TODO: Optimize this
             for (let aisle of Aisle.aisles) {
                 if (segment.isInside(aisle)) {
@@ -300,7 +302,7 @@ function mouseReleased() {
                     }
                 }
             }
-            
+
             if (segment.aisleId == null) {
                 segment.remove();
             }

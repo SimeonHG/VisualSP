@@ -7,3 +7,20 @@ canvas {
 br {
     margin-bottom: 1%;
 }
+
+#modeDiv {
+    margin-bottom: 20px;
+    position: absolute;
+}
+
+#importDiv {
+    padding: 20px;
+    position: relative;
+    float: right;
+}
+
+#timescale {
+    /* width: auto; */
+    /* margin: auto 0; */
+    left: 35%;
+}

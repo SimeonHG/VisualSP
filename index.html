@@ -19,43 +19,45 @@
         <script src = "label.js"></script>
         <script src = "zone.js"></script>
         <script src = "picker.js"></script>
-        <script src="corner.js"></script>        
+        <script src="corner.js"></script>
         <script src = "node.js"></script>
         <link rel = "stylesheet" href = "style.css" type = "text/css" media = "screen"/>
     </head>
     <body>
-        <h4>Mode</h4>
-        <button onclick="Settings.setMode('movement')">Movement</button>
-        <button onclick="Settings.setMode('aisles')">Draw aisles</button>
-        <button onclick="Settings.setMode('segments')">Draw segments</button>
-        <button onclick="Settings.setMode('zones')">Draw zones</button>
-        <button onclick="deleteSelected()">Delete</button>
-        <button onclick="Settings.setMode('select')">Select</button>
-        <button onclick="Settings.setMode('routeSelect'); //alert('Use LMB to select start and RMB to select end')">Select route</button>
-        <button onclick="findRoute()">Find route</button>
-        <button onclick="exporter()">Export Map</button>
+        <div id="modeDiv">
+            <h4>Mode</h4>
+            <button onclick="Settings.setMode('movement')">Movement</button>
+            <button onclick="Settings.setMode('aisles')">Draw aisles</button>
+            <button onclick="Settings.setMode('segments')">Draw segments</button>
+            <button onclick="Settings.setMode('zones')">Draw zones</button>
+            <br>
+            <button onclick="deleteSelected()">Delete</button>
+            <button onclick="Settings.setMode('select')">Select</button>
+            <button onclick="Settings.setMode('routeSelect'); //alert('Use LMB to select start and RMB to select end')">Select route</button>
+            <button onclick="findRoute()">Find route</button>
+            <button onclick="exporter()">Export Map</button>
+            <br>
+            <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
+            <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
+            <form>
+                <label class="checkbox-inline" >
+                    <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
+                </label>
+            </form>
+        </div>
 
-        <p id = "timescale"></p>
-        <h4>Import</h4>
-        <label for="importer">map:</label>
-        <input accept="application/json" type="file" id="importer">
+        <div id="importDiv">
+            <h4>Import</h4>
+            <label for="importer">map:</label>
+            <input accept="application/json" type="file" id="importer">
 
-        <label for="route">route:</label>
-        <input accept="application/json" type="file" id="route">
-        
-        <br>
+            <label for="route">route:</label>
+            <input accept="application/json" type="file" id="route">
+        </div>
 
-        <input type="text" id="labelName" name="labelName" placeholder="Label name..." onclick="Settings.setMode('typing')">
-        <button onclick="createLabel(); Settings.setMode('movement')">Apply</button>
-        
-        <br>
-
-        <form>
-            <label class="checkbox-inline" >
-                <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
-            </label>
-        </form>
-
+        <div id = 'timescale'>
+            asd
+        </div>
 </body>
 
 <head>
