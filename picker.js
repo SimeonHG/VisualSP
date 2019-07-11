@@ -16,11 +16,26 @@ class Picker {
 
 	findNextDestination() {
 		let segment = Segment.findSegmentById(parseInt(this.pickLog[this.taskCounter].location));
+		if (!segment) {
+			alert("No such location");
+			return;
+		}
 		this.tempSquares = segment.getAdjacentFreeSquares();
-		let distances = this.tempSquares.map(square => {
-			square.euclideanDistance(this.start.square);
+		let distancesForSquares = {}
+		this.tempSquares.forEach(square => {
+			let dist = square.euclideanDistance(this.start.square);
+			distancesForSquares[dist] = square;
 		});
-		console.log(distances);
+
+		let minDist = min(Object.keys(distancesForSquares));
+		let destination = distancesForSquares[minDist];
+		console.log(destination);
+
+		this.tempSquares = [];
+		this.tempSquares.push(destination);
+
+		this.destination = new Node(destination);
+
 		this.taskCounter++;
 	}
 

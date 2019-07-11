@@ -67,6 +67,20 @@ class Grid {
 
     }
 
+    getSquaresBetween(startSquare, endSquare) {
+        let squares = [];
+
+        let startLoc = grid.getSquareLocationInGrid(startSquare);
+        let endLoc = grid.getSquareLocationInGrid(endSquare);
+        for (let i = startLoc.row; i < endLoc.row; i++) {
+            for (let j = startLoc.col; j < endLoc.col; j++) {
+                squares.push(grid.squares[j][i]);
+            }
+        }
+
+        return squares;
+    }
+
     getClickedSquare() {
         for (let squareRow of this.squares) {
             for (let square of squareRow) {

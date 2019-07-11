@@ -188,7 +188,24 @@ class Entity extends Object {
     }
 
     remove(list) {
+        let startSqr = grid.getSquare(this.start.x, this.start.y);
+        let endSqr = grid.getSquare(this.end.x, this.end.y);
+
+        grid.getSquaresBetween(startSqr, endSqr).forEach(square => square.hasEntity = false);
+        
         list.splice(list.indexOf(this), 1);
+        Entity.entities.splice(Entity.entities.indexOf(this), 1);
+
+        for (let entity of Entity.entities) {
+            entity.updateSquares();
+        }
+    }
+
+    updateSquares() {
+        let startSqr = grid.getSquare(this.start.x, this.start.y);
+        let endSqr = grid.getSquare(this.end.x, this.end.y);
+
+        grid.getSquaresBetween(startSqr, endSqr).forEach(square => square.hasEntity = true);
     }
 
     select() {

@@ -87,6 +87,7 @@ class Segment extends Entity {
             super.remove(aisle.segments);
         }
         super.remove(Segment.segments);
+        this.aisleId = null;
         Segment.updateIds();
     }
 

@@ -37,7 +37,6 @@ class Square {
     }
 
     euclideanDistance(otherSqr) {
-        console.log(Math.pow(this.pos.y - otherSqr.pos.y, 2));
         return Math.sqrt(Math.pow(this.pos.y - otherSqr.pos.y, 2) + Math.pow(this.pos.x - otherSqr.pos.x, 2)) / Square.width;
     }
 }

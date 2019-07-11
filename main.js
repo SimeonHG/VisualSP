@@ -269,6 +269,7 @@ function mouseDragged() {
 }
 
 function mouseReleased() {
+    console.log(Entity.entities);
     draggingForMovement = false;
     movingSelectedItems = false;
     selectedItems.map((e) => e.place());
@@ -290,6 +291,7 @@ function mouseReleased() {
 
         if (segmentCoords) {
             let segment = new Segment(segmentCoords.start, segmentCoords.end);
+            
             //TODO: Optimize this
             for (let aisle of Aisle.aisles) {
                 if (segment.isInside(aisle)) {
@@ -299,7 +301,10 @@ function mouseReleased() {
                     }
                 }
             }
-            segment.remove();
+            
+            if (segment.aisleId == null) {
+                segment.remove();
+            }
         }
     } else if (Settings.mode == "movement") {
         Controls.move(controls).mouseReleased()
@@ -333,6 +338,7 @@ function findRoute() {
                 }
         ]);
         picker.findNextDestination();
+        picker.findRoute();
     } else {
         alert("Path not selected!");
     }
