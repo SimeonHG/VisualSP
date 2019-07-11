@@ -41,7 +41,7 @@ class Zone extends Entity {
 	}
 
 	remove() {
-		super.remove(Zone.zones);
+		super.remove(Zone.zones, false);
 	}
 
 	collisions() {
