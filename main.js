@@ -351,13 +351,19 @@ function findRoute(path) {
         if (!path) {
             picker = new Picker(currentRoute.start, [{
                 "location": "0"
-            }]);
+            },
+            {
+                "location": "1"
+            }
+        ]);
 
         } else {
             picker = new Picker(currentRoute.start, path);
         }
-        picker.findNextDestination();
-        picker.findRoute();
+        while (picker.findNextDestination()) {
+            picker.findRoute();
+        }
+        picker.animateRoute();
     } else {
         alert("Path not selected!");
     }
