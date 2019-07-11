@@ -46,7 +46,9 @@ function setup() {
     // speedSlider.style('width', '80px');
 
 
-    picker = new Picker(grid.squares[0][0], grid.squares[8][8]);
+    picker = new Picker(grid.squares[0][0], [{
+        "location": "0"
+    }]);
 }
 
 function windowResized() {
@@ -333,7 +335,14 @@ function mouseReleased() {
 
 function findRoute(path) {
     if (currentRoute.start != null) {
-        picker = new Picker(currentRoute.start, path);
+        if (!path) {
+            picker = new Picker(currentRoute.start, [{
+                "location": "0"
+            }]);
+
+        } else {
+            picker = new Picker(currentRoute.start, path);
+        }
         picker.findNextDestination();
         picker.findRoute();
     } else {

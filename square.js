@@ -8,6 +8,8 @@ class Square {
             g: 0,
             b: 0
         }
+        //This is for A* pathfinding
+        // this.visited = false;
     }
 
     isClicked() {  

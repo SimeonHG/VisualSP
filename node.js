@@ -6,6 +6,7 @@ class Node {
         this.f = this.g + this.h;
         this.children = new Array();
         this.parent = null;
+        this.visited = false;
     }
 
     setChildren(children) {
