@@ -390,5 +390,14 @@ function findRoute(path) {
 function routeImport(textObj) {
     
     let path = JSON.parse(textObj, (k, v) => k == 'completed' ? new Date(v) : v);
+    Timer.init()
     findRoute(path);
+}
+
+function filter(k, v) {
+    if (k == 'completed') {
+        Timer.addDate(v)
+        return new Date(v)
+    }
+    return v
 }
