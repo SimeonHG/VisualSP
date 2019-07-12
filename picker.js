@@ -13,6 +13,8 @@ class Picker {
 		this.closedList = new Array();
 		this.route = new Array();
 		this.moving = false;
+		this.deltas = Timer.getDeltas(pickLog);
+		console.log(this.deltas);
 	}
 
 	findNextDestination() {
@@ -26,8 +28,6 @@ class Picker {
 		}
 
 		if (this.destination != null) {
-			console.log("destination is not null");
-			console.log(this.destination);
 			this.start = this.destination;
 		}
 
@@ -124,7 +124,7 @@ class Picker {
 			Node.nodes.push([]);
 		}
 		setTimeout(() => {
-			if (routeIndex == this.route.length - 1) {
+			if (routeIndex == this.route.length - 1 || !animate) {
 				return;
 			}
 			Node.nodes[routeIndex].push(this.route[routeIndex][nodeIndex]);
@@ -134,10 +134,10 @@ class Picker {
 				this.animateRoutes(this.route[++routeIndex].length-1, routeIndex);
 				Node.nodes.push([]);
 			}
-		}, Timer.deltas[routeIndex] / (this.route[routeIndex].length * Settings.timescale));
+		}, this.deltas[routeIndex] / (this.route[routeIndex].length * Settings.timescale));
 	}
 
-	draw(){
+	draw() {
 		for (let square of this.tempSquares) {
 			square.drawColor({
 				r: 200,

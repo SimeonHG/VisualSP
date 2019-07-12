@@ -22,6 +22,7 @@ let offsetY = 0;
 let draggingForMovement = false;
 
 let resizingEntity;
+let pickers = [];
 
 let windowFactor = {
     width: 0.98,
@@ -33,6 +34,8 @@ let picker;
 
 let speedSlider;
 
+let animate = false;
+
 function setup() {
     canvas = createCanvas(windowWidth * windowFactor.width, windowHeight * windowFactor.height);
     grid = new Grid(500, 500);
@@ -41,10 +44,8 @@ function setup() {
     controls.view.y = -height / 2;
 
 
-    speedSlider = createSlider(-16, 16, 1);
+    speedSlider = createSlider(1, 16, 1);
     speedSlider.position(width*0.45, height*0.05);
-    // speedSlider.style('width', '80px');
-
 
     picker = new Picker(grid.squares[0][0], [{
         "location": "0"
@@ -57,6 +58,19 @@ function windowResized() {
 
 function mouseIsInsideCanvas() {
     return mouseX <= canvas.width && mouseY <= canvas.height && mouseX >= 0 && mouseY >= 0;
+}
+
+function startAnimation() {
+    if (!animate) {
+        for (let picker of pickers) {
+            picker.animateRoutes();
+        }
+        animate = true;
+    }
+}
+
+function stopAnimation() {
+    animate = false;
 }
 
 let startPos, currentPos;
@@ -72,7 +86,6 @@ function draw() {
     Settings.timescale = speed;
     let pTime = document.getElementById("timescale");
     pTime.innerHTML = `${speed}x`;
-    pTime.left = '35%';
     background(255);
     if (draggingForMovement && (Settings.mode == "aisles" || Settings.mode == "segments" || Settings.mode == "select" || Settings.mode == "zones") && mouseIsInsideCanvas()) {
         Controls.move(controls).moveEdged(canvas);
@@ -96,9 +109,9 @@ function draw() {
 
     Selection.draw();
 
-    // picker.drawOpenList();
-    // picker.drawClosedList();
-    picker.draw();
+    for (let picker of pickers) {
+        picker.draw();
+    }
 
     if (currentRoute.start !=null) {
         currentRoute.start.drawColor({
@@ -111,7 +124,6 @@ function draw() {
         Timer.running = true;
         Timer.updateTimer();
     }
-
 }
 
 function copySelected() {
@@ -197,7 +209,6 @@ function getSelectedItems(coords) {
             segment.remove();
             return colls;
         }
-        console.log("alo");
         segment.remove();
     }
 
@@ -338,7 +349,7 @@ function mouseReleased() {
 function findRoute(path) {
     if (currentRoute.start != null) {
         if (!path) {
-            picker = new Picker(currentRoute.start, [{
+            path = {
                 "location": "0"
             },
             {
@@ -346,29 +357,25 @@ function findRoute(path) {
             },
             {
                 "location": "40"
-            }
-        ]);
-        console.log(Segment.segments)
-        } else {
-            picker = new Picker(currentRoute.start, path);
+            };
         }
+
+        pickers.push(new Picker(currentRoute.start, path));
+
         let indexOfRoute = 0;
-        while (picker.findNextDestination()) {
-            picker.findRoute();
+        let currPicker = pickers[pickers.length-1];
+        while (currPicker.findNextDestination()) {
+            currPicker.findRoute();
         }
-        // picker.route = picker.route.reverse();
-		// picker.resetAnimationIndex();
-        picker.animateRoutes();
+        currPicker.animateRoutes();
     } else {
         alert("Path not selected!");
     }
 }
 
 function routeImport(textObj) {
-
     let path = JSON.parse(textObj, findRoutes);
     Timer.init();
-    Timer.calculateDeltas(Timer.date);
     findRoute(path);
 }
 

@@ -4,14 +4,19 @@ class Timer {
         Timer.date.push(new Date(newDate).getTime());
     }
 
-    static init() { 
+    static init() {
         let time = Timer.parseTime(Math.min(...Timer.date));
-        document.getElementById("timer").innerHTML = time.hours + "h "
-        + time.minutes + "m " + time.seconds + "s ";
+        if (time.hours) {
+            document.getElementById("timer").innerHTML = time.hours + "h "
+            + time.minutes + "m " + time.seconds + "s ";
+        } else {
+            document.getElementById("timer").innerHTML = 0 + "h "
+            + 0 + "m " + 0 + "s ";
+        }
     }
 
     static calculateDistance(prevTime, nextTime) {
-        return nextTime - prevTime;        
+        return nextTime - prevTime;
     }
 
     static parseTime(distance) {
@@ -21,7 +26,7 @@ class Timer {
         let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
         let parsedTime = {
-            days: days, 
+            days: days,
             hours: hours,
             minutes: minutes,
             seconds: seconds
@@ -30,26 +35,19 @@ class Timer {
         return parsedTime;
     }
 
-    static calculateDeltas(pickerDate) {
+    static getDeltas(pickLog) {
         let distance;
 
         let prevTime;
         let nextTime;
 
-        for(let i = 0; i < Timer.date.length; i++) {
-            
-            nextTime = pickerDate[i];
-            
-            if(i == 0) {
-                prevTime = nextTime;
-            } else {
-                prevTime = pickerDate[i - 1];
-            }
-            distance = Timer.calculateDistance(prevTime, nextTime);
-
-            Timer.deltas.push(distance);
+        let deltas = [];
+        let times = pickLog.map(log => new Date(log["completed"]).getTime());
+        for (let i = 0; i < times.length-1; i++) {
+            distance = Timer.calculateDistance(times[i], times[i+1]);
+            deltas.push(distance);
         }
-        console.log(Timer.deltas);
+        return deltas;
     }
 
     static updateTimer() {
@@ -63,7 +61,7 @@ class Timer {
                 } else {
                     date = Timer.currentTime;
                 }
-                
+
                 if (Settings.timescale < 0) {
                     date -= 1000;
                 } else {
@@ -89,4 +87,3 @@ Timer.currentTime = 0;
 Timer.running = false;
 Timer.index = 0;
 Timer.date = [];
-Timer.deltas = [];
