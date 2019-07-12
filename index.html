@@ -30,9 +30,9 @@
         <br>
         <div class="container is-fluid">
         <div class="columns is-centered">
-            <div class="column">
-                <h4 class="title is-4">Mode selection</h4>
-                <div class="buttons">
+            <div class="column is-5">
+                <h4 class="title is-5">Mode selection</h4>
+                <div class="buttons are-small">
                     <button class="button" onclick="Settings.setMode('movement')">Movement</button>
                     <button class="button" onclick="Settings.setMode('aisles')">Draw aisles</button>
                     <button class="button" onclick="Settings.setMode('segments')">Draw segments</button>
@@ -56,24 +56,37 @@
                         </p>
                     </div>
                 </div>
-                <form>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
-                    </label>
-                </form>
+                <div class="field has-addons">
+                    <p class="control">
+                        <input class="input is-small" type="text" id="labelName" name="labelName" placeholder="Label name..."
+                            onclick="Settings.setMode('typing')">
+                    </p>
+                    <p class="control">
+                        <button class="button is-primary is-small" onclick="createLabel(); Settings.setMode('movement')">
+                            Apply
+                        </button>
+                    </p>
+                </div>
+
             </div>
             <div class="column has-text-centered">
                 <div id="timescale">
                 </div>
             </div>
-            <div class="column">
-                <h4 class="title is-4">Import</h4>
+            <div class="column is-5">
+                <h4 class="title is-5">Import</h4>
                 <label for="importer">map:</label>
                 <input accept="application/json" type="file" id="importer">
 
                 <label for="route">route:</label>
                 <input accept="application/json" type="file" id="route">
                 <p id="timer"></p>
+
+                <form>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="show-segments" value="show-segments" checked>Show segments
+                    </label>
+                </form>
             </div>
         </div>
         </div>
