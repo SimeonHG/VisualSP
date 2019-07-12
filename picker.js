@@ -5,6 +5,8 @@ class Picker {
 		this.pickLog = pickLog;
 		this.taskCounter = 0;
 		this.tempSquares = [];
+		this.nextDestinationToDraw = null;
+
 
 		this.r = random(255);
 		this.g = random(100);
@@ -45,6 +47,9 @@ class Picker {
 
 		this.destination = new Node(destination);
 		this.tempSquares.push(this.destination.square);
+		if (this.taskCounter == 0) {
+			this.nextDestinationToDraw = this.destination;
+		}
 
 		this.taskCounter++;
 		return true;
@@ -126,6 +131,7 @@ class Picker {
 		}
 		setTimeout(() => {
 			if (routeIndex == this.route.length || !animate) {
+				this.nextDestinationToDraw = null;
 				return;
 			}
 			Node.nodes[routeIndex].push(this.route[routeIndex][nodeIndex]);
@@ -134,8 +140,10 @@ class Picker {
 			} else {
 				try{
 					this.animateRoutes(this.route[++routeIndex].length-1, routeIndex);
+					this.nextDestinationToDraw = this.tempSquares[routeIndex];
 					Node.nodes.push([]);
 				}catch(error) {
+					this.nextDestinationToDraw = null;
 					console.log(error);
 				}
 			}
@@ -159,6 +167,19 @@ class Picker {
 					b: this.b
 				});
 			}
+		}
+		this.drawNextDestination();
+
+	}
+
+	drawNextDestination() {
+		if (this.nextDestinationToDraw != null) {
+
+			this.nextDestinationToDraw.drawColor({
+				r: 250,
+				g: 0,
+				b: 0
+			});
 		}
 	}
 
