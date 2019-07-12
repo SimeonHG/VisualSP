@@ -7,7 +7,7 @@ class Picker {
 		this.tempSquares = [];
 
 		this.r = random(255);
-		this.g = 0;
+		this.g = random(100);
 		this.b = random(255);
 		this.openList = new Array();
 		this.closedList = new Array();
@@ -41,7 +41,7 @@ class Picker {
 		let minDist = min(Object.keys(distancesForSquares));
 		let destination = distancesForSquares[minDist];
 
-		
+
 
 		this.destination = new Node(destination);
 		this.tempSquares.push(this.destination.square);
@@ -125,11 +125,7 @@ class Picker {
 			Node.nodes.push([]);
 		}
 		setTimeout(() => {
-<<<<<<< HEAD
-			if (routeIndex == this.route.length - 1 || !animate) {
-=======
-			if (routeIndex == this.route.length) {
->>>>>>> da7760b228472d772d8889f75e9c3043f3a8c216
+			if (routeIndex == this.route.length || !animate) {
 				return;
 			}
 			Node.nodes[routeIndex].push(this.route[routeIndex][nodeIndex]);
@@ -149,8 +145,8 @@ class Picker {
 	draw() {
 		for (let square of this.tempSquares) {
 			square.drawColor({
-				r: 200,
-				g: 0,
+				r: this.r,
+				g: this.g,
 				b: 0
 			});
 		}

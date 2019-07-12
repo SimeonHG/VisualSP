@@ -1,55 +1,42 @@
 [
     {
-<<<<<<< HEAD
         "completed": "2019-07-09T10:30:49.186Z",
-=======
-        "completed": "2019-07-09T10:31:00.186Z",
->>>>>>> da7760b228472d772d8889f75e9c3043f3a8c216
-        "location": "6" 
+        "location": "6"
     },
     {
         "completed": "2019-07-09T10:31:47.186Z",
-        "location": "5" 
+        "location": "5"
     },
     {
         "completed": "2019-07-09T10:31:57.186Z",
-        "location": "40" 
+        "location": "40"
     },
     {
         "completed": "2019-07-09T10:32:29.186Z",
-        "location": "70" 
+        "location": "70"
     },
     {
         "completed": "2019-07-09T10:33:07.186Z",
-        "location": "95" 
+        "location": "95"
     },
     {
         "completed": "2019-07-09T10:33:59.186Z",
-        "location": "84" 
+        "location": "84"
     },
     {
         "completed": "2019-07-09T10:36:21.186Z",
-        "location": "107" 
+        "location": "107"
     },
     {
         "completed": "2019-07-09T10:36:41.186Z",
-        "location": "167" 
+        "location": "167"
     },
     {
         "completed": "2019-07-09T10:37:21.186Z",
-        "location": "137" 
+        "location": "137"
     },
     {
-<<<<<<< HEAD
         "completed": "2019-07-09T10:39:01.186Z",
-        "location": "187" 
-    },
-    {
-        "completed": "2019-07-09T10:41:31.186Z",
-        "location": "144" 
-=======
-        "completed": "2019-07-09T10:38:01.186Z",
-        "location": "187" 
->>>>>>> da7760b228472d772d8889f75e9c3043f3a8c216
+        "location": "187"
     }
 ]

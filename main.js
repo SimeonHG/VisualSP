@@ -120,7 +120,7 @@ function draw() {
             b: 25
         });
     }
-    if(!Timer.running) {
+    if(!Timer.running && animate) {
         Timer.running = true;
         Timer.updateTimer();
     }

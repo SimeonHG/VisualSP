@@ -12,7 +12,7 @@ class Square {
         // this.visited = false;
     }
 
-    isClicked() {  
+    isClicked() {
         let coords = {
             "x": mouseX,
             "y": mouseY
@@ -30,8 +30,10 @@ class Square {
     }
 
     drawColor(color) {
+        push();
         fill(color.r, color.g, color.b);
         rect(this.pos.x, this.pos.y, Square.width, Square.width);
+        pop();
     }
 
     json() {

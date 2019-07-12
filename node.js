@@ -33,13 +33,17 @@ class Node {
     }
 
     draw(color) {
-        fill(color.r, color.g, color.b, 30);
+        push();
+        fill(color.r, color.g, color.b, 80);
         this.square.draw();
+        pop();
     }
 
     drawColor(color) {
-        fill(color.r, color.g, color.b, 30);
+        push();
+        fill(color.r, color.g, color.b, 80);
         this.square.draw();
+        pop();
     }
 
     drawWithScores(color) {

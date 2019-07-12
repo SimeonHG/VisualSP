@@ -6,13 +6,8 @@ class Timer {
 
     static init() {
         let time = Timer.parseTime(Math.min(...Timer.date));
-        if (time.hours) {
-            document.getElementById("timer").innerHTML = time.hours + "h "
-            + time.minutes + "m " + time.seconds + "s ";
-        } else {
-            document.getElementById("timer").innerHTML = 0 + "h "
-            + 0 + "m " + 0 + "s ";
-        }
+        document.getElementById("timer").innerHTML = time.hours + "h "
+        + time.minutes + "m " + time.seconds + "s ";
     }
 
     static calculateDistance(prevTime, nextTime) {
