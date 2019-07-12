@@ -93,13 +93,9 @@ function draw() {
             aisle._placed = true;
         }
     }
-    for (let nodeList of Node.nodes) {
-        for(let node of nodeList){
-            node.draw();
-        }
-    }
+
     Selection.draw();
-    
+
     // picker.drawOpenList();
     // picker.drawClosedList();
     picker.draw();
@@ -362,15 +358,15 @@ function findRoute(path) {
             indexOfRoute++;
         }
         // picker.route = picker.route.reverse();
-		picker.resetAnimationIndex();
-        picker.animateRoutes(0);
+		// picker.resetAnimationIndex();
+        picker.animateRoutes();
     } else {
         alert("Path not selected!");
     }
 }
 
 function routeImport(textObj) {
-    
+
     let path = JSON.parse(textObj, findRoutes);
     Timer.init();
     Timer.calculateDeltas(Timer.date);

@@ -16,7 +16,7 @@ class Picker {
 	}
 
 	findNextDestination() {
-		if (this.pickLog.length <= this.taskCounter) 
+		if (this.pickLog.length <= this.taskCounter)
 			return false;
 
 		let segment = Segment.findSegmentById(parseInt(this.pickLog[this.taskCounter].location));
@@ -28,7 +28,7 @@ class Picker {
 		// if (this.destination != null) {
 		// 	this.start = this.destination;
 		// }
-		
+
 		let adjacent = segment.getAdjacentFreeSquares();
 		let distancesForSquares = {}
 		adjacent.forEach(square => {
@@ -55,7 +55,7 @@ class Picker {
 
 		this.start.setScores(0, 0);
 		this.openList.push(this.start);
-		
+
 		this.route.push([]);
 		while (this.openList.length > 0) {
 			this.openList.sort((a, b) => a.f - b.f);
@@ -80,7 +80,7 @@ class Picker {
 					currentNode = currentNode.parent;
 				}
 				this.route[index].push(currentNode);
-				console.log("index" + index);
+				this.animateRoutes();
 				return;
 
 			}
@@ -111,34 +111,25 @@ class Picker {
 				this.openList.push(childNode);
 			});
 		}
-		
+
 	 }
-	 
-	animateRoutes(routeIndex=0) {
-		Node.nodes.push([]);
-		this.animateRoute(this.route[routeIndex].length - 1, routeIndex);
-		routeIndex++;
-		console.log("routeIndex = " + routeIndex);
-		if (routeIndex < this.route.length) {
-			this.moving = true;
-			this.animateRoutes(routeIndex);
-		}	
-	}
 
-	animateRoute(nodeIndex, routeIndex) {
+	animateRoutes(nodeIndex, routeIndex) {
+		if (nodeIndex == null) {
+			routeIndex = 0;
+			nodeIndex = this.route[0].length-1;
+			Node.nodes.push([]);
+		}
 		setTimeout(() => {
-			console.log("nodeIndex = " + nodeIndex);
-
 			Node.nodes[routeIndex].push(this.route[routeIndex][nodeIndex]);
-			if(nodeIndex > 0) {
-				this.animateRoute(--nodeIndex, routeIndex);
+			if (nodeIndex > 0) {
+				this.animateRoutes(--nodeIndex, routeIndex);
+			} else {
+				this.animateRoutes(this.route[++routeIndex].length-1, routeIndex);
+				Node.nodes.push([]);
+				console.log("zdrasty")
 			}
 		}, Timer.deltas[routeIndex] / (this.route[routeIndex].length * Settings.timescale));
-	}
-
-	resetAnimationIndex(){
-		// Node.nodes = [];
-		Picker.animationIndex = 0;
 	}
 
 	draw(){
@@ -148,6 +139,16 @@ class Picker {
 				g: 0,
 				b: 0
 			});
+		}
+
+		for (let nodeList of Node.nodes) {
+			for(let node of nodeList){
+				node.draw({
+					r: this.r,
+					g: this.g,
+					b: this.b
+				});
+			}
 		}
 	}
 
@@ -169,4 +170,3 @@ class Picker {
 
 }
 Picker.deltaIndex = 0;
-Picker.animationIndex = 0;

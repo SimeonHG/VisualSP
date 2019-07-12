@@ -32,15 +32,13 @@ class Node {
         this.f = this.g + this.h;
     }
 
-    draw() {
-        let nodeColor = color(100, 50, 150);
-        nodeColor.setAlpha(50);
-        fill(nodeColor);
+    draw(color) {
+        fill(color.r, color.g, color.b, 15);
         this.square.draw();
     }
 
     drawColor(color) {
-        fill(color.r, color.g, color.b);
+        fill(color.r, color.g, color.b, 15);
         this.square.draw();
     }
 
