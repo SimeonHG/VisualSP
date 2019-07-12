@@ -354,8 +354,7 @@ function findRoute(path) {
         }
         let indexOfRoute = 0;
         while (picker.findNextDestination()) {
-            picker.findRoute(indexOfRoute);
-            indexOfRoute++;
+            picker.findRoute();
         }
         // picker.route = picker.route.reverse();
 		// picker.resetAnimationIndex();

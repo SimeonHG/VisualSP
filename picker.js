@@ -7,7 +7,7 @@ class Picker {
 		this.tempSquares = [];
 
 		this.r = random(255);
-		this.g = random(255);
+		this.g = 0;
 		this.b = random(255);
 		this.openList = new Array();
 		this.closedList = new Array();
@@ -25,9 +25,11 @@ class Picker {
 			return false;
 		}
 
-		// if (this.destination != null) {
-		// 	this.start = this.destination;
-		// }
+		if (this.destination != null) {
+			console.log("destination is not null");
+			console.log(this.destination);
+			this.start = this.destination;
+		}
 
 		let adjacent = segment.getAdjacentFreeSquares();
 		let distancesForSquares = {}
@@ -39,7 +41,7 @@ class Picker {
 		let minDist = min(Object.keys(distancesForSquares));
 		let destination = distancesForSquares[minDist];
 
-		this.tempSquares.push(destination);
+		this.tempSquares.push(this.start.square);
 
 		this.destination = new Node(destination);
 
@@ -47,11 +49,13 @@ class Picker {
 		return true;
 	}
 
-	findRoute(index) {
+	findRoute() {
 		if (this.destination.square.hasEntity || this.start.square.hasEntity) {
 			alert("Invalid destination or start!");
 			return;
 		}
+
+		this.openList = [];
 
 		this.start.setScores(0, 0);
 		this.openList.push(this.start);
@@ -74,15 +78,14 @@ class Picker {
 			}
 
 			// WIN CONDITION
-			if (currentNode.square.pos.x == this.destination.square.pos.x && currentNode.square.pos.y == this.destination.square.pos.y) {
+			if (currentNode.equals(this.destination)) {
 				while (currentNode.parent != null) {
-					this.route[index].push(currentNode);
+					this.route[this.taskCounter - 1].push(currentNode);
 					currentNode = currentNode.parent;
 				}
-				this.route[index].push(currentNode);
+				this.route[this.taskCounter - 1].push(currentNode);
 				this.animateRoutes();
 				return;
-
 			}
 
 			currentNode.setChildren(grid.getAdjacent(currentNode.square)
@@ -121,13 +124,15 @@ class Picker {
 			Node.nodes.push([]);
 		}
 		setTimeout(() => {
+			if (routeIndex == this.route.length - 1) {
+				return;
+			}
 			Node.nodes[routeIndex].push(this.route[routeIndex][nodeIndex]);
 			if (nodeIndex > 0) {
 				this.animateRoutes(--nodeIndex, routeIndex);
 			} else {
 				this.animateRoutes(this.route[++routeIndex].length-1, routeIndex);
 				Node.nodes.push([]);
-				console.log("zdrasty")
 			}
 		}, Timer.deltas[routeIndex] / (this.route[routeIndex].length * Settings.timescale));
 	}
