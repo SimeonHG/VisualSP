@@ -9,7 +9,7 @@ class Picker {
 
 
 		this.r = random(255);
-		this.g = random(100);
+		this.g = 0;
 		this.b = random(255);
 		this.openList = new Array();
 		this.closedList = new Array();

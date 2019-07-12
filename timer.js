@@ -38,10 +38,16 @@ class Timer {
 
         let deltas = [];
         let times = pickLog.map(log => new Date(log["completed"]).getTime());
-        for (let i = 0; i < times.length-1; i++) {
-            distance = Timer.calculateDistance(times[i], times[i+1]);
+        for (let i = 0; i <= times.length-1; i++) {
+            if(i - 1 < 0) {
+                distance = 0;
+            } else {
+                distance = Timer.calculateDistance(times[i - 1], times[i]);
+            }
             deltas.push(distance);
         }
+
+        console.log(deltas);
         return deltas;
     }
 
