@@ -4,17 +4,13 @@ canvas {
     vertical-align: top;
 }
 
-br {
-    margin-bottom: 1%;
-}
-
 #modeDiv {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     position: absolute;
 }
 
 #importDiv {
-    padding: 20px;
+    /* padding: 20px; */
     position: relative;
     float: right;
 }
@@ -24,3 +20,8 @@ br {
     /* margin: auto 0; */
     left: 35%;
 }
+
+.field {
+    margin-bottom: 1rem;
+}
+
