@@ -41,9 +41,10 @@ class Picker {
 		let minDist = min(Object.keys(distancesForSquares));
 		let destination = distancesForSquares[minDist];
 
-		this.tempSquares.push(this.start.square);
+		
 
 		this.destination = new Node(destination);
+		this.tempSquares.push(this.destination.square);
 
 		this.taskCounter++;
 		return true;
@@ -124,15 +125,19 @@ class Picker {
 			Node.nodes.push([]);
 		}
 		setTimeout(() => {
-			if (routeIndex == this.route.length - 1) {
+			if (routeIndex == this.route.length) {
 				return;
 			}
 			Node.nodes[routeIndex].push(this.route[routeIndex][nodeIndex]);
 			if (nodeIndex > 0) {
 				this.animateRoutes(--nodeIndex, routeIndex);
 			} else {
-				this.animateRoutes(this.route[++routeIndex].length-1, routeIndex);
-				Node.nodes.push([]);
+				try{
+					this.animateRoutes(this.route[++routeIndex].length-1, routeIndex);
+					Node.nodes.push([]);
+				}catch(error) {
+					console.log(error);
+				}
 			}
 		}, Timer.deltas[routeIndex] / (this.route[routeIndex].length * Settings.timescale));
 	}
